@@ -1,6 +1,9 @@
 package com.hackathon.phoblock.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="picture")
@@ -20,7 +23,7 @@ public class Picture {
     Integer numberDownload;
     @Column (nullable = true)
     Integer numberFavorite;
-    @Column (nullable = false);
+    @Column (nullable = false)
     String product;
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
@@ -33,7 +36,7 @@ public class Picture {
         return pictureCaption;
     }
 
-    public String getPictureOwner() {
+    public PhoBlockUser getPictureOwner() {
         return pictureOwner;
     }
 
@@ -61,7 +64,7 @@ public class Picture {
         this.pictureCaption = pictureCaption;
     }
 
-    public void setPictureOwner(String pictureOwner) {
+    public void setPictureOwner(PhoBlockUser pictureOwner) {
         this.pictureOwner = pictureOwner;
     }
 

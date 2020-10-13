@@ -65,7 +65,12 @@ public class PhoBlockUserController {
                 phoBlockUser.setEmailAddress(retrievedUser.getEmailAddress());
                 phoBlockUser.setUserName(retrievedUser.getUserName());
                 phoBlockUser.setUserPassword(null);
+                phoBlockUser.setUserBio(retrievedUser.getUserBio());
+                phoBlockUser.setAccountOwner(retrievedUser);
                 phoBlockUser.setDateCreated(retrievedUser.getDateCreated());
+                phoBlockUser.setFollowers(retrievedUser.getFollowers());
+                phoBlockUser.setFollowing(retrievedUser.getFollowing());
+                phoBlockUser.setUserPost(retrievedUser.getUserPost());
 
                 return phoBlockUser;
             }
@@ -83,7 +88,7 @@ public class PhoBlockUserController {
             retrievedUser.setLastName(phoBlockUser.getLastName());
             retrievedUser.setEmailAddress(phoBlockUser.getEmailAddress());
             retrievedUser.setUserName(phoBlockUser.getUserName());
-            retrievedUser.setUserPassword(phoBlockUser.getUserPassword());
+            retrievedUser.setUserBio(phoBlockUser.getUserBio());
 
             phoBlockUserRepository.save(retrievedUser);
 
