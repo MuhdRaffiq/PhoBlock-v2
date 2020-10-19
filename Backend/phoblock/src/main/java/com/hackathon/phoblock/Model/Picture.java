@@ -13,8 +13,8 @@ public class Picture {
     Integer id;
     @Column(nullable = false)
     String pictureCaption;
-    @Column(nullable = false)
-    PhoBlockUser pictureOwner;
+//    @Column(nullable = false)
+//    PhoBlockUser pictureOwner;
     @Column(nullable = false)
     String pictureTag;
     @Column(nullable = false)
@@ -28,6 +28,12 @@ public class Picture {
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
 
+    public Picture(String pictureCaption, String pictureTag, String pictureTheme){
+        this.pictureCaption = pictureCaption;
+        this.pictureTag = pictureTag;
+        this.pictureTheme = pictureTheme;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -36,9 +42,9 @@ public class Picture {
         return pictureCaption;
     }
 
-    public PhoBlockUser getPictureOwner() {
-        return pictureOwner;
-    }
+//    public PhoBlockUser getPictureOwner() {
+//        return pictureOwner;
+//    }
 
     public String getPictureTag() {
         return pictureTag;
@@ -64,9 +70,9 @@ public class Picture {
         this.pictureCaption = pictureCaption;
     }
 
-    public void setPictureOwner(PhoBlockUser pictureOwner) {
-        this.pictureOwner = pictureOwner;
-    }
+//    public void setPictureOwner(PhoBlockUser pictureOwner) {
+//        this.pictureOwner = pictureOwner;
+//    }
 
     public void setPictureTag(String pictureTag) {
         this.pictureTag = pictureTag;

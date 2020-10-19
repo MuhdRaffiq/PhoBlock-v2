@@ -17,11 +17,15 @@ public class PhoBlockUserController {
 
     @PostMapping("/User")
     PhoBlockUser createUser(@RequestBody PhoBlockUser phoBlockUser) throws RegistrationFailedException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(phoBlockUser.getUserName());
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByuserName(phoBlockUser.getUserName());
 
-        if(retrievedUser == null){
+        System.out.println();
+        System.out.println(retrievedUser);
+
+        if(retrievedUser != null){
             throw new RegistrationFailedException("Username has been taken. Please choose another username");
         }else{
+            //phoBlockUser.setAccountOwner(phoBlockUser);
             phoBlockUserRepository.save(phoBlockUser);
 
             return phoBlockUser;
@@ -37,19 +41,19 @@ public class PhoBlockUserController {
 
     @GetMapping("/User/{username}")
     PhoBlockUser getUser(@PathVariable String username) throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByuserName(username);
 
         if(retrievedUser == null){
             throw new ResourceNotFoundException("Username: " + username + " is not found");
-        }else{
-            return retrievedUser;
         }
+
+        return retrievedUser;
     }
 
     @PostMapping("/AuthenticateLogin")
     PhoBlockUser validateLogin(@RequestBody PhoBlockLoginAuthentication phoBlockLoginAuthentication)
             throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(phoBlockLoginAuthentication.getUsername());
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByuserName(phoBlockLoginAuthentication.getUsername());
 
         if(retrievedUser == null){
             throw new ResourceNotFoundException("Invalid Username/Password");
@@ -66,10 +70,10 @@ public class PhoBlockUserController {
                 phoBlockUser.setUserName(retrievedUser.getUserName());
                 phoBlockUser.setUserPassword(null);
                 phoBlockUser.setUserBio(retrievedUser.getUserBio());
-                phoBlockUser.setAccountOwner(retrievedUser);
+                //phoBlockUser.setAccountOwner(retrievedUser);
                 phoBlockUser.setDateCreated(retrievedUser.getDateCreated());
-                phoBlockUser.setFollowers(retrievedUser.getFollowers());
-                phoBlockUser.setFollowing(retrievedUser.getFollowing());
+                //phoBlockUser.setFollowers(retrievedUser.getFollowers());
+                //phoBlockUser.setFollowing(retrievedUser.getFollowing());
                 phoBlockUser.setUserPost(retrievedUser.getUserPost());
 
                 return phoBlockUser;
@@ -79,7 +83,7 @@ public class PhoBlockUserController {
 
     @PutMapping("/User/{username}")
     public PhoBlockUser updateUser(@RequestBody PhoBlockUser phoBlockUser, @PathVariable String username) throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByuserName(username);
 
         if(retrievedUser == null){
             throw new ResourceNotFoundException("Username: " + username + " is not found");

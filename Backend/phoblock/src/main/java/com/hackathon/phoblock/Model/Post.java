@@ -27,8 +27,10 @@ public class Post {
     Integer numberFavorite;
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
+    @Column
+    String ownerUsername;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     PhoBlockUser postOwner;
@@ -61,6 +63,10 @@ public class Post {
 
     public Date getDateCreated() {
         return dateCreated;
+    }
+
+    public String getOwnerUsername() {
+        return ownerUsername;
     }
 
     public PhoBlockUser getPostOwner() {
@@ -97,6 +103,10 @@ public class Post {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     public void setPostOwner(PhoBlockUser postOwner) {

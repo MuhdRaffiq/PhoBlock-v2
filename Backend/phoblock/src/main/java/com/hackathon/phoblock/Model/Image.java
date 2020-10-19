@@ -6,6 +6,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "Image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +19,7 @@ public class Image {
     @Column(length = 1000)
     byte[] imageByte;
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Post picturePost;

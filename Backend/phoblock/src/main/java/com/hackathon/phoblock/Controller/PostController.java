@@ -2,6 +2,7 @@ package com.hackathon.phoblock.Controller;
 
 import com.hackathon.phoblock.Exceptions.ResourceNotFoundException;
 import com.hackathon.phoblock.Model.PhoBlockUser;
+import com.hackathon.phoblock.Model.Picture;
 import com.hackathon.phoblock.Model.Post;
 import com.hackathon.phoblock.Repository.PhoBlockUserRepository;
 import com.hackathon.phoblock.Repository.PostRepository;
@@ -30,13 +31,14 @@ public class PostController {
     @PostMapping("/users/{username}/posts")
     public Post createPostForUsername(@RequestBody Post post, @PathVariable String username)
             throws ResourceNotFoundException {
-        if(phoBlockUserRepository.findByUserName(username) == null){
+        if(phoBlockUserRepository.findByuserName(username) == null){
             throw new ResourceNotFoundException("Username not found");
         }else{
-            PhoBlockUser user = phoBlockUserRepository.findByUserName(username);
+            PhoBlockUser user = phoBlockUserRepository.findByuserName(username);
 
             user.addUserPost(post);
             post.setPostOwner(user);
+            post.setOwnerUsername(username);
 
             postRepository.save(post);
 
@@ -47,7 +49,7 @@ public class PostController {
     @PutMapping("/users/{username}/posts/{postId}")
     public Post updatePost(@PathVariable String username, @PathVariable Integer id, @RequestBody Post requestPost)
             throws ResourceNotFoundException {
-        if(phoBlockUserRepository.findByUserName(username) == null){
+        if(phoBlockUserRepository.findByuserName(username) == null){
             throw new ResourceNotFoundException("Username not found");
         }else{
             if(postRepository.findById(id) == null){
@@ -66,4 +68,6 @@ public class PostController {
             return retrievedPost;
         }
     }
+
+
 }
