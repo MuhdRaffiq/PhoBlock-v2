@@ -69,5 +69,26 @@ public class PostController {
         }
     }
 
+<<<<<<< HEAD
 
+=======
+    @DeleteMapping("/users/{username}/posts/{postId}")
+    public ResponseEntity<?> deletePost(@PathVariable String username, @PathVariable Integer postId)
+    throws ResourceNotFoundException {
+        if(phoBlockUserRepository.findByUserName(username) == null){
+            throw new ResourceNotFoundException("Username not found");
+        }else{
+            if(postRepository.findById(postId) == null){
+                throw new ResourceNotFoundException("Post id not found");
+            }else {
+                Post deletePost = postRepository.findByIdAndPostOwner_userName(id, username);
+
+                postRepository.delete(deletePost);
+                    
+                return ResponseEntity.ok().build();
+            }
+        }
+    }  
+>>>>>>> 262ced3f0dcfa7dcfc980f448f530ca3508ef145
 }
+
