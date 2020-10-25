@@ -17,15 +17,15 @@ public class PhoBlockUser {
     @Column(nullable = false)
     String firstName;
     @Column(nullable = false)
-    String lastName;
+    String surname;
+    @Column(nullable = false)
+    String wallet;
     @Column(nullable = false)
     String emailAddress;
     @Column(nullable = false)
-    String userName;
-    @Column(nullable = false)
     String userPassword;
-    @Column(nullable = false)
-    String userBio;
+//    @Column(nullable = false)
+//    String userBio;
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
@@ -48,25 +48,25 @@ public class PhoBlockUser {
         return firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getWallet() {
+        return wallet;
     }
 
     public String getEmailAddress() {
         return emailAddress;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public String getUserPassword() {
         return userPassword;
     }
 
-    public String getUserBio() {
-        return userBio;
-    }
+//    public String getUserBio() {
+//        return userBio;
+//    }
 
     public Date getDateCreated() {
         return dateCreated;
@@ -96,25 +96,25 @@ public class PhoBlockUser {
         this.firstName = firstName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setWallet(String wallet) {
+        this.wallet = wallet;
     }
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
 
-    public void setUserBio(String userBio) {
-        this.userBio = userBio;
-    }
+//    public void setUserBio(String userBio) {
+//        this.userBio = userBio;
+//    }
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
@@ -148,18 +148,4 @@ public class PhoBlockUser {
         this.userPost.add(post);
     }
 
-    @Override
-    public String toString() {
-        return "PhoBlockUser{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userBio='" + userBio + '\'' +
-                ", dateCreated=" + dateCreated +
-                ", userPost=" + userPost +
-                '}';
-    }
 }

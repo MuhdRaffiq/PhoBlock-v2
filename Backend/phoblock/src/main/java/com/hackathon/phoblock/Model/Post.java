@@ -28,7 +28,7 @@ public class Post {
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
     @Column
-    String ownerUsername;
+    String ownerEmailAddress;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -65,8 +65,8 @@ public class Post {
         return dateCreated;
     }
 
-    public String getOwnerUsername() {
-        return ownerUsername;
+    public String getOwnerEmailAddress() {
+        return ownerEmailAddress;
     }
 
     public PhoBlockUser getPostOwner() {
@@ -105,8 +105,8 @@ public class Post {
         this.dateCreated = dateCreated;
     }
 
-    public void setOwnerUsername(String ownerUsername) {
-        this.ownerUsername = ownerUsername;
+    public void setOwnerEmailAddress(String ownerEmailAddress) {
+        this.ownerEmailAddress = ownerEmailAddress;
     }
 
     public void setPostOwner(PhoBlockUser postOwner) {

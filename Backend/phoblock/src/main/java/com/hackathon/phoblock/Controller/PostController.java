@@ -7,6 +7,7 @@ import com.hackathon.phoblock.Model.Post;
 import com.hackathon.phoblock.Repository.PhoBlockUserRepository;
 import com.hackathon.phoblock.Repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,40 +24,42 @@ public class PostController {
         return postRepository.findAll();
     }
 
-    @GetMapping("/users/{username}/posts")
-    public List<Post> getAllPostsByUsername(@PathVariable String username){
-        return postRepository.findByPostOwner_userName(username);
+    @GetMapping("/users/{email}/posts")
+    public List<Post> getAllPostsByEmail(@PathVariable String email){
+        return postRepository.findByPostOwner_EmailAddress(email);
     }
 
-    @PostMapping("/users/{username}/posts")
-    public Post createPostForUsername(@RequestBody Post post, @PathVariable String username)
+    @PostMapping("/users/{email}/posts")
+    public Post createPostForUsername(@RequestBody Post post, @PathVariable String email)
             throws ResourceNotFoundException {
-        if(phoBlockUserRepository.findByuserName(username) == null){
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(email);
+
+        if(retrievedUser == null){
             throw new ResourceNotFoundException("Username not found");
         }else{
-            PhoBlockUser user = phoBlockUserRepository.findByuserName(username);
 
-            user.addUserPost(post);
-            post.setPostOwner(user);
-            post.setOwnerUsername(username);
+            retrievedUser.addUserPost(post);
+            post.setPostOwner(retrievedUser);
+            post.setOwnerEmailAddress(email);
 
+            phoBlockUserRepository.save(retrievedUser);
             postRepository.save(post);
 
             return post;
         }
     }
 
-    @PutMapping("/users/{username}/posts/{postId}")
-    public Post updatePost(@PathVariable String username, @PathVariable Integer id, @RequestBody Post requestPost)
+    @PutMapping("/users/{email}/posts/{postId}")
+    public Post updatePost(@PathVariable String email, @PathVariable Integer id, @RequestBody Post requestPost)
             throws ResourceNotFoundException {
-        if(phoBlockUserRepository.findByuserName(username) == null){
+        if(phoBlockUserRepository.findByEmailAddress(email) == null){
             throw new ResourceNotFoundException("Username not found");
         }else{
             if(postRepository.findById(id) == null){
                 throw new ResourceNotFoundException("Post id not found");
             }
 
-            Post retrievedPost = postRepository.findByIdAndPostOwner_userName(id, username);
+            Post retrievedPost = postRepository.findByIdAndPostOwner_EmailAddress(id, email);
 
             retrievedPost.setPostCaption(requestPost.getPostCaption());
             retrievedPost.setPostTag(requestPost.getPostTag());
@@ -69,26 +72,22 @@ public class PostController {
         }
     }
 
-<<<<<<< HEAD
-
-=======
-    @DeleteMapping("/users/{username}/posts/{postId}")
-    public ResponseEntity<?> deletePost(@PathVariable String username, @PathVariable Integer postId)
+    @DeleteMapping("/users/{email}/posts/{postId}")
+    public ResponseEntity<?> deletePost(@PathVariable String email, @PathVariable Integer postId)
     throws ResourceNotFoundException {
-        if(phoBlockUserRepository.findByUserName(username) == null){
+        if(phoBlockUserRepository.findByEmailAddress(email) == null){
             throw new ResourceNotFoundException("Username not found");
         }else{
             if(postRepository.findById(postId) == null){
                 throw new ResourceNotFoundException("Post id not found");
             }else {
-                Post deletePost = postRepository.findByIdAndPostOwner_userName(id, username);
+                Post deletePost = postRepository.findByIdAndPostOwner_EmailAddress(postId, email);
 
                 postRepository.delete(deletePost);
                     
                 return ResponseEntity.ok().build();
             }
         }
-    }  
->>>>>>> 262ced3f0dcfa7dcfc980f448f530ca3508ef145
+    }
 }
 

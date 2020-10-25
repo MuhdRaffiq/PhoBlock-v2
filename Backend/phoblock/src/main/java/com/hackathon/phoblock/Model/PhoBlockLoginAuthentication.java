@@ -1,11 +1,11 @@
 package com.hackathon.phoblock.Model;
 
 public class PhoBlockLoginAuthentication {
-    private String username;
+    private String emailAddress;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     public String getPassword() {

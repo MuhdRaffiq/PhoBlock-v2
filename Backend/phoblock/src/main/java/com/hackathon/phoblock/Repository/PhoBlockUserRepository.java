@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PhoBlockUserRepository extends JpaRepository<PhoBlockUser, Long> {
-    PhoBlockUser findByuserName(String username);
+    PhoBlockUser findByEmailAddress(String emailAddress);
 }
