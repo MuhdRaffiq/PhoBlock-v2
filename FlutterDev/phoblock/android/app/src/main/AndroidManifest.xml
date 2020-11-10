@@ -2,7 +2,7 @@
     package="com.example.phoblock">
    <application
         android:label="phoblock"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/phoblock_branding10"> <!-- Original was "@mipmap/ic_launcher" -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
