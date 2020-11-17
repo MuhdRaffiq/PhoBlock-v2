@@ -25,8 +25,8 @@ it ('can transfer and receive token from chosen account', async() => {
     let balanceUser1Before = await instance.balanceOf(user1);
     await instance.approve(mainWallet, amountSend, {from: mainWallet});
     await instance.transferFrom(mainWallet, user1, amountSend);
-    let balanceMainAfter = balanceMainBefore - amountSend;
-    let balanceUser1After = balanceUser1Before + amountSend; 
+    let balanceMainAfter = Number(balanceMainBefore) - amountSend;
+    let balanceUser1After = Number(balanceUser1Before) + amountSend; 
     assert.equal(await instance.balanceOf(mainWallet), balanceMainAfter);
     assert.equal(await instance.balanceOf(user1), balanceUser1After);
 });
@@ -39,14 +39,15 @@ it ('the sender (requestor) able to send token to the chosen wallet', async() =>
     let balanceMainBefore = await instance.balanceOf(mainWallet);
     let balanceUser1Before = await instance.balanceOf(user1);
     await instance.transfer(user1, amountSend, {from: mainWallet}); 
-    let balanceMainAfter = balanceMainBefore - amountSend;
-    let balanceUser1After = balanceUser1Before + amountSend;
+    let balanceMainAfter = Number(balanceMainBefore) - amountSend;
+    let balanceUser1After = Number(balanceUser1Before) + amountSend;
     assert.equal(await instance.balanceOf(mainWallet), balanceMainAfter);
     assert.equal(await instance.balanceOf(user1), balanceUser1After);
 });
 
 it ('has the right total supply of tokens', async() => {
     let instance = await PhoToken.deployed();
-    let totalSupply = 1000000;
-    assert.equal(await instance.totalSupply.call(), totalSupply);
+    let totalSupply = "1" + "0".repeat(24);
+    let calledTotalSupply = await instance.totalSupply.call()
+    assert.equal(Number(calledTotalSupply), totalSupply);
 });

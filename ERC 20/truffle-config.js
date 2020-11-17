@@ -22,7 +22,7 @@
  const infuraKey = "62997446152c4169a3ac0ecd18bf89a4";
 //
 // const fs = require('fs');
- const mnemonic = "liquid sadness sock gorilla discover elite treat width noble rescue fossil emerge";
+ const mnemonic = "cross real right width lonely core tragic club ecology dry keep miss";
 
 module.exports = {
   /**
