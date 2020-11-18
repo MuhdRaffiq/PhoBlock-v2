@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/pages/homepage.dart';
+import 'package:phoblock/widgets/getData.dart';
+import 'package:phoblock/widgets/userData.dart';
 
 class LogIn_SignUp_Page extends StatefulWidget {
   @override
@@ -8,6 +11,10 @@ class LogIn_SignUp_Page extends StatefulWidget {
 class _LogIn_SignUp_PageState extends State<LogIn_SignUp_Page> {
   @override
   Widget build(BuildContext context) {
+    UserData x = UserData();
+    TextEditingController _userEmail = TextEditingController();
+    TextEditingController _password = TextEditingController();
+    bool loggedin = false;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -16,8 +23,12 @@ class _LogIn_SignUp_PageState extends State<LogIn_SignUp_Page> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Image.asset(
-                    "assets/Big Sur.jpg",
+                  Container(
+                    height: 250,
+                    child: Image.asset(
+                      "assets/Big Sur.jpg",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Text(
                       "Welcome to PhoBlock\nThe decentralized photography platform",
@@ -44,15 +55,18 @@ class _LogIn_SignUp_PageState extends State<LogIn_SignUp_Page> {
                         ),
                       ),
                       TextField(
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          labelText: 'username',
+                          labelText: 'Email Adress',
                         ),
+                        controller: _userEmail,
                       ),
                       TextField(
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'password',
                         ),
+                        controller: _password,
                       ),
                       SizedBox(
                         height: 8,
@@ -62,6 +76,24 @@ class _LogIn_SignUp_PageState extends State<LogIn_SignUp_Page> {
                         onPressed: () {
                           //TODO: check user name and password match in data.
                           print('Submit');
+                          print(_userEmail.text);
+                          print(_password.text);
+                          x.getCode().then((value) {
+                            var data = value;
+                            setState(() {
+                              for (int i = 0; i < data.length; i++) {
+                                if (data[i]['emailAddress'] ==
+                                        _userEmail.text &&
+                                    data[i]['userPassword'] == _password.text) {
+                                  loggedin = true;
+                                  Navigator.of(context).pushNamed('homepage');
+                                }
+                              }
+                              if (!loggedin) print("bad email/password");
+                            });
+                          });
+
+                          // Navigator.of(context).pushNamed('homepage');
                         },
                         child: Text(
                           'Submit',

@@ -1,8 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.phoblock">
+    <uses-permission android:name="android.permission.INTERNET"/>  <!-- added this line to grant app access to internet -->
    <application
         android:label="phoblock"
-        android:icon="@mipmap/phoblock_branding10"> <!-- Original was "@mipmap/ic_launcher" -->
+        android:icon="@mipmap/phoblock_branding10" 
+        android:usesCleartextTraffic="true"> <!-- Original in icon was "@mipmap/ic_launcher" 
+                                                   Oridinal last line did not exist-->
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
