@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'custom_outline_button.dart';
 import '../../style.dart';
 
-class LoginButton extends StatelessWidget {
+class SignupButton extends StatelessWidget {
   static const double _hPad = 40.0;
 
   @override
@@ -12,9 +12,9 @@ class LoginButton extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 5.0),
+          margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 0.2),
           child: CustomOutlineButton(
-            text: "Log in",
+            text: "Create Account",
             color: hexToColor('#64B6A9'),
             onPressed: () {},
           ),

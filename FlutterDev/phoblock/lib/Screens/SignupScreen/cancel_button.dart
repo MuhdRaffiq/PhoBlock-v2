@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'custom_outline_button.dart';
+import 'custom_outline_cancelbutton.dart';
 import '../../style.dart';
 
-class LoginButton extends StatelessWidget {
+class CancelButton extends StatelessWidget {
   static const double _hPad = 40.0;
 
   @override
@@ -13,9 +13,10 @@ class LoginButton extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 5.0),
-          child: CustomOutlineButton(
-            text: "Log in",
-            color: hexToColor('#64B6A9'),
+          child: CustomOutlineCancelButton(
+            text: "Cancel",
+            color: Colors.grey,
+            // color: hexToColor('#64B6A9'),
             onPressed: () {},
           ),
         )
