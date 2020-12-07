@@ -17,7 +17,7 @@ const SubtitleTextStyle = TextStyle(
 const AppBarTextStyle = TextStyle(
   fontFamily: AppbarFontNameDefault,
   fontWeight: FontWeight.w400,
-  fontSize: MediumTextSize,
+  fontSize: LargeTextSize,
   color: Colors.white,
 );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/app.dart';
 
 class NoAccount extends StatelessWidget {
   static const double _hPad = 40.0;
@@ -11,15 +12,30 @@ class NoAccount extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 20.0),
-          child: Text(
-            'No account? Sign up here',
-            style: TextStyle(
+          child: GestureDetector(
+            child: Text(
+              'No account? Sign up here',
+              style: TextStyle(
                 fontFamily: 'Lalezar',
                 fontWeight: FontWeight.w400,
-                color: Colors.black),
+                color: Colors.black,
+              ),
+            ),
+            onTap: () => _onNoAccountTap(context),
           ),
+          // child: Text(
+          //   'No account? Sign up here',
+          //   style: TextStyle(
+          //       fontFamily: 'Lalezar',
+          //       fontWeight: FontWeight.w400,
+          //       color: Colors.black),
+          // ),
         ),
       ],
     );
+  }
+
+  _onNoAccountTap(BuildContext context) {
+    Navigator.pushNamed(context, SignUpRoute);
   }
 }
