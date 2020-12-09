@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../style.dart';
 
-// ignore: must_be_immutable
-class HomeScreen extends StatelessWidget {
+class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Notifications'),
         backgroundColor: hexToColor('#64B6A9'),
       ),
     );

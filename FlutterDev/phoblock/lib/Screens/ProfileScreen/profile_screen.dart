@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'image_banner.dart';
-import 'post_follower_following_section.dart';
-import 'profile_gallery.dart';
-import 'username_text_section.dart';
+import 'EditProfileButton/edit_profile_button.dart';
+import 'ProfileHeader/page_divider.dart';
+import 'ProfileGallery/profile_gallery.dart';
+import 'ProfileHeader/profile_header.dart';
+import 'ProfileHeader/username_text_section.dart';
 import '../../style.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -17,11 +18,10 @@ class ProfileScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ImageBanner("assets/images/postmalone.jpg"),
-          UsernameTextSection('Post Malone'),
-          PostFollowerFollowingSection(),
-          ProfileGallery("assets/images/postmalone.jpg"),
-          ProfileGallery("assets/images/postmalone.jpg"),
+          ProfileHeader("assets/images/postmalone.jpg"),
+          UsernameTextSection('Post Malone', 'I am Post Malone'),
+          EditProfileButton(),
+          PageDivider(),
           ProfileGallery("assets/images/postmalone.jpg"),
         ],
       ),

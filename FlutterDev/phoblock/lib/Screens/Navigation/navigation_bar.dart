@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../DiscoverScreen/discover_screen.dart';
 import '../HomeScreen/home_screen.dart';
+import '../Notification/notification_screen.dart';
 import '../ProfileScreen/profile_screen.dart';
 import '../UploadPhotoScreen/upload_screen.dart';
 import '../../style.dart';
@@ -19,6 +20,7 @@ class _NavigationState extends State<NavigationBar> {
     HomeScreen(),
     DiscoverScreen(),
     UploadScreen(),
+    NotificationScreen(),
     ProfileScreen(),
   ];
 
@@ -50,6 +52,13 @@ class _NavigationState extends State<NavigationBar> {
           BottomNavigationBarItem(
             icon: new Icon(
               Icons.add_a_photo,
+              color: Colors.white,
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(
+              Icons.notifications_active,
               color: Colors.white,
             ),
             label: '',
