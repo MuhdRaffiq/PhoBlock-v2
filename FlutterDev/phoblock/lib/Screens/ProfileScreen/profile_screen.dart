@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'EditProfileButton/edit_profile_button.dart';
-import 'ProfileHeader/page_divider.dart';
-import 'ProfileGallery/profile_gallery.dart';
+import 'ButtonSections/buttons.dart';
+import 'ProfileBody/profile_body.dart';
 import 'ProfileHeader/profile_header.dart';
 import 'ProfileHeader/username_text_section.dart';
 import '../../style.dart';
@@ -20,9 +19,9 @@ class ProfileScreen extends StatelessWidget {
         children: [
           ProfileHeader("assets/images/postmalone.jpg"),
           UsernameTextSection('Post Malone', 'I am Post Malone'),
-          EditProfileButton(),
-          PageDivider(),
-          ProfileGallery("assets/images/postmalone.jpg"),
+          //VoteServiceButton(),
+          Buttons(),
+          ProfileBody(),
         ],
       ),
     );

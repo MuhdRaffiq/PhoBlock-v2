@@ -11,11 +11,7 @@ class ProfileHeader extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 10.0),
       child: Row(
-        //mainAxisAlignment: MainAxisAlignment.start,
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Column(
-          //   children: [
           Container(
             child: CircleAvatar(
               backgroundColor: Colors.black,
@@ -26,7 +22,6 @@ class ProfileHeader extends StatelessWidget {
               ),
             ),
           ),
-
           Container(
             margin: const EdgeInsets.fromLTRB(25.0, 0.0, 0.0, 0.0),
             child: Column(
@@ -50,7 +45,6 @@ class ProfileHeader extends StatelessWidget {
               ],
             ),
           ),
-
           Container(
             margin: const EdgeInsets.fromLTRB(25.0, 0.0, 0.0, 0.0),
             child: Column(
@@ -74,7 +68,6 @@ class ProfileHeader extends StatelessWidget {
               ],
             ),
           ),
-
           Container(
             margin: const EdgeInsets.fromLTRB(25.0, 0.0, 0.0, 0.0),
             child: Column(
@@ -100,47 +93,6 @@ class ProfileHeader extends StatelessWidget {
           ),
         ],
       ),
-      // child: Column(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   crossAxisAlignment: CrossAxisAlignment.stretch,
-      //   children: [
-      //     Row(
-      //       children: [
-      //         Container(
-      //           child: CircleAvatar(
-      //             backgroundColor: Colors.black,
-      //             radius: 71.0,
-      //             child: CircleAvatar(
-      //               radius: 70.0,
-      //               backgroundImage: AssetImage(_imagePath),
-      //             ),
-      //           ),
-      //         ),
-      //         Container(
-      //           child: Column(
-      //             //mainAxisAlignment: MainAxisAlignment.start,
-      //             //crossAxisAlignment: CrossAxisAlignment.center,
-      //             children: [
-      //               Text(
-      //                 'Post',
-      //                 style: TextStyle(
-      //                   fontFamily: 'Lalezar',
-      //                   fontWeight: FontWeight.bold,
-      //                 ),
-      //               ),
-      //               Text(
-      //                 '99',
-      //                 style: TextStyle(
-      //                   fontFamily: 'Lalezar',
-      //                 ),
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

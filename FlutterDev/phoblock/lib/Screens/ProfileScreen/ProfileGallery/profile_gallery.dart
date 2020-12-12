@@ -7,80 +7,146 @@ class ProfileGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
+      padding: EdgeInsets.zero,
       children: [
-        Center(
-          child: Wrap(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
+        Column(
+          children: [
+            Wrap(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
                   ),
                 ),
-                child: Image.asset(
-                  _imagePath,
-                  height: 140.0,
-                  width: 140.0,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
                   ),
                 ),
-                child: Image.asset(
-                  _imagePath,
-                  height: 140.0,
-                  width: 140.0,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
                   ),
                 ),
-                child: Image.asset(
-                  _imagePath,
-                  height: 140.0,
-                  width: 140.0,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
                   ),
                 ),
-                child: Image.asset(
-                  _imagePath,
-                  height: 140.0,
-                  width: 140.0,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
                   ),
                 ),
-                child: Image.asset(
-                  _imagePath,
-                  height: 140.0,
-                  width: 140.0,
-                  fit: BoxFit.fill,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-            ],
-          ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Image.asset(
+                    _imagePath,
+                    height: 140.0,
+                    width: 140.0,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );
