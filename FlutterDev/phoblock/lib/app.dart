@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Screens/EditProfileScreen/edit_profile.dart';
 import 'Screens/HomeScreen/home_screen.dart';
 import 'Screens/LoginScreen/login_signup_page.dart';
 import 'Screens/Navigation/navigation_bar.dart';
@@ -8,12 +9,13 @@ import 'style.dart';
 
 const SignInRoute = '/';
 const SignUpRoute = '/SignUp';
+const VoteServicesRoute = '/VoteAndServices';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: VoteServices(),
+      home: NavigationBar(),
       //onGenerateRoute: _routes(),
       //home: LoginSignupPage(),
       theme: ThemeData(
@@ -38,6 +40,9 @@ class App extends StatelessWidget {
           break;
         case SignUpRoute:
           screen = SignupScreen();
+          break;
+        case VoteServicesRoute:
+          screen = VoteServices();
           break;
         default:
           return null;
