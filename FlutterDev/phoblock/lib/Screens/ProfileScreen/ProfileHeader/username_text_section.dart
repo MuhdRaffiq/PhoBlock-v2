@@ -21,7 +21,7 @@ class UsernameTextSection extends StatelessWidget {
           ),
         ),
         Container(
-          margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 5.0),
+          margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 0.0),
           child: Text(
             _bioString,
             style: TextStyle(

@@ -3,6 +3,7 @@ import 'Screens/HomeScreen/home_screen.dart';
 import 'Screens/LoginScreen/login_signup_page.dart';
 import 'Screens/Navigation/navigation_bar.dart';
 import 'Screens/SignupScreen/signup_screen.dart';
+import 'Screens/VoteServices/vote_services.dart';
 import 'style.dart';
 
 const SignInRoute = '/';
@@ -12,14 +13,16 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: NavigationBar(),
+      home: VoteServices(),
       //onGenerateRoute: _routes(),
       //home: LoginSignupPage(),
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           textTheme: TextTheme(headline6: AppBarTextStyle),
         ),
-        textTheme: TextTheme(bodyText1: SubtitleTextStyle),
+        textTheme: TextTheme(
+          bodyText1: SubtitleTextStyle,
+        ),
       ),
     );
   }

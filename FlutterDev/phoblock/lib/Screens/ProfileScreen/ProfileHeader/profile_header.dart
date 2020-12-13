@@ -9,7 +9,7 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 10.0),
+      margin: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 0.0),
       child: Row(
         children: [
           Container(
