@@ -17,11 +17,15 @@ public class PhoBlockUserController {
 
     @PostMapping("/User")
     PhoBlockUser createUser(@RequestBody PhoBlockUser phoBlockUser) throws RegistrationFailedException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(phoBlockUser.getUserName());
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(phoBlockUser.getEmailAddress());
 
-        if(retrievedUser == null){
+        System.out.println();
+        System.out.println(retrievedUser);
+
+        if(retrievedUser != null){
             throw new RegistrationFailedException("Username has been taken. Please choose another username");
         }else{
+            //phoBlockUser.setAccountOwner(phoBlockUser);
             phoBlockUserRepository.save(phoBlockUser);
 
             return phoBlockUser;
@@ -35,21 +39,21 @@ public class PhoBlockUserController {
         return getAllUsers;
     }
 
-    @GetMapping("/User/{username}")
-    PhoBlockUser getUser(@PathVariable String username) throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
+    @GetMapping("/User/{email}")
+    PhoBlockUser getUser(@PathVariable String email) throws ResourceNotFoundException {
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(email);
 
         if(retrievedUser == null){
-            throw new ResourceNotFoundException("Username: " + username + " is not found");
-        }else{
-            return retrievedUser;
+            throw new ResourceNotFoundException("Email address: " + email + " is not found");
         }
+
+        return retrievedUser;
     }
 
     @PostMapping("/AuthenticateLogin")
     PhoBlockUser validateLogin(@RequestBody PhoBlockLoginAuthentication phoBlockLoginAuthentication)
             throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(phoBlockLoginAuthentication.getUsername());
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(phoBlockLoginAuthentication.getEmailAddress());
 
         if(retrievedUser == null){
             throw new ResourceNotFoundException("Invalid Username/Password");
@@ -61,29 +65,34 @@ public class PhoBlockUserController {
 
                 phoBlockUser.setId(retrievedUser.getId());
                 phoBlockUser.setFirstName(retrievedUser.getFirstName());
-                phoBlockUser.setLastName(retrievedUser.getLastName());
+                phoBlockUser.setSurname(retrievedUser.getSurname());
+                phoBlockUser.setWallet(retrievedUser.getWallet());
                 phoBlockUser.setEmailAddress(retrievedUser.getEmailAddress());
-                phoBlockUser.setUserName(retrievedUser.getUserName());
                 phoBlockUser.setUserPassword(null);
+//                phoBlockUser.setUserBio(retrievedUser.getUserBio());
+                //phoBlockUser.setAccountOwner(retrievedUser);
                 phoBlockUser.setDateCreated(retrievedUser.getDateCreated());
+                //phoBlockUser.setFollowers(retrievedUser.getFollowers());
+                //phoBlockUser.setFollowing(retrievedUser.getFollowing());
+                phoBlockUser.setUserPost(retrievedUser.getUserPost());
 
                 return phoBlockUser;
             }
         }
     }
 
-    @PutMapping("/User/{username}")
-    public PhoBlockUser updateUser(@RequestBody PhoBlockUser phoBlockUser, @PathVariable String username) throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
+    @PutMapping("/User/{email}")
+    public PhoBlockUser updateUser(@RequestBody PhoBlockUser phoBlockUser, @PathVariable String email) throws ResourceNotFoundException {
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(email);
 
         if(retrievedUser == null){
-            throw new ResourceNotFoundException("Username: " + username + " is not found");
+            throw new ResourceNotFoundException("Username: " + email + " is not found");
         }else{
             retrievedUser.setFirstName(phoBlockUser.getFirstName());
-            retrievedUser.setLastName(phoBlockUser.getLastName());
+            retrievedUser.setSurname(phoBlockUser.getSurname());
             retrievedUser.setEmailAddress(phoBlockUser.getEmailAddress());
-            retrievedUser.setUserName(phoBlockUser.getUserName());
-            retrievedUser.setUserPassword(phoBlockUser.getUserPassword());
+            retrievedUser.setWallet(phoBlockUser.getWallet());
+//            retrievedUser.setUserBio(phoBlockUser.getUserBio());
 
             phoBlockUserRepository.save(retrievedUser);
 
