@@ -17,26 +17,21 @@ public class PhoBlockUser {
     @Column(nullable = false)
     String firstName;
     @Column(nullable = false)
-    String surname;
-    @Column(nullable = false)
-    String wallet;
+    String lastName;
     @Column(nullable = false)
     String emailAddress;
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    Date birthDate;
+    @Column(nullable = false)
+    String userName;
+    @Column(nullable = false)
     String userPassword;
-//    @Column(nullable = false)
-//    String userBio;
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
-//    @ManyToOne
-//    @JoinColumn(name = "account_id")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    PhoBlockUser accountOwner;
-//    @OneToMany(mappedBy = "accountOwner")
-//    Set<PhoBlockUser> followers;
-//    @OneToMany(mappedBy = "accountOwner")
-//    Set<PhoBlockUser> following;
+    @Column
+    String bio;
     @OneToMany(mappedBy = "postOwner")
     Set<Post> userPost;
 
@@ -44,106 +39,85 @@ public class PhoBlockUser {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getWallet() {
-        return wallet;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-//    public String getUserBio() {
-//        return userBio;
-//    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-//    public PhoBlockUser getAccountOwner() {
-//        return accountOwner;
-//    }
-//
-//    public Set<PhoBlockUser> getFollowers() {
-//        return followers;
-//    }
-//
-//    public Set<PhoBlockUser> getFollowing() {
-//        return following;
-//    }
-
-    public Set<Post> getUserPost() {
-        return userPost;
-    }
-
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setWallet(String wallet) {
-        this.wallet = wallet;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
 
-//    public void setUserBio(String userBio) {
-//        this.userBio = userBio;
-//    }
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-//    public void setAccountOwner(PhoBlockUser accountOwner) {
-//        this.accountOwner = accountOwner;
-//    }
-//
-//    public void setFollowers(Set<PhoBlockUser> followers) {
-//        this.followers = followers;
-//    }
-//
-//    public void addFollowers(PhoBlockUser user){
-//        this.followers.add(user);
-//    }
-//
-//    public void setFollowing(Set<PhoBlockUser> following) {
-//        this.following = following;
-//    }
-//
-//    public void addFollowing(PhoBlockUser user){
-//        this.following.add(user);
-//    }
+    public Set<Post> getUserPost() {
+        return userPost;
+    }
 
     public void setUserPost(Set<Post> userPost) {
         this.userPost = userPost;
     }
 
+    /*
+    * Helper function to add a Post to a User
+    * */
     public void addUserPost(Post post){
         this.userPost.add(post);
     }

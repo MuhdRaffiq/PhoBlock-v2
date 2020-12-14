@@ -19,8 +19,6 @@ public class Post {
     String postCaption;
     @Column(nullable = false)
     String postTag;
-    @Column(nullable = false)
-    String postTheme;
     @Column (nullable = false)
     Integer numberDownload;
     @Column (nullable = false)
@@ -28,7 +26,7 @@ public class Post {
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
     @Column
-    String ownerEmailAddress;
+    String ownerUsername;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -41,83 +39,71 @@ public class Post {
         return id;
     }
 
-    public String getPostCaption() {
-        return postCaption;
-    }
-
-    public String getPostTag() {
-        return postTag;
-    }
-
-    public String getPostTheme() {
-        return postTheme;
-    }
-
-    public Integer getNumberDownload() {
-        return numberDownload;
-    }
-
-    public Integer getNumberFavorite() {
-        return numberFavorite;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public String getOwnerEmailAddress() {
-        return ownerEmailAddress;
-    }
-
-    public PhoBlockUser getPostOwner() {
-        return postOwner;
-    }
-
-    public Set<Image> getPostPictures() {
-        return postPictures;
-    }
-
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPostCaption() {
+        return postCaption;
     }
 
     public void setPostCaption(String postCaption) {
         this.postCaption = postCaption;
     }
 
+    public String getPostTag() {
+        return postTag;
+    }
+
     public void setPostTag(String postTag) {
         this.postTag = postTag;
     }
 
-    public void setPostTheme(String postTheme) {
-        this.postTheme = postTheme;
+    public Integer getNumberDownload() {
+        return numberDownload;
     }
 
     public void setNumberDownload(Integer numberDownload) {
         this.numberDownload = numberDownload;
     }
 
+    public Integer getNumberFavorite() {
+        return numberFavorite;
+    }
+
     public void setNumberFavorite(Integer numberFavorite) {
         this.numberFavorite = numberFavorite;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public void setOwnerEmailAddress(String ownerEmailAddress) {
-        this.ownerEmailAddress = ownerEmailAddress;
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
+    public PhoBlockUser getPostOwner() {
+        return postOwner;
     }
 
     public void setPostOwner(PhoBlockUser postOwner) {
         this.postOwner = postOwner;
     }
 
-    public void setPostPictures(Set<Image> postPictures) {
-        this.postPictures = postPictures;
+    public Set<Image> getPostPictures() {
+        return postPictures;
     }
 
-    public void addPicture(Image picture){
-        this.postPictures.add(picture);
+    public void setPostPictures(Set<Image> postPictures) {
+        this.postPictures = postPictures;
     }
 }
