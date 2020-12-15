@@ -26,8 +26,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<ExceptionResponse> resourceNotFoundException(ResourceNotFoundException ex,
                                                                              WebRequest request){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-                request.getDescription(false), HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
+                request.getDescription(false), HttpStatus.NOT_FOUND.getReasonPhrase());
 
-        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OnSuccessException.class)
+    public final ResponseEntity<ExceptionResponse> onSuccessException(OnSuccessException ex, WebRequest request){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+                request.getDescription(false), HttpStatus.OK.getReasonPhrase());
+
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.OK);
     }
 }

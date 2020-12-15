@@ -34,6 +34,14 @@ public class PhoBlockUser {
     String bio;
     @OneToMany(mappedBy = "postOwner")
     Set<Post> userPost;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userImage")
+    Image userDefaultPicture;
+    @OneToMany(mappedBy = "userFollower")
+    Set<Follower> followers;
+    @OneToMany(mappedBy = "userFollowing")
+    Set<Following> followings;
+    @OneToMany(mappedBy = "userFavorites")
+    Set<Post> userFavorites;
 
     public Integer getId() {
         return id;
@@ -122,4 +130,53 @@ public class PhoBlockUser {
         this.userPost.add(post);
     }
 
+    public Image getUserDefaultPicture() {
+        return userDefaultPicture;
+    }
+
+    public void setUserDefaultPicture(Image userDefaultPicture) {
+        this.userDefaultPicture = userDefaultPicture;
+    }
+
+    public Set<Follower> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<Follower> followers) {
+        this.followers = followers;
+    }
+
+    /*
+    * Helper function to add follower
+    * */
+    public void addFollower(Follower follower){
+        this.followers.add(follower);
+    }
+
+    public Set<Following> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(Set<Following> followings) {
+        this.followings = followings;
+    }
+
+    /*
+     * Helper function to add following
+     * */
+    public void addFollowing(Following following){
+        this.followings.add(following);
+    }
+
+    public Set<Post> getUserFavorites() {
+        return userFavorites;
+    }
+
+    public void setUserFavorites(Set<Post> userFavorites) {
+        this.userFavorites = userFavorites;
+    }
+
+    public void addUserFavorites(Post userFavorite){
+        this.userFavorites.add(userFavorite);
+    }
 }

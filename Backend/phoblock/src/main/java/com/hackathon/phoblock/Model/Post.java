@@ -32,8 +32,13 @@ public class Post {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     PhoBlockUser postOwner;
-    @OneToMany(mappedBy = "picturePost")
-    Set<Image> postPictures;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "imagePost")
+    Image postPicture;
+    @ManyToOne
+    @JoinColumn(name = "user_fav_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    PhoBlockUser userFavorites;
 
     public Integer getId() {
         return id;
@@ -99,11 +104,19 @@ public class Post {
         this.postOwner = postOwner;
     }
 
-    public Set<Image> getPostPictures() {
-        return postPictures;
+    public Image getPostPicture() {
+        return postPicture;
     }
 
-    public void setPostPictures(Set<Image> postPictures) {
-        this.postPictures = postPictures;
+    public void setPostPicture(Image postPicture) {
+        this.postPicture = postPicture;
+    }
+
+    public PhoBlockUser getUserFavorites() {
+        return userFavorites;
+    }
+
+    public void setUserFavorites(PhoBlockUser userFavorites) {
+        this.userFavorites = userFavorites;
     }
 }
