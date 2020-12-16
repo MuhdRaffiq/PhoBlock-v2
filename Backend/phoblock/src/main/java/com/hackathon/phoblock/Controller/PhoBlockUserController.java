@@ -24,28 +24,20 @@ public class PhoBlockUserController {
     @Autowired
     PostRepository postRepository;
 
-    static class FollowerSortByDate implements Comparator<Follower> {
+    static class PostSortByDate implements Comparator<Post> {
         @Override
-        public int compare(Follower follower1, Follower follower2){
-            return follower1.getFollowedDate().compareTo(follower2.getFollowedDate());
+        public int compare(Post post1, Post post2){
+            return post1.getDateCreated().compareTo(post2.getDateCreated());
         }
     }
 
-    static class FollowingSortByDate implements Comparator<Following> {
-        @Override
-        public int compare(Following following1, Following following2){
-            return following1.getFollowingDate().compareTo(following2.getFollowingDate());
-        }
-    }
-
-    @PostMapping("/Users/User")
+    @PostMapping("/Users/NewUser")
     PhoBlockUser createUser(@RequestBody PhoBlockUser phoBlockUser) throws RegistrationFailedException {
         PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(phoBlockUser.getEmailAddress());
 
         if(retrievedUser != null){
             throw new RegistrationFailedException("Username has been taken. Please choose another username");
         }else{
-
             phoBlockUserRepository.save(phoBlockUser);
 
             return phoBlockUser;
@@ -95,7 +87,6 @@ public class PhoBlockUserController {
         if(retrievedUser == null){
             throw new ResourceNotFoundException("Username not found!");
         }else{
-
             retrievedUser.setFirstName(phoBlockUser.getFirstName());
             retrievedUser.setLastName(phoBlockUser.getLastName());
             retrievedUser.setUserName(phoBlockUser.getUserName());
@@ -122,36 +113,6 @@ public class PhoBlockUserController {
 
             return retrievedUser;
         }
-    }
-
-    @GetMapping("/Users/User/{username}/Followers")
-    List<Follower> getUserFollowers(@PathVariable String username){
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
-
-        List<Follower> followers = new ArrayList<>();
-
-        for(Follower follower: retrievedUser.getFollowers()){
-            followers.add(follower);
-        }
-
-        Collections.sort(followers, new PhoBlockUserController.FollowerSortByDate());
-
-        return followers;
-    }
-
-    @GetMapping("/Users/User/{username}/Followings")
-    List<Following> getUserFollowings(@PathVariable String username){
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
-
-        List<Following> followings = new ArrayList<>();
-
-        for(Following following: retrievedUser.getFollowings()){
-            followings.add(following);
-        }
-
-        Collections.sort(followings, new PhoBlockUserController.FollowingSortByDate());
-
-        return followings;
     }
 
     @PostMapping("/Users/User/{username}/Follow/{followingUsername}")
@@ -310,6 +271,29 @@ public class PhoBlockUserController {
             phoBlockUserRepository.delete(retrievedUser);
 
             return ResponseEntity.ok().build();
+        }
+    }
+
+    @GetMapping("/Users/User/{username}/Feed")
+    List<Post> userFeed(@PathVariable String username) throws ResourceNotFoundException {
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
+
+        if(retrievedUser == null){
+            throw new ResourceNotFoundException("Username not found!");
+        }else{
+            List<Post> allFollowingPost = new ArrayList<>();
+
+            for(Following following: retrievedUser.getFollowings()){
+                PhoBlockUser getFollowingUser = phoBlockUserRepository.findByUserName(following.getUsername());
+
+                Set<Post> followingPosts = getFollowingUser.getUserPost();
+
+                allFollowingPost.addAll(new ArrayList<Post>(followingPosts));
+            }
+
+            Collections.sort(allFollowingPost, new PhoBlockUserController.PostSortByDate());
+
+            return allFollowingPost;
         }
     }
 
