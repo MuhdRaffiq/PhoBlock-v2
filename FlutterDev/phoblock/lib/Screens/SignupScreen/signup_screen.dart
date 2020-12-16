@@ -11,7 +11,26 @@ import 'signup_button.dart';
 import 'usrname_textbox.dart';
 import '../../style.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
+  @override
+  _SignupScreen createState() => _SignupScreen();
+}
+
+class _SignupScreen extends State<SignupScreen> {
+  final firstNameTextController = TextEditingController();
+  final lastNameTextController = TextEditingController();
+  final emailTextController = TextEditingController();
+  final dobTextController = TextEditingController();
+  final usernameTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+  final confirmPwdTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    firstNameTextController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +43,20 @@ class SignupScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           HeaderText("Create your account"),
-          FirstNameTextBox(),
-          LastNameTextBox(),
-          EmailTextBox(),
-          DOBTextBox(),
-          UsernameTextBox(),
-          PasswordTextBox(),
-          ConfirmPasswTextBox(),
-          SignupButton(),
+          FirstNameTextBox(firstNameTextController),
+          LastNameTextBox(lastNameTextController),
+          EmailTextBox(emailTextController),
+          DOBTextBox(dobTextController),
+          UsernameTextBox(usernameTextController),
+          PasswordTextBox(passwordTextController),
+          ConfirmPasswTextBox(confirmPwdTextController),
+          SignupButton(
+              firstNameTextController,
+              lastNameTextController,
+              emailTextController,
+              dobTextController,
+              usernameTextController,
+              passwordTextController),
           CancelButton(),
         ],
       ),

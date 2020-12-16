@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 
 class FirstNameTextBox extends StatelessWidget {
+  final textController;
   static const double _hPad = 40.0;
+
+  FirstNameTextBox(this.textController);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      //padding: EdgeInsets.all(30.0),
       children: [
-        //new Padding(padding: EdgeInsets.all(20.0)),
         Container(
           margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 5.0),
-          child: TextField(
+          child: TextFormField(
             keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.words,
+            controller: textController,
+            validator: (name) {
+              if (name.isEmpty) {
+                return 'Invalid Username';
+              } else {
+                return null;
+              }
+            },
             decoration: new InputDecoration(
               //labelText: 'Email Adress',
               border: new OutlineInputBorder(
