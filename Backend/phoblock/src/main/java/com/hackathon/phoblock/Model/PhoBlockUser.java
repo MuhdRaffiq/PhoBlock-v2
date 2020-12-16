@@ -36,9 +36,9 @@ public class PhoBlockUser {
     Set<Post> userPost;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userImage")
     Image userDefaultPicture;
-    @OneToMany(mappedBy = "userFollower")
+    @OneToMany(mappedBy = "following")
     Set<Follower> followers;
-    @OneToMany(mappedBy = "userFollowing")
+    @OneToMany(mappedBy = "follower")
     Set<Following> followings;
     @OneToMany(mappedBy = "userFavorites")
     Set<Post> userFavorites;

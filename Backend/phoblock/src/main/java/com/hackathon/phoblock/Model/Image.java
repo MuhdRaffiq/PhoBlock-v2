@@ -35,7 +35,7 @@ public class Image {
     @JsonIgnore
     Follower followerImage;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_id", referencedColumnName = "id")
+    @JoinColumn(name = "following_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Following followingImage;
