@@ -25,9 +25,23 @@ class _SignupScreen extends State<SignupScreen> {
   final passwordTextController = TextEditingController();
   final confirmPwdTextController = TextEditingController();
 
+  final firstNameFormKey = GlobalKey<FormState>();
+  final lastNameFormKey = GlobalKey<FormState>();
+  final emailFormKey = GlobalKey<FormState>();
+  final dobFormKey = GlobalKey<FormState>();
+  final usernameFormKey = GlobalKey<FormState>();
+  final pwdFormKey = GlobalKey<FormState>();
+  final cfmPwdFormKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     firstNameTextController.dispose();
+    lastNameTextController.dispose();
+    emailTextController.dispose();
+    dobTextController.dispose();
+    usernameTextController.dispose();
+    passwordTextController.dispose();
+    confirmPwdTextController.dispose();
     super.dispose();
   }
 
@@ -43,20 +57,27 @@ class _SignupScreen extends State<SignupScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           HeaderText("Create your account"),
-          FirstNameTextBox(firstNameTextController),
-          LastNameTextBox(lastNameTextController),
-          EmailTextBox(emailTextController),
-          DOBTextBox(dobTextController),
+          FirstNameTextBox(firstNameTextController, firstNameFormKey),
+          LastNameTextBox(lastNameTextController, lastNameFormKey),
+          EmailTextBox(emailTextController, emailFormKey),
+          DOBTextBox(dobTextController, dobFormKey),
           UsernameTextBox(usernameTextController),
-          PasswordTextBox(passwordTextController),
-          ConfirmPasswTextBox(confirmPwdTextController),
+          PasswordTextBox(passwordTextController, pwdFormKey),
+          ConfirmPasswTextBox(
+              confirmPwdTextController, passwordTextController, cfmPwdFormKey),
           SignupButton(
               firstNameTextController,
+              firstNameFormKey,
               lastNameTextController,
+              lastNameFormKey,
               emailTextController,
+              emailFormKey,
               dobTextController,
+              dobFormKey,
               usernameTextController,
-              passwordTextController),
+              passwordTextController,
+              pwdFormKey,
+              cfmPwdFormKey),
           CancelButton(),
         ],
       ),

@@ -14,15 +14,28 @@ class SignupButton extends StatelessWidget {
   final dobController;
   final usernameController;
   final passwController;
+
+  final firstNameFormKey;
+  final lastNameFormKey;
+  final emailFormKey;
+  final dobFormKey;
+  final pwdFormKey;
+  final cfmPwdFormKey;
   static const double _hPad = 40.0;
 
   SignupButton(
     this.firstNameController,
+    this.firstNameFormKey,
     this.lastNameController,
+    this.lastNameFormKey,
     this.emailController,
+    this.emailFormKey,
     this.dobController,
+    this.dobFormKey,
     this.usernameController,
     this.passwController,
+    this.pwdFormKey,
+    this.cfmPwdFormKey,
   );
 
   @override
@@ -37,34 +50,58 @@ class SignupButton extends StatelessWidget {
             text: "Create Account",
             color: hexToColor('#64B6A9'),
             onPressed: () {
-              createUser(
-                      firstNameController.text,
-                      lastNameController.text,
-                      emailController.text,
-                      dobController.text,
-                      usernameController.text,
-                      passwController.text)
-                  .then((response) {
-                if (response.statusCode == 200) {
-                  return Fluttertoast.showToast(
-                    msg: 'Account Registered',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIos: 1,
-                    backgroundColor: hexToColor('#64B6A9'),
-                    textColor: Colors.white,
-                  );
-                } else {
-                  return Fluttertoast.showToast(
-                    msg: 'Registration Failed',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIos: 1,
-                    backgroundColor: Colors.redAccent,
-                    textColor: Colors.white,
-                  );
-                }
-              });
+              bool firstName = firstNameFormKey.currentState.validate();
+              bool lastName = lastNameFormKey.currentState.validate();
+              bool email = emailFormKey.currentState.validate();
+              bool dob = dobFormKey.currentState.validate();
+              bool pwd = pwdFormKey.currentState.validate();
+              bool cfmPwd = cfmPwdFormKey.currentState.validate();
+
+              String firstNameStr = firstNameController.text;
+              String lastNameStr = lastNameController.text;
+              String emailStr = emailController.text;
+              String dobStr = dobController.text;
+              String usrnameStr = usernameController.text;
+              String pwdStr = passwController.text;
+
+              if (firstName && lastName && email && dob && pwd && cfmPwd) {
+                createUser(firstNameStr, lastNameStr, emailStr, dobStr,
+                        usrnameStr, pwdStr)
+                    .then((response) {
+                  //print(jsonDecode(response.body)["detailMessage"]);
+                  if (response.statusCode == 200) {
+                    return Fluttertoast.showToast(
+                      msg: 'Account Has Successfully Registered',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 1,
+                      backgroundColor: hexToColor('#64B6A9'),
+                      textColor: Colors.white,
+                      fontSize: 14.0,
+                    );
+                  } else if (response.statusCode == 406) {
+                    return Fluttertoast.showToast(
+                      msg: jsonDecode(response.body)["detailMessage"],
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 3,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 14.0,
+                    );
+                  } else {
+                    return Fluttertoast.showToast(
+                      msg: 'Registration Failed',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 14.0,
+                    );
+                  }
+                });
+              }
             },
           ),
         )
@@ -83,15 +120,19 @@ class SignupButton extends StatelessWidget {
     var formatter = new DateFormat('yyyy-MM-dd');
     String formattedDate = formatter.format(now);
 
+    String trimmedFirstName = firstName.trim();
+    String trimmedLastName = lastName.trim();
+    String trimmedEmail = emailAddress.trim();
+
     final http.Response response =
         await http.post('http://127.0.0.1:8080/Users/NewUser',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
             body: jsonEncode(<String, String>{
-              'firstName': firstName,
-              'lastName': lastName,
-              'emailAddress': emailAddress,
+              'firstName': trimmedFirstName,
+              'lastName': trimmedLastName,
+              'emailAddress': trimmedEmail,
               'birthDate': birthdate,
               'userName': userName,
               'userPassword': userPassword,
