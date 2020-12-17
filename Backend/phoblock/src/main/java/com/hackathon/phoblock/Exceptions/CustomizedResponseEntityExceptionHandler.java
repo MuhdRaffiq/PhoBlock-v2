@@ -38,4 +38,12 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.OK);
     }
+
+    @ExceptionHandler(NotAcceptableException.class)
+    public final ResponseEntity<ExceptionResponse> notAcceptableException(NotAcceptableException ex, WebRequest request){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+                request.getDescription(false), HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
+
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_ACCEPTABLE);
+    }
 }

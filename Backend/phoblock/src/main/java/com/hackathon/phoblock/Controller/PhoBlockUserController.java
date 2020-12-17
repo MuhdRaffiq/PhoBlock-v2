@@ -36,8 +36,12 @@ public class PhoBlockUserController {
         PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(phoBlockUser.getEmailAddress());
 
         if(retrievedUser != null){
-            throw new RegistrationFailedException("Username has been taken. Please choose another username");
+            throw new RegistrationFailedException("Account has been created with the provided email");
         }else{
+            if(phoBlockUserRepository.findByUserName(phoBlockUser.getUserName()) != null){
+                throw new RegistrationFailedException("Username is taken. Please try a different username");
+            }
+
             phoBlockUserRepository.save(phoBlockUser);
 
             return phoBlockUser;
