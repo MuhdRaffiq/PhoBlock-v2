@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ftoast/ftoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'custom_outline_button.dart';
@@ -68,36 +68,35 @@ class SignupButton extends StatelessWidget {
                 createUser(firstNameStr, lastNameStr, emailStr, dobStr,
                         usrnameStr, pwdStr)
                     .then((response) {
-                  //print(jsonDecode(response.body)["detailMessage"]);
                   if (response.statusCode == 200) {
-                    return Fluttertoast.showToast(
-                      msg: 'Account Has Successfully Registered',
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIos: 1,
-                      backgroundColor: hexToColor('#64B6A9'),
-                      textColor: Colors.white,
-                      fontSize: 14.0,
+                    FToast.toast(
+                      context,
+                      toast: _showToast(
+                        context,
+                        'Your Account is Successfully Registered',
+                        hexToColor('#00c16a'), //hexToColor('#64B6A9'),
+                        false,
+                      ),
                     );
                   } else if (response.statusCode == 406) {
-                    return Fluttertoast.showToast(
-                      msg: jsonDecode(response.body)["detailMessage"],
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIos: 3,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 14.0,
+                    FToast.toast(
+                      context,
+                      toast: _showToast(
+                        context,
+                        jsonDecode(response.body)["detailMessage"],
+                        Colors.red,
+                        true,
+                      ),
                     );
                   } else {
-                    return Fluttertoast.showToast(
-                      msg: 'Registration Failed',
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIos: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 14.0,
+                    FToast.toast(
+                      context,
+                      toast: _showToast(
+                        context,
+                        'Server Failed',
+                        Colors.red,
+                        true,
+                      ),
                     );
                   }
                 });
@@ -140,5 +139,92 @@ class SignupButton extends StatelessWidget {
             }));
 
     return response;
+  }
+
+  Widget _showToast(
+      BuildContext buildContext, String text, Color color, bool isFailed) {
+    Widget toast;
+
+    if (isFailed == true) {
+      toast = Expanded(
+        child: Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 35.0),
+            width: MediaQuery.of(buildContext).size.width - 80,
+            padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 0.2, color: Colors.black),
+                bottom: BorderSide(width: 0.2, color: Colors.black),
+                left: BorderSide(width: 0.2, color: Colors.black),
+                right: BorderSide(width: 0.2, color: Colors.black),
+              ),
+              borderRadius: BorderRadius.circular(5.0),
+              color: color,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.block_outlined,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      toast = Expanded(
+        child: Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 35.0),
+            width: MediaQuery.of(buildContext).size.width - 80,
+            padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 0.2, color: Colors.black),
+                bottom: BorderSide(width: 0.2, color: Colors.black),
+                left: BorderSide(width: 0.2, color: Colors.black),
+                right: BorderSide(width: 0.2, color: Colors.black),
+              ),
+              borderRadius: BorderRadius.circular(5.0),
+              color: color,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return toast;
   }
 }
