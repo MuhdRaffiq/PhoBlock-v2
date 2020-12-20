@@ -7,6 +7,7 @@ import 'Screens/SignupScreen/signup_screen.dart';
 import 'Screens/VoteServices/vote_services.dart';
 import 'style.dart';
 
+const AfterLoginRoute = '/Home';
 const SignInRoute = '/';
 const SignUpRoute = '/SignUp';
 const VoteServicesRoute = '/VoteAndServices';
@@ -43,6 +44,9 @@ class App extends StatelessWidget {
           break;
         case VoteServicesRoute:
           screen = VoteServices();
+          break;
+        case AfterLoginRoute:
+          screen = NavigationBar();
           break;
         default:
           return null;

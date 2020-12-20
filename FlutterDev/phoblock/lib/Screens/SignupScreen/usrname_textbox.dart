@@ -16,7 +16,6 @@ class UsernameTextBox extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 5.0),
           child: TextFormField(
             keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.words,
             controller: textController,
             decoration: new InputDecoration(
               border: new OutlineInputBorder(

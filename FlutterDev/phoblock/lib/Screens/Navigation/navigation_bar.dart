@@ -3,7 +3,7 @@ import '../DiscoverScreen/discover_screen.dart';
 import '../HomeScreen/home_screen.dart';
 import '../Notification/notification_screen.dart';
 import '../ProfileScreen/profile_screen.dart';
-import '../UploadPhotoScreen/upload_screen.dart';
+import '../UploadPhotoScreen/camera_screen.dart';
 import '../../style.dart';
 
 class NavigationBar extends StatefulWidget {
@@ -19,7 +19,7 @@ class _NavigationState extends State<NavigationBar> {
   final List<Widget> _children = [
     HomeScreen(),
     DiscoverScreen(),
-    UploadScreen(),
+    CameraScreen(), //UploadScreen(),
     NotificationScreen(),
     ProfileScreen(),
   ];
@@ -76,9 +76,21 @@ class _NavigationState extends State<NavigationBar> {
   }
 
   _onTapTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if (index == 2) {
+      setState(() {
+        _currentIndex = 0;
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CameraScreen(),
+        ),
+      );
+    } else {
+      setState(() {
+        _currentIndex = index;
+      });
+    }
     //_currentIndex = index;
   }
 }

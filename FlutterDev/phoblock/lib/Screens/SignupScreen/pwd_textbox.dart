@@ -18,8 +18,8 @@ class PasswordTextBox extends StatelessWidget {
           Container(
             margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 5.0),
             child: TextFormField(
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.words,
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
               controller: textController,
               validator: (value) {
                 if (value.length < 8) {

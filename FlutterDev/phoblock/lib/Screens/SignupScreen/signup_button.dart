@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -78,6 +79,10 @@ class SignupButton extends StatelessWidget {
                         false,
                       ),
                     );
+
+                    Timer(Duration(seconds: 1), () {
+                      Navigator.pop(context);
+                    });
                   } else if (response.statusCode == 406) {
                     FToast.toast(
                       context,
