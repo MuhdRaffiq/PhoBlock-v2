@@ -39,7 +39,7 @@ public class PhoBlockUserController {
             throw new RegistrationFailedException("Email has been used previously");
         }else{
             if(phoBlockUserRepository.findByUserName(phoBlockUser.getUserName()) != null){
-                throw new RegistrationFailedException("Username is taken. Please try a different username");
+                throw new RegistrationFailedException("Username is taken. Try a different username");
             }
 
             phoBlockUserRepository.save(phoBlockUser);
@@ -74,13 +74,24 @@ public class PhoBlockUserController {
                 phoBlockUserRepository.findByUserName(loginCredentials.getEmailAddress()) == null){
             throw new ResourceNotFoundException("Invalid Username/Password");
         }else{
-            PhoBlockUser retrievedUser = phoBlockUserRepository.findByEmailAddress(loginCredentials.getEmailAddress());
+            PhoBlockUser retrievedUserByEmail = phoBlockUserRepository.findByEmailAddress(loginCredentials.getEmailAddress());
+            PhoBlockUser retrievedUserByUsername = phoBlockUserRepository.findByUserName(loginCredentials.getEmailAddress());
 
-            if(!retrievedUser.getUserPassword().equals(loginCredentials.getPassword())){
-                throw new ResourceNotFoundException("Invalid Username/Password");
+            if(retrievedUserByEmail != null && retrievedUserByUsername == null){
+                if(!retrievedUserByEmail.getUserPassword().equals(loginCredentials.getPassword())){
+                    throw new ResourceNotFoundException("Invalid Username/Password");
+                }
+
+                throw new OnSuccessException("Logging in as " + retrievedUserByEmail.getUserName());
+            }else{
+                if(!retrievedUserByUsername.getUserPassword().equals(loginCredentials.getPassword())){
+                    throw new ResourceNotFoundException("Invalid Username/Password");
+                }
+
+                throw new OnSuccessException("Logging in as " + retrievedUserByUsername.getUserName());
             }
 
-            throw new OnSuccessException("Login Success!");
+
         }
     }
 
