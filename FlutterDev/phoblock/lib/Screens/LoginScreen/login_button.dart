@@ -41,9 +41,14 @@ class LoginButton extends StatelessWidget {
                     ),
                   );
 
+                  String trimmedLoginString = loginString.trim();
+
                   Timer(Duration(seconds: 1), () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        AfterLoginRoute, (Route<dynamic> route) => false);
+                      AfterLoginRoute,
+                      (Route<dynamic> route) => false,
+                      arguments: {"loginUsrname": trimmedLoginString},
+                    );
                   });
                 } else if (response.statusCode == 404) {
                   FToast.toast(

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 class CaptionTextBox extends StatelessWidget {
   //static const double _hPad = 40.0;
+  final textController;
+
+  CaptionTextBox(this.textController);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
       child: TextFormField(
+        controller: textController,
         keyboardType: TextInputType.multiline,
         minLines: 1,
         maxLines: 2,

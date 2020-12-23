@@ -7,6 +7,10 @@ import '../UploadPhotoScreen/camera_screen.dart';
 import '../../style.dart';
 
 class NavigationBar extends StatefulWidget {
+  final String usernameLoggedIn;
+
+  NavigationBar({this.usernameLoggedIn});
+
   @override
   State<StatefulWidget> createState() {
     return _NavigationState();
@@ -16,6 +20,8 @@ class NavigationBar extends StatefulWidget {
 // ignore: must_be_immutable
 class _NavigationState extends State<NavigationBar> {
   int _currentIndex = 0;
+  //String usernameLoggedIn = widget.usernameLoggedIn;
+
   final List<Widget> _children = [
     HomeScreen(),
     DiscoverScreen(),
@@ -83,7 +89,8 @@ class _NavigationState extends State<NavigationBar> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CameraScreen(),
+          builder: (context) =>
+              CameraScreen(usernameLoggedIn: widget.usernameLoggedIn),
         ),
       );
     } else {

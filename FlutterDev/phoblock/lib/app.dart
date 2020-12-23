@@ -46,7 +46,9 @@ class App extends StatelessWidget {
           screen = VoteServices();
           break;
         case AfterLoginRoute:
-          screen = NavigationBar();
+          screen = NavigationBar(
+            usernameLoggedIn: arguments['loginUsrname'],
+          );
           break;
         default:
           return null;

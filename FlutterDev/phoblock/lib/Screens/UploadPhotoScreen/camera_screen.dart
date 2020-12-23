@@ -13,6 +13,10 @@ import 'Gallery/gallery_screen.dart';
 import '../../style.dart';
 
 class CameraScreen extends StatefulWidget {
+  final String usernameLoggedIn;
+
+  CameraScreen({this.usernameLoggedIn});
+
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
@@ -22,22 +26,16 @@ class _CameraScreenState extends State<CameraScreen> {
   List cameras;
   int selectedCameraIndex;
   String imgPath;
-  File _image;
 
   Future<void> getImage(context) async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    // setState(() {
-    //   _image = image;
-    // });
-    //if (_image != null) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewPostScreen(image),
+        builder: (context) => PreviewPostScreen(image, widget.usernameLoggedIn),
       ),
     );
-    //}
   }
 
   Future _initCameraController(CameraDescription cameraDescription) async {
@@ -150,15 +148,6 @@ class _CameraScreenState extends State<CameraScreen> {
           onPressed: () {
             //navigate to preview screen
             getImage(context);
-
-            // if (_image != null) {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => PreviewPostScreen(_image),
-            //     ),
-            //   );
-            // }
           },
           icon: Icon(
             Icons.collections_rounded,

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class PostHeader extends StatelessWidget {
   final String _imagePath;
+  final String usernameLoggedIn;
 
-  PostHeader(this._imagePath);
+  PostHeader(this._imagePath, this.usernameLoggedIn);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class PostHeader extends StatelessWidget {
             child: new GestureDetector(
               onTap: () {},
               child: Text(
-                'Post',
+                usernameLoggedIn, //'Post',
                 style: TextStyle(
                   fontFamily: 'Lalezar',
                   fontSize: 16.0,

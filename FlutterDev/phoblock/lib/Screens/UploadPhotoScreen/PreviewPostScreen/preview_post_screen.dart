@@ -12,8 +12,10 @@ import '../../../style.dart';
 // ignore: must_be_immutable
 class PreviewPostScreen extends StatelessWidget {
   File imageFile;
+  String usernameLoggedIn;
+  final captionController = TextEditingController();
 
-  PreviewPostScreen(this.imageFile);
+  PreviewPostScreen(this.imageFile, this.usernameLoggedIn);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +28,18 @@ class PreviewPostScreen extends StatelessWidget {
           Card(
             child: Column(
               children: [
-                PostHeader("assets/images/postmalone.jpg"),
+                PostHeader(
+                  "assets/images/postmalone.jpg",
+                  this.usernameLoggedIn,
+                ),
                 PostBody(this.imageFile),
                 PostFooter(),
-                CaptionTextBox(),
+                CaptionTextBox(captionController),
               ],
             ),
           ),
-          PostButton(),
-          CancelButton(),
+          PostButton(usernameLoggedIn, imageFile, captionController),
+          CancelButton(usernameLoggedIn),
         ],
       ),
     );

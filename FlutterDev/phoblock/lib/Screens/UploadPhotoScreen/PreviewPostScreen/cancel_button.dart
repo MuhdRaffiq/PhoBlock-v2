@@ -1,8 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import '../../../app.dart';
 import 'custom_outline_button.dart';
 
 class CancelButton extends StatelessWidget {
   static const double _hPad = 40.0;
+  String loggedInUsername;
+
+  CancelButton(this.loggedInUsername);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,15 @@ class CancelButton extends StatelessWidget {
           child: CustomOutlineButton(
             text: "Cancel",
             color: Colors.grey,
-            onPressed: () {},
+            onPressed: () {
+              Timer(Duration(seconds: 1), () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  AfterLoginRoute,
+                  (Route<dynamic> route) => false,
+                  arguments: {"loginUsrname": loggedInUsername},
+                );
+              });
+            },
           ),
         )
       ],
