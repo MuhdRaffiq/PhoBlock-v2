@@ -42,6 +42,8 @@ public class PhoBlockUser {
     Set<Following> followings;
     @OneToMany(mappedBy = "userFavorites")
     Set<Post> userFavorites;
+    @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
+    Set<Post> likedPost;
 
     public Integer getId() {
         return id;
@@ -178,5 +180,20 @@ public class PhoBlockUser {
 
     public void addUserFavorites(Post userFavorite){
         this.userFavorites.add(userFavorite);
+    }
+
+    public Set<Post> getLikedPost() {
+        return likedPost;
+    }
+
+    public void setLikedPost(Set<Post> likedPost) {
+        this.likedPost = likedPost;
+    }
+
+    /*
+     * Helper function to add liked post
+     * */
+    public void addLikedPost(Post likedPost){
+        this.likedPost.add(likedPost);
     }
 }

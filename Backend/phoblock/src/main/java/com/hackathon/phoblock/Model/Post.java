@@ -17,14 +17,17 @@ public class Post {
     Integer id;
     @Column(nullable = false)
     String postCaption;
-    @Column(nullable = false)
-    String postTag;
     @Column (nullable = false)
     Integer numberDownload;
     @Column (nullable = false)
     Integer numberFavorite;
+    @Column(nullable = false)
+    Integer numberLiked;
+    @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date dateCreated;
+    @Column
+    String postTag;
     @Column
     String ownerUsername;
     @ManyToOne
@@ -39,6 +42,8 @@ public class Post {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     PhoBlockUser userFavorites;
+    @ManyToMany(targetEntity = PhoBlockUser.class, mappedBy = "likedPost", cascade = CascadeType.ALL)
+    Set<PhoBlockUser> likedUser;
 
     public Integer getId() {
         return id;
@@ -80,6 +85,14 @@ public class Post {
         this.numberFavorite = numberFavorite;
     }
 
+    public Integer getNumberLiked() {
+        return numberLiked;
+    }
+
+    public void setNumberLiked(Integer numberLiked) {
+        this.numberLiked = numberLiked;
+    }
+
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -118,5 +131,17 @@ public class Post {
 
     public void setUserFavorites(PhoBlockUser userFavorites) {
         this.userFavorites = userFavorites;
+    }
+
+    public Set<PhoBlockUser> getLikedUser() {
+        return likedUser;
+    }
+
+    public void setLikedUser(Set<PhoBlockUser> likedUser) {
+        this.likedUser = likedUser;
+    }
+
+    public void addLikedUser(PhoBlockUser likedUser){
+        this.likedUser.add(likedUser);
     }
 }

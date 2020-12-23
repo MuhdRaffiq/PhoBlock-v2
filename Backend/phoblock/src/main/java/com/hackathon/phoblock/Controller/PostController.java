@@ -1,5 +1,6 @@
 package com.hackathon.phoblock.Controller;
 
+import com.hackathon.phoblock.Exceptions.OnSuccessException;
 import com.hackathon.phoblock.Exceptions.ResourceNotFoundException;
 import com.hackathon.phoblock.Model.Image;
 import com.hackathon.phoblock.Model.PhoBlockUser;
@@ -47,7 +48,7 @@ public class PostController {
 
     @PostMapping("/users/{userName}/posts")
     public Post createPostForUsername(@RequestBody Post post, @PathVariable String userName)
-            throws ResourceNotFoundException {
+            throws ResourceNotFoundException, OnSuccessException {
 
         PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(userName);
 
@@ -69,7 +70,7 @@ public class PostController {
             //Save image post to Image Repository
             imageRepository.save(post.getPostPicture());
 
-            return post;
+            throw new OnSuccessException("New Post Uploaded");
         }
     }
 
