@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'cancel_button.dart';
-import 'cfmpwd_textbox.dart';
-import 'dob_textbox.dart';
-import 'email_textbox.dart';
-import 'firstname_textbox.dart';
+import 'Buttons/cancel_button.dart';
+import 'Textbox/cfmpwd_textbox.dart';
+import 'Textbox/dob_textbox.dart';
+import 'Textbox/email_textbox.dart';
+import 'Textbox/firstname_textbox.dart';
 import 'header_text.dart';
-import 'lastname_textbox.dart';
-import 'pwd_textbox.dart';
-import 'signup_button.dart';
-import 'usrname_textbox.dart';
+import 'Textbox/lastname_textbox.dart';
+import 'Textbox/pwd_textbox.dart';
+import 'Buttons/signup_button.dart';
+import 'Textbox/usrname_textbox.dart';
 import '../../style.dart';
 
 class SignupScreen extends StatefulWidget {

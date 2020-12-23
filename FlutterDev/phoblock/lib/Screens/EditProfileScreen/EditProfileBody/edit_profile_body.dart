@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'bio_field.dart';
-import 'birthday_field.dart';
-import 'email_field.dart';
-import 'phone_field.dart';
-import 'username_field.dart';
+import 'Textbox/bio_field.dart';
+import 'Textbox/birthday_field.dart';
+import 'Textbox/email_field.dart';
+import 'Textbox/phone_field.dart';
+import 'Textbox/username_field.dart';
 import '../../../style.dart';
 
 class EditProfileBody extends StatelessWidget {

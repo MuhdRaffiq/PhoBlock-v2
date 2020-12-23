@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'forgot_password.dart';
-import 'image_banner.dart';
+import 'Widgets/forgot_password.dart';
+import 'Widgets/image_banner.dart';
 import 'login_button.dart';
-import 'no_account.dart';
-import 'password_textbox.dart';
-import 'text_box.dart';
-import 'title_section.dart';
+import 'Widgets/no_account.dart';
+import 'Textbox/password_textbox.dart';
+import 'Textbox/text_box.dart';
+import 'Widgets/title_section.dart';
 
 class LoginSignupPage extends StatelessWidget {
   final loginCredentialController = TextEditingController();

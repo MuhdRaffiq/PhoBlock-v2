@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../style.dart';
+import '../../../style.dart';
 
 class DOBTextBox extends StatelessWidget {
   final textController;

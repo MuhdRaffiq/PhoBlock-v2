@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'custom_outline_cancelbutton.dart';
+import '../custom_outline_cancelbutton.dart';
 
 class CancelButton extends StatelessWidget {
   static const double _hPad = 40.0;

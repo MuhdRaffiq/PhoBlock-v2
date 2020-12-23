@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:ftoast/ftoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'custom_outline_button.dart';
-import '../../style.dart';
+import '../custom_outline_button.dart';
+import '../../../style.dart';
 
 class SignupButton extends StatelessWidget {
   final firstNameController;
