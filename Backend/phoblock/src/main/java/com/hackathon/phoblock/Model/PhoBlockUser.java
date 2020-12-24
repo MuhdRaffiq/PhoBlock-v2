@@ -32,6 +32,8 @@ public class PhoBlockUser {
     Date dateCreated;
     @Column
     String bio;
+    @Column
+    String phoneNumber;
     @OneToMany(mappedBy = "postOwner")
     Set<Post> userPost;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userImage")
@@ -107,6 +109,14 @@ public class PhoBlockUser {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Date getDateCreated() {

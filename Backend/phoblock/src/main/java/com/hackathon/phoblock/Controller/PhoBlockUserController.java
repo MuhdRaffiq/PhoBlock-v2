@@ -5,6 +5,7 @@ import com.hackathon.phoblock.Exceptions.RegistrationFailedException;
 import com.hackathon.phoblock.Exceptions.ResourceNotFoundException;
 import com.hackathon.phoblock.Model.*;
 import com.hackathon.phoblock.Repository.*;
+import com.hackathon.phoblock.ResponseBodyModel.EditProfileBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -96,7 +97,8 @@ public class PhoBlockUserController {
     }
 
     @PutMapping("/Users/User/{userName}")
-    PhoBlockUser updateUser(@RequestBody PhoBlockUser phoBlockUser, @PathVariable String userName) throws ResourceNotFoundException {
+    PhoBlockUser updateUser(@RequestBody EditProfileBody phoBlockUser, @PathVariable String userName)
+            throws ResourceNotFoundException, OnSuccessException {
         PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(userName);
 
         if(retrievedUser == null){
@@ -104,29 +106,33 @@ public class PhoBlockUserController {
         }else{
             retrievedUser.setFirstName(phoBlockUser.getFirstName());
             retrievedUser.setLastName(phoBlockUser.getLastName());
-            retrievedUser.setUserName(phoBlockUser.getUserName());
-            retrievedUser.setEmailAddress(phoBlockUser.getEmailAddress());
+            retrievedUser.setUserName(phoBlockUser.getUsername());
             retrievedUser.setBio(phoBlockUser.getBio());
-            retrievedUser.setBirthDate(phoBlockUser.getBirthDate());
+            retrievedUser.setEmailAddress(phoBlockUser.getEmail());
+            retrievedUser.setPhoneNumber(phoBlockUser.getPhoneNumber());
+            retrievedUser.setBirthDate(phoBlockUser.getBirthday());
 
-            if(phoBlockUser.getUserDefaultPicture() != null){
+            if(phoBlockUser.getImageName() != null &&
+                    phoBlockUser.getImageType() != null &&
+                    phoBlockUser.getImageString() != null){
+                Image newImage = new Image(phoBlockUser.getImageName(), phoBlockUser.getImageType(), phoBlockUser.getImageString());
+                newImage.setUserImage(retrievedUser);
 
-                if(retrievedUser.getUserDefaultPicture() == null) {
-                    retrievedUser.setUserDefaultPicture(phoBlockUser.getUserDefaultPicture());
-                    Image updateImage = phoBlockUser.getUserDefaultPicture();
-                    imageRepository.save(updateImage);
-                }else{
-                    Image userCurrDp = retrievedUser.getUserDefaultPicture();
-                    imageRepository.delete(userCurrDp);
+                if(retrievedUser.getUserDefaultPicture() != null){
+                    Image oldDp = retrievedUser.getUserDefaultPicture();
+                    oldDp.setUserImage(null);
 
-                    retrievedUser.setUserDefaultPicture(phoBlockUser.getUserDefaultPicture());
-                    imageRepository.save(phoBlockUser.getUserDefaultPicture());
+                    retrievedUser.setUserDefaultPicture(null);
+                    imageRepository.delete(retrievedUser.getUserDefaultPicture());
                 }
+
+                retrievedUser.setUserDefaultPicture(newImage);
+                imageRepository.save(newImage);
             }
 
             phoBlockUserRepository.save(retrievedUser);
 
-            return retrievedUser;
+            throw new OnSuccessException("Profile has successfully update!");
         }
     }
 
