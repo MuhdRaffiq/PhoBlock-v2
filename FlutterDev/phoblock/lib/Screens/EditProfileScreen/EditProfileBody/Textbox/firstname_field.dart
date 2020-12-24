@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PhoneField extends StatelessWidget {
+// ignore: must_be_immutable
+class FirstNameField extends StatelessWidget {
   final textController;
   final textFormKey;
 
-  PhoneField(this.textController, this.textFormKey);
+  FirstNameField(this.textController, this.textFormKey);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,12 @@ class PhoneField extends StatelessWidget {
           children: [
             Container(
               width: 80.0,
-              child: Text('Phone: '),
+              child: Text('First Name: '),
             ),
             Flexible(
               child: new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Enter Phone Number",
+                  labelText: "Enter First Name",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),
@@ -33,17 +34,13 @@ class PhoneField extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
                 controller: textController,
                 validator: (value) {
-                  if (value.isEmpty || value == ' ' || value.length < 10) {
-                    return 'Invalid value';
+                  if (value.isEmpty || value == ' ') {
+                    return 'Invalid name';
                   }
 
-                  value.runes.forEach((int rune) {
-                    var character = new String.fromCharCode(rune);
-
-                    if (!_isNumeric(character)) {
-                      return 'Invalid value';
-                    }
-                  });
+                  if (value.trim().length == 1) {
+                    return 'Invalid name';
+                  }
 
                   return null;
                 },
@@ -56,12 +53,5 @@ class PhoneField extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  bool _isNumeric(String numStr) {
-    if (numStr == null) {
-      return false;
-    }
-    return double.tryParse(numStr) != null;
   }
 }

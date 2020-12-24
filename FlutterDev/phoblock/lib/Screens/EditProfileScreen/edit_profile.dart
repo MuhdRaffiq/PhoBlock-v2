@@ -11,34 +11,40 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   GlobalKey<EditProfileHeaderState> _editProfileHeader;
-  TextEditingController usernameTextController;
-  TextEditingController bioTextController;
-  TextEditingController emailTextController;
-  TextEditingController phoneTextController;
-  TextEditingController birthdayTextController;
 
-  GlobalKey<FormState> usernameFormKey;
-  GlobalKey<FormState> bioFormKey;
-  GlobalKey<FormState> emailFormKey;
-  GlobalKey<FormState> phoneFormKey;
-  GlobalKey<FormState> birthdayFormKey;
+  final firstNameTextController = TextEditingController();
+  final lastNameTextController = TextEditingController();
+  final usernameTextController = TextEditingController();
+  final bioTextController = TextEditingController();
+  final emailTextController = TextEditingController();
+  final phoneTextController = TextEditingController();
+  final birthdayTextController = TextEditingController();
+
+  final firstNameFormKey = GlobalKey<FormState>();
+  final lastNameFormKey = GlobalKey<FormState>();
+  final usernameFormKey = GlobalKey<FormState>();
+  final bioFormKey = GlobalKey<FormState>();
+  final emailFormKey = GlobalKey<FormState>();
+  final phoneFormKey = GlobalKey<FormState>();
+  final birthdayFormKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    firstNameTextController.dispose();
+    lastNameTextController.dispose();
+    usernameTextController.dispose();
+    bioTextController.dispose();
+    emailTextController.dispose();
+    phoneTextController.dispose();
+    usernameTextController.dispose();
+    birthdayTextController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
     _editProfileHeader = GlobalKey();
-
-    usernameTextController = TextEditingController();
-    bioTextController = TextEditingController();
-    emailTextController = TextEditingController();
-    phoneTextController = TextEditingController();
-    birthdayTextController = TextEditingController();
-
-    usernameFormKey = GlobalKey<FormState>();
-    bioFormKey = GlobalKey<FormState>();
-    emailFormKey = GlobalKey<FormState>();
-    phoneFormKey = GlobalKey<FormState>();
-    birthdayFormKey = GlobalKey<FormState>();
   }
 
   @override
@@ -55,9 +61,41 @@ class _EditProfileState extends State<EditProfile> {
           EditProfileHeader(
             key: _editProfileHeader,
             imagePath: "assets/images/postmalone.jpg",
-          ), //
-          EditProfileBody(),
-          SubmitButton(),
+          ),
+          EditProfileBody(
+            firstNameTextController: firstNameTextController,
+            firstNameFormKey: firstNameFormKey,
+            lastNameTextController: lastNameTextController,
+            lastNameFormKey: lastNameFormKey,
+            usernameTextController: usernameTextController,
+            usernameFormKey: usernameFormKey,
+            bioTextController: bioTextController,
+            bioFormKey: bioFormKey,
+            emailTextController: emailTextController,
+            emailFormKey: emailFormKey,
+            phoneTextController: phoneTextController,
+            phoneFormKey: phoneFormKey,
+            birthdayTextController: birthdayTextController,
+            birthdayFormKey: birthdayFormKey,
+          ),
+          SubmitButton(
+            imageKey: _editProfileHeader,
+            loggedInUsername: 'johncena',
+            firstNameTextController: firstNameTextController,
+            firstNameFormKey: firstNameFormKey,
+            lastNameTextController: lastNameTextController,
+            lastNameFormKey: lastNameFormKey,
+            usernameTextController: usernameTextController,
+            usernameFormKey: usernameFormKey,
+            bioTextController: bioTextController,
+            bioFormKey: bioFormKey,
+            emailTextController: emailTextController,
+            emailFormKey: emailFormKey,
+            phoneTextController: phoneTextController,
+            phoneFormKey: phoneFormKey,
+            birthdayTextController: birthdayTextController,
+            birthdayFormKey: birthdayFormKey,
+          ),
         ],
       ),
     );

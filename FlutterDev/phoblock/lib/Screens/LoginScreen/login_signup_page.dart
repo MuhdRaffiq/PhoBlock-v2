@@ -7,9 +7,21 @@ import 'Textbox/password_textbox.dart';
 import 'Textbox/text_box.dart';
 import 'Widgets/title_section.dart';
 
-class LoginSignupPage extends StatelessWidget {
+class LoginSignupPage extends StatefulWidget {
+  @override
+  _LoginSignupPageState createState() => _LoginSignupPageState();
+}
+
+class _LoginSignupPageState extends State<LoginSignupPage> {
   final loginCredentialController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    loginCredentialController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

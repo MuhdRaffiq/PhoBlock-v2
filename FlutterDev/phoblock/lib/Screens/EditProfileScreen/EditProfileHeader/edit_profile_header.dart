@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../style.dart';
 
+// ignore: must_be_immutable
 class EditProfileHeader extends StatefulWidget {
   final String imagePath;
   Key key;
@@ -15,24 +16,24 @@ class EditProfileHeader extends StatefulWidget {
 }
 
 class EditProfileHeaderState extends State<EditProfileHeader> {
-  File _imageFile;
+  File imageFile;
 
   @override
   void initState() {
     super.initState();
-    _imageFile = null;
+    imageFile = null;
   }
 
   Future<void> getImage(context) async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      _imageFile = image;
+      imageFile = image;
     });
   }
 
   Widget displayProfilePicture() {
-    if (_imageFile == null) {
+    if (imageFile == null) {
       return Container(
         margin: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 5.0),
         child: CircleAvatar(
@@ -52,7 +53,7 @@ class EditProfileHeaderState extends State<EditProfileHeader> {
           radius: 66.0,
           child: CircleAvatar(
             radius: 65.0,
-            backgroundImage: FileImage(_imageFile),
+            backgroundImage: FileImage(imageFile),
           ),
         ),
       );
