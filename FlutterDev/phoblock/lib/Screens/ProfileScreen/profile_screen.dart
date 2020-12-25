@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/phoblock_user.dart';
 import 'ButtonSections/buttons.dart';
 import 'ProfileBody/profile_body.dart';
 import 'ProfileHeader/profile_header.dart';
@@ -6,6 +7,10 @@ import 'ProfileHeader/username_text_section.dart';
 import '../../style.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final PhoblockUser user;
+
+  ProfileScreen({this.user});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,10 +22,11 @@ class ProfileScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ProfileHeader("assets/images/postmalone.jpg"),
-          UsernameTextSection('Post Malone', 'I am Post Malone'),
+          ProfileHeader(user.profilePicture, user.userPosts.length),
+          // ProfileHeader("assets/images/postmalone.jpg"),
+          UsernameTextSection(user.username, user.bio),
           //VoteServiceButton(),
-          Buttons(),
+          Buttons(user),
           ProfileBody(),
         ],
       ),

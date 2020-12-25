@@ -21,7 +21,7 @@ class EmailField extends StatelessWidget {
             Flexible(
               child: new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Enter Email",
+                  labelText: "", //"Enter Email",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),

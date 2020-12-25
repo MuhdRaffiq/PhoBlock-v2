@@ -21,7 +21,7 @@ class BioField extends StatelessWidget {
             Flexible(
               child: new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Enter Bio",
+                  labelText: "", //"Enter Bio",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),

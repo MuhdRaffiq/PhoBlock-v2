@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/phoblock_user.dart';
 import 'Button/submit_button.dart';
 import 'EditProfileBody/edit_profile_body.dart';
 import 'EditProfileHeader/edit_profile_header.dart';
 import '../../style.dart';
 
+// ignore: must_be_immutable
 class EditProfile extends StatefulWidget {
+  PhoblockUser user;
+
+  EditProfile({this.user});
+
   @override
   State<EditProfile> createState() => _EditProfileState();
 }
@@ -12,13 +18,20 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   GlobalKey<EditProfileHeaderState> _editProfileHeader;
 
-  final firstNameTextController = TextEditingController();
-  final lastNameTextController = TextEditingController();
-  final usernameTextController = TextEditingController();
-  final bioTextController = TextEditingController();
-  final emailTextController = TextEditingController();
-  final phoneTextController = TextEditingController();
-  final birthdayTextController = TextEditingController();
+  //final firstNameTextController = TextEditingController();
+  TextEditingController firstNameTextController;
+  //final lastNameTextController = TextEditingController();
+  TextEditingController lastNameTextController;
+  //final usernameTextController = TextEditingController();
+  TextEditingController usernameTextController;
+  //final bioTextController = TextEditingController();
+  TextEditingController bioTextController;
+  //final emailTextController = TextEditingController();
+  TextEditingController emailTextController;
+  //final phoneTextController = TextEditingController();
+  TextEditingController phoneTextController;
+  //final birthdayTextController = TextEditingController();
+  TextEditingController birthdayTextController;
 
   final firstNameFormKey = GlobalKey<FormState>();
   final lastNameFormKey = GlobalKey<FormState>();
@@ -45,6 +58,55 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     super.initState();
     _editProfileHeader = GlobalKey();
+
+    if (widget.user.firstName != null) {
+      firstNameTextController = TextEditingController();
+      firstNameTextController.text = widget.user.firstName;
+    } else {
+      firstNameTextController = TextEditingController();
+    }
+
+    if (widget.user.lastName != null) {
+      lastNameTextController = TextEditingController();
+      lastNameTextController.text = widget.user.lastName;
+    } else {
+      lastNameTextController = TextEditingController();
+    }
+
+    if (widget.user.username != null) {
+      usernameTextController = TextEditingController();
+      usernameTextController.text = widget.user.username;
+    } else {
+      usernameTextController = TextEditingController();
+    }
+
+    if (widget.user.bio != null) {
+      bioTextController = TextEditingController();
+      bioTextController.text = widget.user.bio;
+    } else {
+      bioTextController = TextEditingController();
+    }
+
+    if (widget.user.emailAddress != null) {
+      emailTextController = TextEditingController();
+      emailTextController.text = widget.user.emailAddress;
+    } else {
+      emailTextController = TextEditingController();
+    }
+
+    if (widget.user.phone != null) {
+      phoneTextController = TextEditingController();
+      phoneTextController.text = widget.user.phone;
+    } else {
+      phoneTextController = TextEditingController();
+    }
+
+    if (widget.user.birthday != null) {
+      birthdayTextController = TextEditingController();
+      birthdayTextController.text = widget.user.birthday;
+    } else {
+      birthdayTextController = TextEditingController();
+    }
   }
 
   @override
@@ -60,7 +122,7 @@ class _EditProfileState extends State<EditProfile> {
         children: [
           EditProfileHeader(
             key: _editProfileHeader,
-            imagePath: "assets/images/postmalone.jpg",
+            userDp: widget.user.profilePicture,
           ),
           EditProfileBody(
             firstNameTextController: firstNameTextController,
@@ -80,7 +142,7 @@ class _EditProfileState extends State<EditProfile> {
           ),
           SubmitButton(
             imageKey: _editProfileHeader,
-            loggedInUsername: 'johncena',
+            loggedInUser: widget.user,
             firstNameTextController: firstNameTextController,
             firstNameFormKey: firstNameFormKey,
             lastNameTextController: lastNameTextController,

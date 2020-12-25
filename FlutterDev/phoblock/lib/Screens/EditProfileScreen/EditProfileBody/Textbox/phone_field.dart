@@ -21,7 +21,7 @@ class PhoneField extends StatelessWidget {
             Flexible(
               child: new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Enter Phone Number",
+                  labelText: "", //"Enter Phone Number",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),

@@ -1,10 +1,45 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/image.dart';
 
 class ProfileHeader extends StatelessWidget {
-  final String _imagePath;
+  //final String _imagePath;
+  ImageFile userDp;
+  int postLength;
   //static const double _hPad = 16.0;
 
-  ProfileHeader(this._imagePath);
+  ProfileHeader(this.userDp, this.postLength);
+
+  Widget avatarWidget() {
+    if (userDp == null) {
+      return Container(
+        child: CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 59.0,
+          child: CircleAvatar(
+            radius: 58.0,
+            backgroundImage: AssetImage("assets/images/doe.jpg"),
+          ),
+        ),
+      );
+    } else {
+      Uint8List imageBytes = base64.decode(userDp.imageString);
+
+      return Container(
+        child: CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 59.0,
+          child: CircleAvatar(
+            radius: 58.0,
+            backgroundImage: MemoryImage(imageBytes),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +47,7 @@ class ProfileHeader extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 0.0),
       child: Row(
         children: [
-          Container(
-            child: CircleAvatar(
-              backgroundColor: Colors.black,
-              radius: 59.0,
-              child: CircleAvatar(
-                radius: 58.0,
-                backgroundImage: AssetImage(_imagePath),
-              ),
-            ),
-          ),
+          avatarWidget(),
           Container(
             margin: const EdgeInsets.fromLTRB(25.0, 0.0, 0.0, 0.0),
             child: Column(
@@ -36,7 +62,7 @@ class ProfileHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '99',
+                  postLength.toString(),
                   style: TextStyle(
                     fontFamily: 'Lalezar',
                     fontSize: 14.0,

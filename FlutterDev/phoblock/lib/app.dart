@@ -47,7 +47,7 @@ class App extends StatelessWidget {
           break;
         case AfterLoginRoute:
           screen = NavigationBar(
-            usernameLoggedIn: arguments['loginUsrname'],
+            loggedInUser: arguments['loginUser'],
           );
           break;
         default:

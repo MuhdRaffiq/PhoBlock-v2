@@ -7,13 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:ftoast/ftoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
+import 'package:phoblock/Model/phoblock_user.dart';
 import 'custom_outline_button.dart';
 import '../../../style.dart';
 
 // ignore: must_be_immutable
 class SubmitButton extends StatefulWidget {
   final imageKey;
-  String loggedInUsername;
+  PhoblockUser loggedInUser;
   final firstNameTextController;
   final lastNameTextController;
   final usernameTextController;
@@ -32,7 +33,7 @@ class SubmitButton extends StatefulWidget {
 
   SubmitButton({
     this.imageKey,
-    this.loggedInUsername,
+    this.loggedInUser,
     this.firstNameTextController,
     this.firstNameFormKey,
     this.lastNameTextController,
@@ -88,8 +89,6 @@ class _SubmitButtonState extends State<SubmitButton> {
               String birthdayStr = widget.birthdayTextController.text;
               String trimmedBirthday = birthdayStr.trim();
 
-              String loggedinUsername = widget.loggedInUsername;
-
               if (firstName && lastName && bio && email && phone && dob) {
                 postEdittedProfile(
                   trimmedFirstName,
@@ -100,7 +99,7 @@ class _SubmitButtonState extends State<SubmitButton> {
                   trimmedPhone,
                   trimmedBirthday,
                   widget.imageKey.currentState.imageFile,
-                ).then((response) {
+                ).then((response) async {
                   if (response.statusCode == 200) {
                     FToast.toast(
                       context,
@@ -111,6 +110,23 @@ class _SubmitButtonState extends State<SubmitButton> {
                         false,
                       ),
                     );
+
+                    //Get image bytes
+                    Uint8List bytes = await widget
+                        .imageKey.currentState.imageFile
+                        .readAsBytes();
+                    //Conver byte to String
+                    String _img64String = base64Encode(bytes);
+
+                    widget.loggedInUser.firstName = trimmedFirstName;
+                    widget.loggedInUser.lastName = trimmedLastName;
+                    widget.loggedInUser.username = trimmedUsername;
+                    widget.loggedInUser.bio = trimmedBio;
+                    widget.loggedInUser.emailAddress = trimmedEmail;
+                    widget.loggedInUser.phone = trimmedPhone;
+                    widget.loggedInUser.birthday = trimmedBirthday;
+                    widget.loggedInUser.profilePicture.imageString =
+                        _img64String;
                   } else if (response.statusCode == 406) {
                     FToast.toast(
                       context,
@@ -162,7 +178,7 @@ class _SubmitButtonState extends State<SubmitButton> {
 
     if (imageFile == null) {
       response = await http.put(
-          'http://127.0.0.1:8080/Users/User/' + widget.loggedInUsername,
+          'http://127.0.0.1:8080/Users/User/' + widget.loggedInUser.username,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -183,27 +199,26 @@ class _SubmitButtonState extends State<SubmitButton> {
       Uint8List bytes = await imageFile.readAsBytes();
       //Conver byte to String
       String _img64String = base64Encode(bytes);
-      String loggedInUser = widget.loggedInUsername;
 
       print(_img64String);
 
-      response =
-          await http.put('http://127.0.0.1:8080/Users/User/' + loggedInUser,
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-              },
-              body: jsonEncode(<String, dynamic>{
-                'firstName': trimmedFirstName,
-                'lastName': trimmedLastName,
-                'username': trimmedUsername,
-                'bio': trimmedBio,
-                'email': trimmedEmail,
-                'phoneNumber': trimmedPhone,
-                'birthday': trimmedBirthday,
-                'imageName': imgName,
-                'imageType': imgType,
-                'imageString': _img64String,
-              }));
+      response = await http.put(
+          'http://127.0.0.1:8080/Users/User/' + widget.loggedInUser.username,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{
+            'firstName': trimmedFirstName,
+            'lastName': trimmedLastName,
+            'username': trimmedUsername,
+            'bio': trimmedBio,
+            'email': trimmedEmail,
+            'phoneNumber': trimmedPhone,
+            'birthday': trimmedBirthday,
+            'imageName': imgName,
+            'imageType': imgType,
+            'imageString': _img64String,
+          }));
     }
 
     return response;

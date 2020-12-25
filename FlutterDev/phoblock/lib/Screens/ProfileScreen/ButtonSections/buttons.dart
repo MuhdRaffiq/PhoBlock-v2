@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/phoblock_user.dart';
 import 'package:phoblock/app.dart';
 import '../custom_outline_button.dart';
 import '../../EditProfileScreen/edit_profile.dart';
@@ -7,6 +8,9 @@ import '../../../style.dart';
 
 class Buttons extends StatelessWidget {
   static const double _hPad = 20.0;
+  PhoblockUser user;
+
+  Buttons(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class Buttons extends StatelessWidget {
   }
 
   _editProfileButtonTap(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => EditProfile()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => EditProfile(user: user)));
   }
 }

@@ -26,7 +26,7 @@ class ProfileBody extends StatelessWidget {
             ),
           ),
           Container(
-            height: 475.0,
+            height: 473.0,
             child: TabBarView(
               children: [
                 ProfileGallery("assets/images/postmalone.jpg"),

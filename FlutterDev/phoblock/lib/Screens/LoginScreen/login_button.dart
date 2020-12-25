@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ftoast/ftoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:phoblock/Model/phoblock_user.dart';
 import 'package:phoblock/app.dart';
 import 'custom_outline_button.dart';
 import '../../style.dart';
@@ -43,13 +44,23 @@ class LoginButton extends StatelessWidget {
 
                   String trimmedLoginString = loginString.trim();
 
-                  Timer(Duration(seconds: 1), () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      AfterLoginRoute,
-                      (Route<dynamic> route) => false,
-                      arguments: {"loginUsrname": trimmedLoginString},
-                    );
+                  fetchUser(trimmedLoginString).then((user) {
+                    Timer(Duration(seconds: 1), () {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        AfterLoginRoute,
+                        (Route<dynamic> route) => false,
+                        arguments: {"loginUser": user},
+                      );
+                    });
                   });
+
+                  // Timer(Duration(seconds: 1), () {
+                  //   Navigator.of(context).pushNamedAndRemoveUntil(
+                  //     AfterLoginRoute,
+                  //     (Route<dynamic> route) => false,
+                  //     arguments: {"loginUsrname": trimmedLoginString},
+                  //   );
+                  // });
                 } else if (response.statusCode == 404) {
                   FToast.toast(
                     context,
@@ -93,6 +104,17 @@ class LoginButton extends StatelessWidget {
             }));
 
     return response;
+  }
+
+  Future<PhoblockUser> fetchUser(String usernameLoggedIn) async {
+    final response =
+        await http.get('http://127.0.0.1:8080/Users/User/' + usernameLoggedIn);
+
+    if (response.statusCode == 200) {
+      return PhoblockUser.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load User');
+    }
   }
 
   Widget _showToast(

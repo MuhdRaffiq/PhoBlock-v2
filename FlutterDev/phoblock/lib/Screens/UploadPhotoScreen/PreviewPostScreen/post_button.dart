@@ -97,7 +97,12 @@ class PostButton extends StatelessWidget {
     //Conver byte to String
     String _img64String = base64Encode(bytes);
     //Convert to Json Object
-    ImageFile image = new ImageFile(imgName, imgType, _img64String);
+    //ImageFile image = new ImageFile(imgName, imgType, _img64String);
+    ImageFile image = new ImageFile(
+      imageName: imgName,
+      imageType: imgType,
+      imageString: _img64String,
+    );
     var parsedJson = json.decode(jsonEncode(image));
 
     final http.Response response = await http.post(

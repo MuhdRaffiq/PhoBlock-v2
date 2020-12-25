@@ -23,7 +23,7 @@ class BirthdayField extends StatelessWidget {
             Flexible(
               child: new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Enter Birthday",
+                  labelText: "", //"Enter Birthday",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),
