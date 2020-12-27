@@ -8,6 +8,9 @@ class ImageFile {
   ImageFile({this.imageName, this.imageType, this.imageString});
 
   factory ImageFile.fromJson(Map<String, dynamic> json) {
+    if (json == null) {
+      return null;
+    }
     return ImageFile(
       imageName: json['imageName'],
       imageType: json['imageType'],

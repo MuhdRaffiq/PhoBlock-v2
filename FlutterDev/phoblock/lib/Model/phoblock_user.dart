@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:phoblock/Model/image.dart';
 import 'package:phoblock/Model/post.dart';
 
@@ -64,4 +64,15 @@ class PhoblockUser {
         'profilePicture': profilePicture,
         'dateCreated': dateCreated,
       };
+
+  static Future<PhoblockUser> fetchUser(int id) async {
+    final response =
+        await http.get('http://127.0.0.1:8080/Users/User/Id/' + id.toString());
+
+    if (response.statusCode == 200) {
+      return PhoblockUser.fromJson(jsonDecode(response.body));
+    } else {
+      throw null;
+    }
+  }
 }

@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import '../../../app.dart';
 import 'custom_outline_button.dart';
 
+// ignore: must_be_immutable
 class CancelButton extends StatelessWidget {
   static const double _hPad = 40.0;
-  String loggedInUsername;
+  int userId;
 
-  CancelButton(this.loggedInUsername);
+  CancelButton(this.userId);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class CancelButton extends StatelessWidget {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   AfterLoginRoute,
                   (Route<dynamic> route) => false,
-                  arguments: {"loginUsrname": loggedInUsername},
+                  arguments: {"usedID": userId},
                 );
               });
             },

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:phoblock/Model/phoblock_user.dart';
 import 'ButtonSections/buttons.dart';
 import 'ProfileBody/profile_body.dart';
@@ -6,10 +9,62 @@ import 'ProfileHeader/profile_header.dart';
 import 'ProfileHeader/username_text_section.dart';
 import '../../style.dart';
 
-class ProfileScreen extends StatelessWidget {
-  final PhoblockUser user;
+class ProfileScreen extends StatefulWidget {
+  final int userId;
 
-  ProfileScreen({this.user});
+  ProfileScreen({this.userId});
+
+  @override
+  ProfileScreenState createState() => ProfileScreenState();
+}
+
+class ProfileScreenState extends State<ProfileScreen> {
+  PhoblockUser phoblockUser;
+
+  @override
+  void initState() {
+    super.initState();
+    PhoblockUser.fetchUser(widget.userId).then((user) {
+      setState(() {
+        phoblockUser = user;
+      });
+    });
+  }
+
+  Widget _showProfileHeader() {
+    if (phoblockUser == null) {
+      return Spacer();
+    } else {
+      return ProfileHeader(
+        phoblockUser.profilePicture,
+        phoblockUser.userPosts.length,
+      );
+    }
+  }
+
+  Widget _showTextSection() {
+    if (phoblockUser == null) {
+      return Spacer();
+    } else {
+      return UsernameTextSection(phoblockUser.username, phoblockUser.bio);
+    }
+  }
+
+  Widget _showButtons() {
+    if (phoblockUser == null) {
+      return Spacer();
+    } else {
+      return Buttons(phoblockUser, widget.userId);
+    }
+  }
+
+  Widget _showProfileBody() {
+    if (phoblockUser == null) {
+      return Spacer();
+    } else {
+      return ProfileBody(phoblockUser.userPosts);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +77,10 @@ class ProfileScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ProfileHeader(user.profilePicture, user.userPosts.length),
-          // ProfileHeader("assets/images/postmalone.jpg"),
-          UsernameTextSection(user.username, user.bio),
-          //VoteServiceButton(),
-          Buttons(user),
-          ProfileBody(),
+          _showProfileHeader(),
+          _showTextSection(),
+          _showButtons(),
+          _showProfileBody(),
         ],
       ),
     );

@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:ftoast/ftoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
+import 'package:phoblock/Model/image.dart';
 import 'package:phoblock/Model/phoblock_user.dart';
+import 'package:phoblock/app.dart';
 import 'custom_outline_button.dart';
 import '../../../style.dart';
 
@@ -15,6 +17,8 @@ import '../../../style.dart';
 class SubmitButton extends StatefulWidget {
   final imageKey;
   PhoblockUser loggedInUser;
+  int userId;
+  //final lastKey;
   final firstNameTextController;
   final lastNameTextController;
   final usernameTextController;
@@ -34,6 +38,8 @@ class SubmitButton extends StatefulWidget {
   SubmitButton({
     this.imageKey,
     this.loggedInUser,
+    this.userId,
+    //this.lastKey,
     this.firstNameTextController,
     this.firstNameFormKey,
     this.lastNameTextController,
@@ -111,22 +117,35 @@ class _SubmitButtonState extends State<SubmitButton> {
                       ),
                     );
 
-                    //Get image bytes
-                    Uint8List bytes = await widget
-                        .imageKey.currentState.imageFile
-                        .readAsBytes();
-                    //Conver byte to String
-                    String _img64String = base64Encode(bytes);
+                    // Uint8List bytes;
+                    // String _img64String;
+                    // String imageFullName;
+                    // String imgName;
+                    // String imgType;
 
-                    widget.loggedInUser.firstName = trimmedFirstName;
-                    widget.loggedInUser.lastName = trimmedLastName;
-                    widget.loggedInUser.username = trimmedUsername;
-                    widget.loggedInUser.bio = trimmedBio;
-                    widget.loggedInUser.emailAddress = trimmedEmail;
-                    widget.loggedInUser.phone = trimmedPhone;
-                    widget.loggedInUser.birthday = trimmedBirthday;
-                    widget.loggedInUser.profilePicture.imageString =
-                        _img64String;
+                    // if (widget.imageKey.currentState.imageFile != null) {
+                    //   //Get image bytes
+                    //   bytes = await widget.imageKey.currentState.imageFile
+                    //       .readAsBytes();
+                    //   //Conver byte to String
+                    //   _img64String = base64Encode(bytes);
+                    //   imageFullName =
+                    //       basename(widget.imageKey.currentState.imageFile.path);
+                    //   imgName = imageFullName.split(".")[0];
+                    //   imgType = imageFullName.split(".")[1];
+                    // }
+
+                    Timer(Duration(seconds: 1), () {
+                      //Navigator.pop(context, widget.userId);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        AfterLoginRoute,
+                        (Route<dynamic> route) => false,
+                        //arguments: {"loginUser": user},
+                        arguments: {"usedID": widget.userId},
+                      );
+                      // Navigator.popUntil(
+                      //     context, ModalRoute.withName(AfterLoginRoute));
+                    });
                   } else if (response.statusCode == 406) {
                     FToast.toast(
                       context,

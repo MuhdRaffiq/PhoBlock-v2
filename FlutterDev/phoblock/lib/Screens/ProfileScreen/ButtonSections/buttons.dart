@@ -9,8 +9,9 @@ import '../../../style.dart';
 class Buttons extends StatelessWidget {
   static const double _hPad = 20.0;
   PhoblockUser user;
+  int userID;
 
-  Buttons(this.user);
+  Buttons(this.user, this.userID);
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +44,11 @@ class Buttons extends StatelessWidget {
   }
 
   _voteServiceButtonTap(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => VoteServices()));
+    Navigator.pushNamed(context, VoteServicesRoute);
   }
 
   _editProfileButtonTap(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => EditProfile(user: user)));
+    Navigator.pushNamed(context, EditProfileRoute,
+        arguments: {"loginUser": user, "userId": userID});
   }
 }

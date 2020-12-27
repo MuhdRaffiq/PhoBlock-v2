@@ -1,10 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/phoblock_user.dart';
 
 class PostHeader extends StatelessWidget {
-  final String _imagePath;
-  final String usernameLoggedIn;
+  final PhoblockUser phoblockUser;
 
-  PostHeader(this._imagePath, this.usernameLoggedIn);
+  PostHeader(this.phoblockUser);
+
+  Widget _showHeader() {
+    if (phoblockUser.profilePicture == null) {
+      return Container(
+        child: CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 21.0,
+          child: CircleAvatar(
+            radius: 20.0,
+            backgroundImage: AssetImage("assets/images/doe.jpg"),
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        child: CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 21.0,
+          child: CircleAvatar(
+            radius: 20.0,
+            backgroundImage: MemoryImage(
+                base64.decode(phoblockUser.profilePicture.imageString)),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,22 +41,13 @@ class PostHeader extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
       child: Row(
         children: [
-          Container(
-            child: CircleAvatar(
-              backgroundColor: Colors.black,
-              radius: 21.0,
-              child: CircleAvatar(
-                radius: 20.0,
-                backgroundImage: AssetImage(_imagePath),
-              ),
-            ),
-          ),
+          _showHeader(),
           Container(
             margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
             child: new GestureDetector(
               onTap: () {},
               child: Text(
-                usernameLoggedIn, //'Post',
+                phoblockUser.username, //usernameLoggedIn, //'Post',
                 style: TextStyle(
                   fontFamily: 'Lalezar',
                   fontSize: 16.0,

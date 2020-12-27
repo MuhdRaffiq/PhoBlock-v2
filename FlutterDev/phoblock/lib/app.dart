@@ -8,6 +8,7 @@ import 'Screens/VoteServices/vote_services.dart';
 import 'style.dart';
 
 const AfterLoginRoute = '/Home';
+const EditProfileRoute = '/EditProfile';
 const SignInRoute = '/';
 const SignUpRoute = '/SignUp';
 const VoteServicesRoute = '/VoteAndServices';
@@ -46,8 +47,12 @@ class App extends StatelessWidget {
           screen = VoteServices();
           break;
         case AfterLoginRoute:
-          screen = NavigationBar(
-            loggedInUser: arguments['loginUser'],
+          screen = NavigationBar(arguments['usedID']);
+          break;
+        case EditProfileRoute:
+          screen = EditProfile(
+            user: arguments['loginUser'],
+            userId: arguments['userId'],
           );
           break;
         default:

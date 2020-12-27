@@ -15,11 +15,11 @@ import '../../../Model/image.dart';
 
 class PostButton extends StatelessWidget {
   static const double _hPad = 40.0;
-  String loggedInUsername;
+  int userId;
   File imageFile;
   final captionController;
 
-  PostButton(this.loggedInUsername, this.imageFile, this.captionController);
+  PostButton(this.userId, this.imageFile, this.captionController);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class PostButton extends StatelessWidget {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       AfterLoginRoute,
                       (Route<dynamic> route) => false,
-                      arguments: {"loginUsrname": loggedInUsername},
+                      arguments: {"usedID": userId},
                     );
                   });
                 } else if (response.statusCode == 406) {
@@ -97,7 +97,6 @@ class PostButton extends StatelessWidget {
     //Conver byte to String
     String _img64String = base64Encode(bytes);
     //Convert to Json Object
-    //ImageFile image = new ImageFile(imgName, imgType, _img64String);
     ImageFile image = new ImageFile(
       imageName: imgName,
       imageType: imgType,
@@ -106,7 +105,7 @@ class PostButton extends StatelessWidget {
     var parsedJson = json.decode(jsonEncode(image));
 
     final http.Response response = await http.post(
-        'http://127.0.0.1:8080/users/' + loggedInUsername + '/posts',
+        'http://127.0.0.1:8080/users/user/' + userId.toString() + '/posts',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

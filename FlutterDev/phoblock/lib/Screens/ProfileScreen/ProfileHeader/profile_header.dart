@@ -5,11 +5,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:phoblock/Model/image.dart';
 
+// ignore: must_be_immutable
 class ProfileHeader extends StatelessWidget {
-  //final String _imagePath;
   ImageFile userDp;
   int postLength;
-  //static const double _hPad = 16.0;
 
   ProfileHeader(this.userDp, this.postLength);
 

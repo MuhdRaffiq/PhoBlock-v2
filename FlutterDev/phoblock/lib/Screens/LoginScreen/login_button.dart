@@ -4,16 +4,34 @@ import 'package:flutter/material.dart';
 import 'package:ftoast/ftoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:phoblock/Model/phoblock_user.dart';
+import 'package:phoblock/Screens/Navigation/navigation_bar.dart';
 import 'package:phoblock/app.dart';
 import 'custom_outline_button.dart';
 import '../../style.dart';
 
-class LoginButton extends StatelessWidget {
+// ignore: must_be_immutable
+class LoginButton extends StatefulWidget {
   final loginCredentialController;
   final passwordController;
-  static const double _hPad = 40.0;
 
-  LoginButton(this.loginCredentialController, this.passwordController);
+  LoginButton(
+    this.loginCredentialController,
+    this.passwordController,
+  );
+
+  @override
+  LoginButtonState createState() => LoginButtonState();
+}
+
+class LoginButtonState extends State<LoginButton> {
+  static const double _hPad = 40.0;
+  PhoblockUser user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = new PhoblockUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +45,8 @@ class LoginButton extends StatelessWidget {
             text: "Log in",
             color: hexToColor('#64B6A9'),
             onPressed: () {
-              String loginString = loginCredentialController.text;
-              String passwordString = passwordController.text;
+              String loginString = widget.loginCredentialController.text;
+              String passwordString = widget.passwordController.text;
 
               login(loginString, passwordString).then((response) {
                 if (response.statusCode == 200) {
@@ -36,31 +54,43 @@ class LoginButton extends StatelessWidget {
                     context,
                     toast: _showToast(
                       context,
-                      jsonDecode(response.body)["detailMessage"],
+                      'Login Successful', //jsonDecode(response.body)["detailMessage"],
                       hexToColor('#00c16a'), //hexToColor('#64B6A9'),
                       false,
                     ),
                   );
 
-                  String trimmedLoginString = loginString.trim();
+                  print(response.body);
 
-                  fetchUser(trimmedLoginString).then((user) {
-                    Timer(Duration(seconds: 1), () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        AfterLoginRoute,
-                        (Route<dynamic> route) => false,
-                        arguments: {"loginUser": user},
-                      );
-                    });
-                  });
+                  //String trimmedLoginString = loginString.trim();
 
-                  // Timer(Duration(seconds: 1), () {
-                  //   Navigator.of(context).pushNamedAndRemoveUntil(
-                  //     AfterLoginRoute,
-                  //     (Route<dynamic> route) => false,
-                  //     arguments: {"loginUsrname": trimmedLoginString},
-                  //   );
+                  // fetchUser(trimmedLoginString).then((retUser) {
+                  //   setState(() {
+                  //     user.firstName = retUser.firstName;
+                  //     user.lastName = retUser.lastName;
+                  //     user.username = retUser.username;
+                  //     user.emailAddress = retUser.emailAddress;
+                  //     user.phone = retUser.phone;
+                  //     user.birthday = retUser.birthday;
+                  //     user.bio = retUser.bio;
+                  //     user.dateCreated = retUser.dateCreated;
+                  //     user.profilePicture = retUser.profilePicture;
+                  //     user.userFavs = retUser.userFavs;
+                  //     user.userPosts = retUser.userPosts;
+                  //   });
                   // });
+
+                  //fetchUser(trimmedLoginString);
+                  int userId = int.parse(response.body);
+
+                  Timer(Duration(seconds: 1), () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AfterLoginRoute,
+                      (Route<dynamic> route) => false,
+                      //arguments: {"loginUser": user},
+                      arguments: {"usedID": userId},
+                    );
+                  });
                 } else if (response.statusCode == 404) {
                   FToast.toast(
                     context,
@@ -106,12 +136,15 @@ class LoginButton extends StatelessWidget {
     return response;
   }
 
-  Future<PhoblockUser> fetchUser(String usernameLoggedIn) async {
+  Future<void> fetchUser(String usernameLoggedIn) async {
     final response =
         await http.get('http://127.0.0.1:8080/Users/User/' + usernameLoggedIn);
 
     if (response.statusCode == 200) {
-      return PhoblockUser.fromJson(jsonDecode(response.body));
+      setState(() {
+        user = PhoblockUser.fromJson(jsonDecode(response.body));
+      });
+      //return PhoblockUser.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load User');
     }

@@ -13,9 +13,9 @@ import 'Gallery/gallery_screen.dart';
 import '../../style.dart';
 
 class CameraScreen extends StatefulWidget {
-  final String usernameLoggedIn;
+  final int userId;
 
-  CameraScreen({this.usernameLoggedIn});
+  CameraScreen({this.userId});
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -33,7 +33,7 @@ class _CameraScreenState extends State<CameraScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewPostScreen(image, widget.usernameLoggedIn),
+        builder: (context) => PreviewPostScreen(image, widget.userId),
       ),
     );
   }

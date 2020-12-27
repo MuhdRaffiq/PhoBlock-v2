@@ -8,8 +8,9 @@ import '../../style.dart';
 // ignore: must_be_immutable
 class EditProfile extends StatefulWidget {
   PhoblockUser user;
+  int userId;
 
-  EditProfile({this.user});
+  EditProfile({this.user, this.userId});
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -18,19 +19,12 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   GlobalKey<EditProfileHeaderState> _editProfileHeader;
 
-  //final firstNameTextController = TextEditingController();
   TextEditingController firstNameTextController;
-  //final lastNameTextController = TextEditingController();
   TextEditingController lastNameTextController;
-  //final usernameTextController = TextEditingController();
   TextEditingController usernameTextController;
-  //final bioTextController = TextEditingController();
   TextEditingController bioTextController;
-  //final emailTextController = TextEditingController();
   TextEditingController emailTextController;
-  //final phoneTextController = TextEditingController();
   TextEditingController phoneTextController;
-  //final birthdayTextController = TextEditingController();
   TextEditingController birthdayTextController;
 
   final firstNameFormKey = GlobalKey<FormState>();
@@ -143,6 +137,7 @@ class _EditProfileState extends State<EditProfile> {
           SubmitButton(
             imageKey: _editProfileHeader,
             loggedInUser: widget.user,
+            userId: widget.userId,
             firstNameTextController: firstNameTextController,
             firstNameFormKey: firstNameFormKey,
             lastNameTextController: lastNameTextController,

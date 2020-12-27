@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/phoblock_user.dart';
 import 'Widgets/forgot_password.dart';
 import 'Widgets/image_banner.dart';
 import 'login_button.dart';
@@ -9,12 +10,17 @@ import 'Widgets/title_section.dart';
 
 class LoginSignupPage extends StatefulWidget {
   @override
-  _LoginSignupPageState createState() => _LoginSignupPageState();
+  LoginSignupPageState createState() => LoginSignupPageState();
 }
 
-class _LoginSignupPageState extends State<LoginSignupPage> {
+class LoginSignupPageState extends State<LoginSignupPage> {
   final loginCredentialController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -35,7 +41,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           TextBox(loginCredentialController),
           PasswordTextBox(passwordController),
           ForgotPassword(),
-          LoginButton(loginCredentialController, passwordController),
+          LoginButton(
+            loginCredentialController,
+            passwordController,
+          ),
           NoAccount(),
         ],
       ),

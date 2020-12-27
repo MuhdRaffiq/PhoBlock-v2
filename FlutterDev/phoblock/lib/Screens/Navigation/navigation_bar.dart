@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:phoblock/Model/phoblock_user.dart';
@@ -12,30 +10,21 @@ import '../../style.dart';
 
 // ignore: must_be_immutable
 class NavigationBar extends StatefulWidget {
-  //final String usernameLoggedIn;
-  PhoblockUser loggedInUser;
+  final int userId;
 
-  NavigationBar({this.loggedInUser});
+  NavigationBar(this.userId);
 
   @override
   State<StatefulWidget> createState() {
-    return _NavigationState();
+    return NavigationState();
   }
 }
 
 // ignore: must_be_immutable
-class _NavigationState extends State<NavigationBar> {
+class NavigationState extends State<NavigationBar> {
   int _currentIndex = 0;
 
   Widget showWidget = HomeScreen();
-
-  // final List<Widget> _children = [
-  //   HomeScreen(),
-  //   DiscoverScreen(),
-  //   CameraScreen(), //UploadScreen(),
-  //   NotificationScreen(),
-  //   ProfileScreen(),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +89,10 @@ class _NavigationState extends State<NavigationBar> {
         _currentIndex = index;
       });
     } else if (index == 2) {
-      setState(() {
-        _currentIndex = 0;
-      });
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              CameraScreen(usernameLoggedIn: widget.loggedInUser.username),
-        ),
+            builder: (context) => CameraScreen(userId: widget.userId)),
       );
     } else if (index == 3) {
       setState(() {
@@ -117,7 +101,7 @@ class _NavigationState extends State<NavigationBar> {
       });
     } else if (index == 4) {
       setState(() {
-        showWidget = ProfileScreen(user: widget.loggedInUser);
+        showWidget = ProfileScreen(userId: widget.userId);
         _currentIndex = index;
       });
     }
