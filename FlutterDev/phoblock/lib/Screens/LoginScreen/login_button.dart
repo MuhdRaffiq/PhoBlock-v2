@@ -60,34 +60,12 @@ class LoginButtonState extends State<LoginButton> {
                     ),
                   );
 
-                  print(response.body);
-
-                  //String trimmedLoginString = loginString.trim();
-
-                  // fetchUser(trimmedLoginString).then((retUser) {
-                  //   setState(() {
-                  //     user.firstName = retUser.firstName;
-                  //     user.lastName = retUser.lastName;
-                  //     user.username = retUser.username;
-                  //     user.emailAddress = retUser.emailAddress;
-                  //     user.phone = retUser.phone;
-                  //     user.birthday = retUser.birthday;
-                  //     user.bio = retUser.bio;
-                  //     user.dateCreated = retUser.dateCreated;
-                  //     user.profilePicture = retUser.profilePicture;
-                  //     user.userFavs = retUser.userFavs;
-                  //     user.userPosts = retUser.userPosts;
-                  //   });
-                  // });
-
-                  //fetchUser(trimmedLoginString);
                   int userId = int.parse(response.body);
 
                   Timer(Duration(seconds: 1), () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       AfterLoginRoute,
                       (Route<dynamic> route) => false,
-                      //arguments: {"loginUser": user},
                       arguments: {"usedID": userId},
                     );
                   });

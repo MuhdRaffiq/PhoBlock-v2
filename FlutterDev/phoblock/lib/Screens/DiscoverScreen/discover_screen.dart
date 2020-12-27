@@ -16,7 +16,7 @@ class DiscoverScreen extends StatelessWidget {
             horizontal: 15.0,
             vertical: 2.0,
           ),
-          child: SearchBar(),
+          //child: SearchBar(),
         ),
       ),
     );

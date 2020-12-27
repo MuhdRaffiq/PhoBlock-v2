@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:phoblock/Model/post.dart';
 
+// ignore: must_be_immutable
 class ProfileGallery extends StatelessWidget {
-  //final String _imagePath;
   List<Post> postList;
 
-  // ProfileGallery(this._imagePath);
   ProfileGallery(this.postList);
 
   @override
