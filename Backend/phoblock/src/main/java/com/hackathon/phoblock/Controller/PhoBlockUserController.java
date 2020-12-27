@@ -67,8 +67,19 @@ public class PhoBlockUserController {
         return retrievedUser;
     }
 
+    @GetMapping("/Users/User/Id/{id}")
+    PhoBlockUser getUserbyId(@PathVariable int id) throws ResourceNotFoundException {
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findById(id);
+
+        if(retrievedUser == null){
+            throw new ResourceNotFoundException("User not found");
+        }
+
+        return retrievedUser;
+    }
+
     @PostMapping("/AuthenticateLogin")
-    PhoBlockUser validateLogin(@RequestBody PhoBlockLoginAuthentication loginCredentials)
+    Integer validateLogin(@RequestBody PhoBlockLoginAuthentication loginCredentials)
             throws ResourceNotFoundException, OnSuccessException {
 
         if(phoBlockUserRepository.findByEmailAddress(loginCredentials.getEmailAddress()) == null &&
@@ -83,13 +94,15 @@ public class PhoBlockUserController {
                     throw new ResourceNotFoundException("Invalid Username/Password");
                 }
 
-                throw new OnSuccessException("Logging in as " + retrievedUserByEmail.getUserName());
+                return retrievedUserByEmail.getId();
+                //throw new OnSuccessException("Logging in as " + retrievedUserByEmail.getUserName());
             }else{
                 if(!retrievedUserByUsername.getUserPassword().equals(loginCredentials.getPassword())){
                     throw new ResourceNotFoundException("Invalid Username/Password");
                 }
 
-                throw new OnSuccessException("Logging in as " + retrievedUserByUsername.getUserName());
+                return retrievedUserByUsername.getId();
+                //throw new OnSuccessException("Logging in as " + retrievedUserByUsername.getUserName());
             }
 
 

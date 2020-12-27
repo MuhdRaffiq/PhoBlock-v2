@@ -74,6 +74,34 @@ public class PostController {
         }
     }
 
+    @PostMapping("/users/user/{id}/posts")
+    public Post createPostForId(@RequestBody Post post, @PathVariable int id)
+            throws ResourceNotFoundException, OnSuccessException {
+
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findById(id);
+
+        if(retrievedUser == null){
+            throw new ResourceNotFoundException("Username not found");
+        }else{
+
+            retrievedUser.addUserPost(post);
+            post.setPostOwner(retrievedUser);
+            post.setOwnerUsername(retrievedUser.getUserName());
+
+            Image postImage = post.getPostPicture();
+            postImage.setImagePost(post);
+
+            //Modify retrievedUser data
+            phoBlockUserRepository.save(retrievedUser);
+            //Save new post to Post Repository
+            postRepository.save(post);
+            //Save image post to Image Repository
+            imageRepository.save(post.getPostPicture());
+
+            throw new OnSuccessException("New Post Uploaded");
+        }
+    }
+
     @PutMapping("/users/{userName}/posts/{postId}")
     public Post updatePost(@PathVariable String userName, @PathVariable Integer postId, @RequestBody Post requestPost)
             throws ResourceNotFoundException {
