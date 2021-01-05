@@ -56,12 +56,14 @@ public class PostController {
             throw new ResourceNotFoundException("Username not found");
         }else{
 
-            retrievedUser.addUserPost(post);
             post.setPostOwner(retrievedUser);
             post.setOwnerUsername(userName);
+            post.setUserDp(retrievedUser.getUserDefaultPicture());
 
             Image postImage = post.getPostPicture();
             postImage.setImagePost(post);
+
+            retrievedUser.addUserPost(post);
 
             //Modify retrievedUser data
             phoBlockUserRepository.save(retrievedUser);
@@ -87,6 +89,8 @@ public class PostController {
             retrievedUser.addUserPost(post);
             post.setPostOwner(retrievedUser);
             post.setOwnerUsername(retrievedUser.getUserName());
+            post.setOwnerUserId(id);
+            post.setUserDp(retrievedUser.getUserDefaultPicture());
 
             Image postImage = post.getPostPicture();
             postImage.setImagePost(post);

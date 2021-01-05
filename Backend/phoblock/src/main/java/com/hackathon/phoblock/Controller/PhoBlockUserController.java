@@ -140,6 +140,24 @@ public class PhoBlockUserController {
                 }
 
                 retrievedUser.setUserDefaultPicture(newImage);
+
+                for(Post userPost: retrievedUser.getUserPost()){
+                    Image idk = new Image(retrievedUser.getUserDefaultPicture().getImageName(),
+                            retrievedUser.getUserDefaultPicture().getImageType(),
+                            retrievedUser.getUserDefaultPicture().getImageString());
+
+                    userPost.setUserDp(idk);
+                    idk.setPostUserDp(userPost);
+
+//                    userPost.setUserDp(retrievedUser.getUserDefaultPicture());
+//
+//                    Image postUserDp = userPost.getUserDp();
+//                    postUserDp.setPostUserDp(userPost);
+
+                    imageRepository.save(idk);
+                    postRepository.save(userPost);
+                }
+
                 imageRepository.save(newImage);
             }
 

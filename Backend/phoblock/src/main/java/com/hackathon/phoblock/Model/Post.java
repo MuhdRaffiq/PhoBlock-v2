@@ -30,7 +30,11 @@ public class Post {
     String postTag;
     @Column
     String ownerUsername;
-    @ManyToOne
+    @Column
+    Integer ownerUserId;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "postUserDp")
+    Image userDp;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -107,6 +111,22 @@ public class Post {
 
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
+    }
+
+    public Integer getOwnerUserId() {
+        return ownerUserId;
+    }
+
+    public void setOwnerUserId(Integer ownerUserId) {
+        this.ownerUserId = ownerUserId;
+    }
+
+    public Image getUserDp() {
+        return userDp;
+    }
+
+    public void setUserDp(Image userDp) {
+        this.userDp = userDp;
     }
 
     public PhoBlockUser getPostOwner() {

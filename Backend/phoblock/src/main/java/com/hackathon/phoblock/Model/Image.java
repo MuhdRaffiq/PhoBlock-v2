@@ -39,6 +39,11 @@ public class Image {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Following followingImage;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_user_dp_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    Post postUserDp;
 
     public Image() {
         super();
@@ -96,5 +101,29 @@ public class Image {
 
     public void setImagePost(Post imagePost) {
         this.imagePost = imagePost;
+    }
+
+    public Follower getFollowerImage() {
+        return followerImage;
+    }
+
+    public void setFollowerImage(Follower followerImage) {
+        this.followerImage = followerImage;
+    }
+
+    public Following getFollowingImage() {
+        return followingImage;
+    }
+
+    public void setFollowingImage(Following followingImage) {
+        this.followingImage = followingImage;
+    }
+
+    public Post getPostUserDp() {
+        return postUserDp;
+    }
+
+    public void setPostUserDp(Post postUserDp) {
+        this.postUserDp = postUserDp;
     }
 }

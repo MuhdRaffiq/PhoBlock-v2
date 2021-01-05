@@ -34,7 +34,7 @@ public class PhoBlockUser {
     String bio;
     @Column
     String phoneNumber;
-    @OneToMany(mappedBy = "postOwner")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "postOwner")
     Set<Post> userPost;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userImage")
     Image userDefaultPicture;
