@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class EmailTextBox extends StatelessWidget {
   final textController;
   final formKey;

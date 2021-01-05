@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class TitleHeader extends StatelessWidget {
   final String _text;
 

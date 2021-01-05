@@ -117,24 +117,6 @@ class _SubmitButtonState extends State<SubmitButton> {
                       ),
                     );
 
-                    // Uint8List bytes;
-                    // String _img64String;
-                    // String imageFullName;
-                    // String imgName;
-                    // String imgType;
-
-                    // if (widget.imageKey.currentState.imageFile != null) {
-                    //   //Get image bytes
-                    //   bytes = await widget.imageKey.currentState.imageFile
-                    //       .readAsBytes();
-                    //   //Conver byte to String
-                    //   _img64String = base64Encode(bytes);
-                    //   imageFullName =
-                    //       basename(widget.imageKey.currentState.imageFile.path);
-                    //   imgName = imageFullName.split(".")[0];
-                    //   imgType = imageFullName.split(".")[1];
-                    // }
-
                     Timer(Duration(seconds: 1), () {
                       //Navigator.pop(context, widget.userId);
                       Navigator.of(context).pushNamedAndRemoveUntil(
@@ -218,8 +200,6 @@ class _SubmitButtonState extends State<SubmitButton> {
       Uint8List bytes = await imageFile.readAsBytes();
       //Conver byte to String
       String _img64String = base64Encode(bytes);
-
-      print(_img64String);
 
       response = await http.put(
           'http://127.0.0.1:8080/Users/User/' + widget.loggedInUser.username,

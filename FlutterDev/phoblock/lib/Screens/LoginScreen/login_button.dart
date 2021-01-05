@@ -55,7 +55,7 @@ class LoginButtonState extends State<LoginButton> {
                     toast: _showToast(
                       context,
                       'Login Successful', //jsonDecode(response.body)["detailMessage"],
-                      hexToColor('#00c16a'), //hexToColor('#64B6A9'),
+                      hexToColor('#00c16a'),
                       false,
                     ),
                   );
@@ -122,7 +122,6 @@ class LoginButtonState extends State<LoginButton> {
       setState(() {
         user = PhoblockUser.fromJson(jsonDecode(response.body));
       });
-      //return PhoblockUser.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load User');
     }

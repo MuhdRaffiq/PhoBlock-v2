@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 // ignore: must_be_immutable
 class GalleryScreen extends StatelessWidget {
   Future<File> imageFile;
@@ -20,7 +23,6 @@ class GalleryScreen extends StatelessWidget {
         )
       ],
     );
-    //pickImageFromGallery(ImageSource.gallery);
   }
 
   Widget showImage() {
@@ -52,8 +54,4 @@ class GalleryScreen extends StatelessWidget {
   pickImageFromGallery(ImageSource imageSource) {
     imageFile = ImagePicker.pickImage(source: imageSource);
   }
-
-  // pickImageFromGallery() async {
-  //   File image = await ImagePicker.pickImage(source: null);
-  // }
 }

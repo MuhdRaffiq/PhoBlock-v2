@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../custom_outline_button.dart';
 import '../../../style.dart';
 
-//enum YesNo { yes, no }
-
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class ProposalWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -12,7 +13,6 @@ class ProposalWidget extends StatefulWidget {
 }
 
 class _ProposalBody extends State<ProposalWidget> {
-  //YesNo _yesNo = YesNo.no;
   String _yes = 'Yes';
   String _no = 'No';
 
@@ -79,7 +79,7 @@ class _ProposalBody extends State<ProposalWidget> {
           ),
           CustomOutlineButton(
             text: "Submit Proposal",
-            color: hexToColor('#64B6A9'), //hexToColor('#64B6A9'),
+            color: hexToColor('#64B6A9'),
             onPressed: () {},
           ),
         ],

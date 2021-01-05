@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class UsernameTextSection extends StatelessWidget {
   final String _nameString;
   final String _bioString;

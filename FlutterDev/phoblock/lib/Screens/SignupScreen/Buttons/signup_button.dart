@@ -8,6 +8,9 @@ import 'package:intl/intl.dart';
 import '../custom_outline_button.dart';
 import '../../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class SignupButton extends StatelessWidget {
   final firstNameController;
   final lastNameController;

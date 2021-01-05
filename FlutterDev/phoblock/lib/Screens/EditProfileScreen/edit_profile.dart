@@ -43,8 +43,8 @@ class _EditProfileState extends State<EditProfile> {
     bioTextController.dispose();
     emailTextController.dispose();
     phoneTextController.dispose();
-    usernameTextController.dispose();
     birthdayTextController.dispose();
+
     super.dispose();
   }
 

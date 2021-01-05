@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/Screens/ProfileScreen/profile_screen.dart';
 import 'Screens/EditProfileScreen/edit_profile.dart';
-import 'Screens/HomeScreen/home_screen.dart';
 import 'Screens/LoginScreen/login_signup_page.dart';
 import 'Screens/Navigation/navigation_bar.dart';
 import 'Screens/SignupScreen/signup_screen.dart';
@@ -12,6 +12,7 @@ const EditProfileRoute = '/EditProfile';
 const SignInRoute = '/';
 const SignUpRoute = '/SignUp';
 const VoteServicesRoute = '/VoteAndServices';
+const ProfileRoute = '/Profile';
 
 class App extends StatelessWidget {
   @override
@@ -53,6 +54,12 @@ class App extends StatelessWidget {
           screen = EditProfile(
             user: arguments['loginUser'],
             userId: arguments['userId'],
+          );
+          break;
+        case ProfileRoute:
+          screen = ProfileScreen(
+            userId: arguments['userId'],
+            otherUserId: arguments['otherUserId'],
           );
           break;
         default:

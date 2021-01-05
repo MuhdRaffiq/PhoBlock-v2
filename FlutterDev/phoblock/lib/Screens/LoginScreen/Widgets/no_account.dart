@@ -23,13 +23,6 @@ class NoAccount extends StatelessWidget {
             ),
             onTap: () => _onNoAccountTap(context),
           ),
-          // child: Text(
-          //   'No account? Sign up here',
-          //   style: TextStyle(
-          //       fontFamily: 'Lalezar',
-          //       fontWeight: FontWeight.w400,
-          //       color: Colors.black),
-          // ),
         ),
       ],
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class HeaderText extends StatelessWidget {
   final String _headerString;
   static const double _hPad = 50.0;

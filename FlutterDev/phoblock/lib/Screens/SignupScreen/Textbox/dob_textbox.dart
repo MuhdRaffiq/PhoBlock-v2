@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class DOBTextBox extends StatelessWidget {
   final textController;
   final formKey;
@@ -30,7 +33,7 @@ class DOBTextBox extends StatelessWidget {
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(1900),
-                  lastDate: DateTime(2021),
+                  lastDate: DateTime(2050),
                   initialEntryMode: DatePickerEntryMode.input,
                   builder: (BuildContext context, Widget child) {
                     return Theme(

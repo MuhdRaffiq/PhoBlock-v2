@@ -11,10 +11,12 @@ import 'PreviewPostHeader/post_header.dart';
 import 'post_button.dart';
 import '../../../style.dart';
 
-// ignore: must_be_immutable
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class PreviewPostScreen extends StatefulWidget {
-  File imageFile;
-  int userId;
+  final File imageFile;
+  final int userId;
 
   PreviewPostScreen(this.imageFile, this.userId);
 
@@ -37,14 +39,6 @@ class PreviewPostScreenState extends State<PreviewPostScreen> {
     });
   }
 
-  Widget _showHeader() {
-    if (phoblockUser == null) {
-      return Spacer();
-    } else {
-      return PostHeader(phoblockUser);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,16 +52,64 @@ class PreviewPostScreenState extends State<PreviewPostScreen> {
             child: Column(
               children: [
                 _showHeader(),
-                PostBody(widget.imageFile), // PostBody(this.imageFile),
-                PostFooter(),
-                CaptionTextBox(captionController),
+                _showBody(),
+                _showFooter(),
+                _showCaptionTextBox(),
               ],
             ),
           ),
-          PostButton(widget.userId, widget.imageFile, captionController),
-          CancelButton(widget.userId),
+          _showPostButton(),
+          _showCancelButton(),
         ],
       ),
     );
+  }
+
+  Widget _showHeader() {
+    if (phoblockUser == null) {
+      return Spacer();
+    } else {
+      return PostHeader(phoblockUser);
+    }
+  }
+
+  Widget _showBody() {
+    if (widget.imageFile == null) {
+      return Spacer();
+    } else {
+      return PostBody(widget.imageFile);
+    }
+  }
+
+  Widget _showFooter() {
+    if (_showBody() != Spacer() && _showHeader() != Spacer()) {
+      return PostFooter();
+    } else {
+      return Spacer();
+    }
+  }
+
+  Widget _showCaptionTextBox() {
+    if (_showBody() != Spacer() && _showHeader() != Spacer()) {
+      return CaptionTextBox(captionController);
+    } else {
+      return Spacer();
+    }
+  }
+
+  Widget _showPostButton() {
+    if (widget.imageFile == null && widget.userId == null) {
+      return Spacer();
+    } else {
+      return PostButton(widget.userId, widget.imageFile, captionController);
+    }
+  }
+
+  Widget _showCancelButton() {
+    if (widget.userId == null) {
+      return Spacer();
+    } else {
+      return CancelButton(widget.userId);
+    }
   }
 }

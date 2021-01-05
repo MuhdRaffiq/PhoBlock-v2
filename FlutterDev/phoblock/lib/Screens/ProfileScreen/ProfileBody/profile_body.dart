@@ -2,19 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:phoblock/Model/post.dart';
 import '../ProfileGallery/profile_gallery.dart';
 
-// ignore: must_be_immutable
 class ProfileBody extends StatelessWidget {
-  List<Post> postList;
+  final List<Post> postList;
 
   ProfileBody(this.postList);
-
-  Widget _buildGallery() {
-    if (postList.length == 0) {
-      return Text('fdfd');
-    } else {
-      return ProfileGallery(postList);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,5 +42,13 @@ class ProfileBody extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildGallery() {
+    if (postList.length == 0) {
+      return Text('fdfd');
+    } else {
+      return ProfileGallery(postList);
+    }
   }
 }

@@ -13,74 +13,85 @@ import '../../../app.dart';
 import '../../../style.dart';
 import '../../../Model/image.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class PostButton extends StatelessWidget {
   static const double _hPad = 40.0;
-  int userId;
-  File imageFile;
+  final int userId;
+  final File imageFile;
   final captionController;
 
   PostButton(this.userId, this.imageFile, this.captionController);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 0.0),
-          child: CustomOutlineButton(
-            text: "Post",
-            color: hexToColor('#64B6A9'),
-            onPressed: () {
-              String captionString = captionController.text;
+    return _showButton(context);
+  }
 
-              createPost(captionString).then((response) {
-                if (response.statusCode == 200) {
-                  FToast.toast(
-                    context,
-                    toast: _showToast(
+  Widget _showButton(context) {
+    if (userId == null && imageFile == null && captionController == null) {
+      return Spacer();
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 0.0),
+            child: CustomOutlineButton(
+              text: "Post",
+              color: hexToColor('#64B6A9'),
+              onPressed: () {
+                String captionString = captionController.text;
+
+                createPost(captionString).then((response) {
+                  if (response.statusCode == 200) {
+                    FToast.toast(
                       context,
-                      jsonDecode(response.body)["detailMessage"],
-                      hexToColor('#64B6A9'),
-                      false,
-                    ),
-                  );
-
-                  Timer(Duration(seconds: 1), () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      AfterLoginRoute,
-                      (Route<dynamic> route) => false,
-                      arguments: {"usedID": userId},
+                      toast: _showToast(
+                        context,
+                        jsonDecode(response.body)["detailMessage"],
+                        hexToColor('#64B6A9'),
+                        false,
+                      ),
                     );
-                  });
-                } else if (response.statusCode == 406) {
-                  FToast.toast(
-                    context,
-                    toast: _showToast(
+
+                    Timer(Duration(seconds: 1), () {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        AfterLoginRoute,
+                        (Route<dynamic> route) => false,
+                        arguments: {"usedID": userId},
+                      );
+                    });
+                  } else if (response.statusCode == 406) {
+                    FToast.toast(
                       context,
-                      jsonDecode(response.body)["detailMessage"],
-                      Colors.red,
-                      true,
-                    ),
-                  );
-                } else {
-                  FToast.toast(
-                    context,
-                    toast: _showToast(
+                      toast: _showToast(
+                        context,
+                        jsonDecode(response.body)["detailMessage"],
+                        Colors.red,
+                        true,
+                      ),
+                    );
+                  } else {
+                    FToast.toast(
                       context,
-                      'Server Error',
-                      Colors.red,
-                      true,
-                    ),
-                  );
-                }
-              });
-            },
-          ),
-        )
-      ],
-    );
+                      toast: _showToast(
+                        context,
+                        'Server Error',
+                        Colors.red,
+                        true,
+                      ),
+                    );
+                  }
+                });
+              },
+            ),
+          )
+        ],
+      );
+    }
   }
 
   Future<http.Response> createPost(String postCaption) async {

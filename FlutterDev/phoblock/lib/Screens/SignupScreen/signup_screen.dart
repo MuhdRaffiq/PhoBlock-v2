@@ -11,6 +11,9 @@ import 'Buttons/signup_button.dart';
 import 'Textbox/usrname_textbox.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class SignupScreen extends StatefulWidget {
   @override
   _SignupScreen createState() => _SignupScreen();

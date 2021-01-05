@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import '../../../app.dart';
 import 'custom_outline_button.dart';
 
-// ignore: must_be_immutable
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class CancelButton extends StatelessWidget {
   static const double _hPad = 40.0;
-  int userId;
+  final int userId;
 
   CancelButton(this.userId);
 

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:phoblock/Model/phoblock_user.dart';
-import 'package:phoblock/app.dart';
 import '../custom_outline_button.dart';
 import '../../../style.dart';
 
-class Buttons extends StatelessWidget {
-  static const double _hPad = 20.0;
-  final PhoblockUser user;
-  final int userID;
+class MessageFollowButtons extends StatefulWidget {
+  @override
+  MessageFollowButtonState createState() => MessageFollowButtonState();
+}
 
-  Buttons(this.user, this.userID);
+class MessageFollowButtonState extends State<MessageFollowButtons> {
+  static const double _hPad = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -22,31 +21,22 @@ class Buttons extends StatelessWidget {
             height: 40.0,
             width: 180.0,
             child: CustomOutlineButton(
-              text: "Vote/Service",
+              text: "Follow",
               color: hexToColor('#64B6A9'),
-              onPressed: () => _voteServiceButtonTap(context),
+              onPressed: () {},
             ),
           ),
           Container(
             height: 40.0,
             width: 180.0,
             child: CustomOutlineButton(
-              text: "Edit Profile",
+              text: "Message",
               color: Colors.black38,
-              onPressed: () => _editProfileButtonTap(context),
+              onPressed: () {},
             ),
           ),
         ],
       ),
     );
-  }
-
-  _voteServiceButtonTap(BuildContext context) {
-    Navigator.pushNamed(context, VoteServicesRoute);
-  }
-
-  _editProfileButtonTap(BuildContext context) {
-    Navigator.pushNamed(context, EditProfileRoute,
-        arguments: {"loginUser": user, "userId": userID});
   }
 }

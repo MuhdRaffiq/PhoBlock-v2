@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:phoblock/Model/phoblock_user.dart';
+import 'package:phoblock/Model/post.dart';
 import '../DiscoverScreen/discover_screen.dart';
 import '../HomeScreen/home_screen.dart';
 import '../Notification/notification_screen.dart';
@@ -24,12 +25,24 @@ class NavigationBar extends StatefulWidget {
 class NavigationState extends State<NavigationBar> {
   int _currentIndex = 0;
 
-  Widget showWidget = HomeScreen();
+  List<Widget> screens;
+
+  @override
+  void initState() {
+    super.initState();
+    screens = [
+      HomeScreen(widget.userId),
+      DiscoverScreen(),
+      Spacer(),
+      NotificationScreen(),
+      ProfileScreen(userId: widget.userId, otherUserId: null)
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: showWidget, //_children[_currentIndex],
+      body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: _onTapTapped,
@@ -78,30 +91,14 @@ class NavigationState extends State<NavigationBar> {
   }
 
   _onTapTapped(int index) {
-    if (index == 0) {
-      setState(() {
-        showWidget = HomeScreen();
-        _currentIndex = index;
-      });
-    } else if (index == 1) {
-      setState(() {
-        showWidget = DiscoverScreen();
-        _currentIndex = index;
-      });
-    } else if (index == 2) {
+    if (index == 2) {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => CameraScreen(userId: widget.userId)),
       );
-    } else if (index == 3) {
+    } else {
       setState(() {
-        showWidget = NotificationScreen();
-        _currentIndex = index;
-      });
-    } else if (index == 4) {
-      setState(() {
-        showWidget = ProfileScreen(userId: widget.userId);
         _currentIndex = index;
       });
     }

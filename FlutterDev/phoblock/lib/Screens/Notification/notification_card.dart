@@ -24,7 +24,7 @@ class NotificationCard extends StatelessWidget {
               trailing: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
                 child: Image.asset(this._imagePath),
-              ), //NotificationImage(this._imagePath),
+              ),
             ),
           ],
         ),

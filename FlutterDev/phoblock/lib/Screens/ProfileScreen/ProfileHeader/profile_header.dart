@@ -5,40 +5,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:phoblock/Model/image.dart';
 
-// ignore: must_be_immutable
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class ProfileHeader extends StatelessWidget {
-  ImageFile userDp;
-  int postLength;
+  final ImageFile userDp;
+  final int postLength;
 
   ProfileHeader(this.userDp, this.postLength);
-
-  Widget avatarWidget() {
-    if (userDp == null) {
-      return Container(
-        child: CircleAvatar(
-          backgroundColor: Colors.black,
-          radius: 59.0,
-          child: CircleAvatar(
-            radius: 58.0,
-            backgroundImage: AssetImage("assets/images/doe.jpg"),
-          ),
-        ),
-      );
-    } else {
-      Uint8List imageBytes = base64.decode(userDp.imageString);
-
-      return Container(
-        child: CircleAvatar(
-          backgroundColor: Colors.black,
-          radius: 59.0,
-          child: CircleAvatar(
-            radius: 58.0,
-            backgroundImage: MemoryImage(imageBytes),
-          ),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,5 +93,33 @@ class ProfileHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget avatarWidget() {
+    if (userDp == null) {
+      return Container(
+        child: CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 59.0,
+          child: CircleAvatar(
+            radius: 58.0,
+            backgroundImage: AssetImage("assets/images/doe.jpg"),
+          ),
+        ),
+      );
+    } else {
+      Uint8List imageBytes = base64.decode(userDp.imageString);
+
+      return Container(
+        child: CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 59.0,
+          child: CircleAvatar(
+            radius: 58.0,
+            backgroundImage: MemoryImage(imageBytes),
+          ),
+        ),
+      );
+    }
   }
 }

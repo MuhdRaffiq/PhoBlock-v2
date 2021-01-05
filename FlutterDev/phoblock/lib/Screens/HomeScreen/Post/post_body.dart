@@ -1,22 +1,36 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/image.dart';
+import 'package:phoblock/Model/post.dart';
 
 class PostBody extends StatelessWidget {
-  final String _imagePath;
+  final Post postFeed;
 
-  PostBody(this._imagePath);
+  PostBody(this.postFeed);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //padding: const EdgeInsets.fromLTRB(_hPad, 32.0, _hPad, 4.0),
-      margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 5.0),
-      constraints: BoxConstraints.expand(
-        height: 400.0,
-      ),
-      child: Image.asset(
-        _imagePath,
-        fit: BoxFit.fill,
-      ),
-    );
+    return _showPostBody();
+  }
+
+  Widget _showPostBody() {
+    if (postFeed.postPicture == null) {
+      return Container(
+        width: 0.0,
+        height: 0.0,
+      );
+    } else {
+      return Container(
+        margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 5.0),
+        constraints: BoxConstraints.expand(
+          height: 400.0,
+        ),
+        child: Image.memory(
+          base64.decode(postFeed.postPicture.imageString),
+          fit: BoxFit.fill,
+        ),
+      );
+    }
   }
 }

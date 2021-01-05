@@ -4,6 +4,9 @@ import 'Proposal/proposal.dart';
 import 'Services/services.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class VoteServices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

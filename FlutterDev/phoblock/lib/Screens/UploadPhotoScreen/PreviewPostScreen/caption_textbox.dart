@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class CaptionTextBox extends StatelessWidget {
-  //static const double _hPad = 40.0;
   final textController;
 
   CaptionTextBox(this.textController);

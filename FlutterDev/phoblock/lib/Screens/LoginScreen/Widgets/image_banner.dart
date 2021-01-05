@@ -14,7 +14,6 @@ class ImageBanner extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          //padding: const EdgeInsets.fromLTRB(_hPad, 32.0, _hPad, 4.0),
           margin: const EdgeInsets.fromLTRB(_hPad, 150.0, _hPad, 10.0),
           constraints: BoxConstraints.expand(
             height: 200.0,

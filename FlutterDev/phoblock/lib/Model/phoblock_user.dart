@@ -4,6 +4,7 @@ import 'package:phoblock/Model/image.dart';
 import 'package:phoblock/Model/post.dart';
 
 class PhoblockUser {
+  int userId;
   String firstName;
   String lastName;
   String emailAddress;
@@ -17,6 +18,7 @@ class PhoblockUser {
   List<Post> userFavs;
 
   PhoblockUser({
+    this.userId,
     this.firstName,
     this.lastName,
     this.emailAddress,
@@ -40,6 +42,7 @@ class PhoblockUser {
     ImageFile userDp = ImageFile.fromJson(json1['userDefaultPicture']);
 
     return PhoblockUser(
+      userId: json1['id'],
       firstName: json1['firstName'],
       lastName: json1['lastName'],
       emailAddress: json1['emailAddress'],
@@ -72,7 +75,7 @@ class PhoblockUser {
     if (response.statusCode == 200) {
       return PhoblockUser.fromJson(jsonDecode(response.body));
     } else {
-      throw null;
+      return null;
     }
   }
 }
