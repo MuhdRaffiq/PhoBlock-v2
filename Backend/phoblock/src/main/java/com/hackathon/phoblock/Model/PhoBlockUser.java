@@ -165,6 +165,13 @@ public class PhoBlockUser {
         this.followers.add(follower);
     }
 
+    /*
+    * Helper function to remove follower
+    * */
+    public void removeFollower(Follower follower){
+        this.followers.remove(follower);
+    }
+
     public Set<Following> getFollowings() {
         return followings;
     }
@@ -178,6 +185,13 @@ public class PhoBlockUser {
      * */
     public void addFollowing(Following following){
         this.followings.add(following);
+    }
+
+    /*
+    * Helper function to remove following
+    * */
+    public void removeFollowing(Following following){
+        this.followings.remove(following);
     }
 
     public Set<Post> getUserFavorites() {

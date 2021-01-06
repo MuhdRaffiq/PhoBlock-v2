@@ -17,6 +17,8 @@ public class Following {
     String username;
     @Column(nullable = false)
     Date followingDate;
+    @Column
+    Integer followingId;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "followingImage")
     Image followingDefaultPicture;
     @ManyToOne
@@ -47,6 +49,14 @@ public class Following {
 
     public void setFollowingDate(Date followingDate) {
         this.followingDate = followingDate;
+    }
+
+    public Integer getFollowingId() {
+        return followingId;
+    }
+
+    public void setFollowingId(Integer followingId) {
+        this.followingId = followingId;
     }
 
     public Image getFollowingDefaultPicture() {

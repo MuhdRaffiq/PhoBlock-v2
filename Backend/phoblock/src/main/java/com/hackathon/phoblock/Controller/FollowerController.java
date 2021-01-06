@@ -54,5 +54,20 @@ public class FollowerController {
         return followers;
     }
 
+    @GetMapping("/Users/User/{userId}/Followers")
+    List<Follower> getUserFollowersById(@PathVariable int userId){
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findById(userId);
+
+        List<Follower> followers = new ArrayList<>();
+
+        for(Follower follower: retrievedUser.getFollowers()){
+            followers.add(follower);
+        }
+
+        Collections.sort(followers, new FollowerController.FollowerSortByDate());
+
+        return followers;
+    }
+
 
 }

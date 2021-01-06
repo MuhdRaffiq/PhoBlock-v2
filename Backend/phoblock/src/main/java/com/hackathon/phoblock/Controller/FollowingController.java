@@ -1,5 +1,6 @@
 package com.hackathon.phoblock.Controller;
 
+import com.hackathon.phoblock.Exceptions.ResourceNotFoundException;
 import com.hackathon.phoblock.Model.Following;
 import com.hackathon.phoblock.Model.PhoBlockUser;
 import com.hackathon.phoblock.Repository.FollowingRepository;
@@ -49,6 +50,24 @@ public class FollowingController {
         Collections.sort(followings, new FollowingController.FollowingSortByDate());
 
         return followings;
+    }
+
+    @GetMapping("/Users/User/{userId}/Following/{otherUserId}")
+    boolean isFollowing(@PathVariable int userId, @PathVariable int otherUserId) throws ResourceNotFoundException {
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findById(userId);
+        PhoBlockUser retrievedOtherUser = phoBlockUserRepository.findById(otherUserId);
+
+        if(retrievedUser == null || retrievedOtherUser == null){
+            throw new ResourceNotFoundException("User not found!");
+        }
+
+        for(Following following: retrievedUser.getFollowings()){
+            if(following.getUsername().equals(retrievedOtherUser.getUserName())){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

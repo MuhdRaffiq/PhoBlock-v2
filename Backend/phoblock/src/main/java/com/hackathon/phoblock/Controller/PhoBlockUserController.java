@@ -95,14 +95,12 @@ public class PhoBlockUserController {
                 }
 
                 return retrievedUserByEmail.getId();
-                //throw new OnSuccessException("Logging in as " + retrievedUserByEmail.getUserName());
             }else{
                 if(!retrievedUserByUsername.getUserPassword().equals(loginCredentials.getPassword())){
                     throw new ResourceNotFoundException("Invalid Username/Password");
                 }
 
                 return retrievedUserByUsername.getId();
-                //throw new OnSuccessException("Logging in as " + retrievedUserByUsername.getUserName());
             }
 
 
@@ -149,11 +147,6 @@ public class PhoBlockUserController {
                     userPost.setUserDp(idk);
                     idk.setPostUserDp(userPost);
 
-//                    userPost.setUserDp(retrievedUser.getUserDefaultPicture());
-//
-//                    Image postUserDp = userPost.getUserDp();
-//                    postUserDp.setPostUserDp(userPost);
-
                     imageRepository.save(idk);
                     postRepository.save(userPost);
                 }
@@ -167,28 +160,41 @@ public class PhoBlockUserController {
         }
     }
 
-    @PostMapping("/Users/User/{username}/Follow/{followingUsername}")
-    ResponseEntity<?> followUser(@PathVariable String username, @PathVariable String followingUsername)
+    @PostMapping("/Users/User/{userId}/Follow/{followingUserId}")
+    ResponseEntity<?> followUser(@PathVariable int userId, @PathVariable int followingUserId)
             throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findById(userId);
+        PhoBlockUser retrievedFollowingUser = phoBlockUserRepository.findById(followingUserId);
 
-        if(retrievedUser == null){
+        if(retrievedUser == null && retrievedFollowingUser == null){
             throw new ResourceNotFoundException("User not found!");
         }else{
-            PhoBlockUser retrievedFollowingUser = phoBlockUserRepository.findByUserName(followingUsername);
+            //Check if user has followed the other username
+            for(Following following: retrievedUser.getFollowings()){
+                if(following.getUsername().equals(retrievedFollowingUser.getUserName())){
+                    return ResponseEntity.status(406).build();
+                }
+            }
 
+            //create a following
+            Following following = new Following();
+            following.setUsername(retrievedFollowingUser.getUserName());
+            following.setFollowingDate(new Date());
+            following.setFollowingId(retrievedFollowingUser.getId());
+            following.setFollowingDefaultPicture(retrievedFollowingUser.getUserDefaultPicture());
+            following.setFollower(retrievedUser);
+
+            followingRepository.save(following);
+
+            //Create a follower
             Follower follower = new Follower();
             follower.setUsername(retrievedUser.getUserName());
             follower.setFollowedDate(new Date());
-            follower.setFollowerDefaultPicture(retrievedUser.getUserDefaultPicture());
+            follower.setFollowerId(retrievedUser.getId());
+            follower.setFollowerDefaultPicture(retrievedFollowingUser.getUserDefaultPicture());
             follower.setFollowing(retrievedFollowingUser);
-            followerRepository.save(follower);
 
-            Following following = new Following();
-            following.setUsername(followingUsername);
-            following.setFollowingDate(new Date());
-            following.setFollowingDefaultPicture(retrievedFollowingUser.getUserDefaultPicture());
-            followingRepository.save(following);
+            followerRepository.save(follower);
 
             retrievedUser.addFollowing(following);
             retrievedFollowingUser.addFollower(follower);
@@ -200,38 +206,40 @@ public class PhoBlockUserController {
         }
     }
 
-    @PostMapping("/Users/User/{username}/Unfollow/{unfollowUsername}")
-    ResponseEntity<?> unfollowUser(@PathVariable String username, @PathVariable String unfollowUsername)
+    @PostMapping("/Users/User/{userId}/Unfollow/{unfollowUserId}")
+    ResponseEntity<?> unfollowUser(@PathVariable int userId, @PathVariable int unfollowUserId)
             throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
+        PhoBlockUser retrievedUser = phoBlockUserRepository.findById(userId);
+        PhoBlockUser retrievedFollowingUser = phoBlockUserRepository.findById(unfollowUserId);
 
         if(retrievedUser == null){
             throw new ResourceNotFoundException("User not found!");
         }else{
-            PhoBlockUser retrievedFollowingUser = phoBlockUserRepository.findByUserName(unfollowUsername);
 
-            Following getFollowing;
+            PhoBlockUser findFollowing = followingRepository.findByUsernameAndFollower(retrievedFollowingUser.getUserName(), retrievedUser);
 
+            if(findFollowing == null){
+                return ResponseEntity.status(406).build();
+            }
+
+            //Removing following from userId
             for(Following following: retrievedUser.getFollowings()){
-                if(following.getUsername().equals(retrievedFollowingUser.getUserName())){
-                    getFollowing = following;
-                    retrievedUser.getFollowings().remove(following);
+                if(following.getFollowingId() == findFollowing.getId()){
+                    retrievedUser.removeFollowing(following);
                     following.setFollower(null);
+                    followingRepository.delete(following);
 
-                    followingRepository.delete(getFollowing);
                     break;
                 }
             }
 
-            Follower getFollower;
-
+            //Removing follower from unfollowUsername
             for(Follower follower: retrievedFollowingUser.getFollowers()){
-                if(follower.getUsername().equals(retrievedUser.getUserName())){
-                    getFollower = follower;
-                    retrievedFollowingUser.getFollowers().remove(follower);
+                if(follower.getFollowerId() == retrievedUser.getId()){
+                    retrievedFollowingUser.removeFollower(follower);
                     follower.setFollowing(null);
+                    followerRepository.delete(follower);
 
-                    followerRepository.delete(getFollower);
                     break;
                 }
             }
