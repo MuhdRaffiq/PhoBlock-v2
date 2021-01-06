@@ -8,6 +8,9 @@ import 'Textbox/password_textbox.dart';
 import 'Textbox/text_box.dart';
 import 'Widgets/title_section.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class LoginSignupPage extends StatefulWidget {
   @override
   LoginSignupPageState createState() => LoginSignupPageState();

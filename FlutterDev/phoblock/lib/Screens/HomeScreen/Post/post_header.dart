@@ -6,6 +6,9 @@ import 'package:phoblock/Model/image.dart';
 import 'package:phoblock/Model/post.dart';
 import 'package:phoblock/app.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class PostHeader extends StatelessWidget {
   final int loggedInId;
   final Post postFeed;

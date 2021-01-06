@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:phoblock/Model/image.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class Post {
   String postCaption;
   int numberDownload;
@@ -13,7 +16,6 @@ class Post {
   ImageFile postPicture;
   ImageFile postUserDp;
   int postOwnerUserId;
-  //PhoblockUser postOwner;
 
   Post({
     this.postCaption,
@@ -25,7 +27,6 @@ class Post {
     this.postPicture,
     this.postUserDp,
     this.postOwnerUserId,
-    //this.postOwner,
   });
 
   factory Post.fromJson(Map<dynamic, dynamic> json) {
@@ -42,7 +43,6 @@ class Post {
       postPicture: postImage,
       postUserDp: owner,
       postOwnerUserId: json['ownerUserId'],
-      //postOwner: owner,
     );
   }
 

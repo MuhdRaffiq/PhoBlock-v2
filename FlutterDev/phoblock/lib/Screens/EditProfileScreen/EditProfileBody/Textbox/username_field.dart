@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class UsernameField extends StatelessWidget {
   final textController;
   final textFormKey;
@@ -21,7 +24,7 @@ class UsernameField extends StatelessWidget {
             Flexible(
               child: new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "", //"Enter Username",
+                  labelText: "",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),

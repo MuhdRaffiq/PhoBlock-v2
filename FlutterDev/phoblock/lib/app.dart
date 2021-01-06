@@ -14,6 +14,9 @@ const SignUpRoute = '/SignUp';
 const VoteServicesRoute = '/VoteAndServices';
 const ProfileRoute = '/Profile';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

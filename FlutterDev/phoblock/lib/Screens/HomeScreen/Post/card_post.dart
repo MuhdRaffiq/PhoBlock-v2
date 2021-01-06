@@ -6,6 +6,9 @@ import 'post_footer.dart';
 import 'post_header.dart';
 import '../../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class CardPost extends StatelessWidget {
   final int loggedInId;
   final Post postFeed;

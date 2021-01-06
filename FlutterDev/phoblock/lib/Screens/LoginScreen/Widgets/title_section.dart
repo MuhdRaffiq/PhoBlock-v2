@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class TitleSection extends StatelessWidget {
   final String _titleString;
   static const double _hPad = 50.0;

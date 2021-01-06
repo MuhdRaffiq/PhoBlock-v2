@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class ImageBanner extends StatelessWidget {
   // use underscore for private variable
   final String _imagePath;

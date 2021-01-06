@@ -4,6 +4,9 @@ import 'package:phoblock/app.dart';
 import '../custom_outline_button.dart';
 import '../../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class Buttons extends StatelessWidget {
   static const double _hPad = 20.0;
   final PhoblockUser user;

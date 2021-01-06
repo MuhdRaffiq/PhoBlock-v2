@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class ImageFile {
   String imageName;
   String imageType;

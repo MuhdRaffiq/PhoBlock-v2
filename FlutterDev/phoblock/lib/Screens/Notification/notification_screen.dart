@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'notification_card.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 // ignore: must_be_immutable
 class NotificationScreen extends StatelessWidget {
   String _imagePath;

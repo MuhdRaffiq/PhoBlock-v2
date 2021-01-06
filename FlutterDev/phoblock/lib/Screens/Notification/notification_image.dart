@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class NotificationImage extends StatelessWidget {
   final String _imagePath;
 

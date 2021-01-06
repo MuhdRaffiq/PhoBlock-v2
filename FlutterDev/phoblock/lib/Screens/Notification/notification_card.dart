@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'notification_image.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class NotificationCard extends StatelessWidget {
   final String _imagePath;
   final String _usernameString;

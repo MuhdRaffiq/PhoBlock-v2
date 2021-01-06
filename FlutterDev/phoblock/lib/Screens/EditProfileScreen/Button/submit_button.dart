@@ -13,6 +13,9 @@ import 'package:phoblock/app.dart';
 import 'custom_outline_button.dart';
 import '../../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 // ignore: must_be_immutable
 class SubmitButton extends StatefulWidget {
   final imageKey;

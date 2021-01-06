@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:phoblock/Model/post.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 // ignore: must_be_immutable
 class ProfileGallery extends StatelessWidget {
   List<Post> postList;

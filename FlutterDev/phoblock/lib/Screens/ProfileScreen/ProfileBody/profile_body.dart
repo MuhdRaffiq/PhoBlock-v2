@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:phoblock/Model/post.dart';
 import '../ProfileGallery/profile_gallery.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class ProfileBody extends StatelessWidget {
   final List<Post> postList;
 

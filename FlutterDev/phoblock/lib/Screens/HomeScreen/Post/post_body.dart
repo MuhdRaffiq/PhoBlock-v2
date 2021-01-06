@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:phoblock/Model/image.dart';
 import 'package:phoblock/Model/post.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class PostBody extends StatelessWidget {
   final Post postFeed;
 
@@ -28,7 +31,7 @@ class PostBody extends StatelessWidget {
         ),
         child: Image.memory(
           base64.decode(postFeed.postPicture.imageString),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover, //BoxFit.fill,
         ),
       );
     }

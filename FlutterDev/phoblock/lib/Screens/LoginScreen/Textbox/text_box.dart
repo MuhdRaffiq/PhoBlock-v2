@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class TextBox extends StatelessWidget {
   final textController;
   static const double _hPad = 40.0;

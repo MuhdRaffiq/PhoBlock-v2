@@ -7,6 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:phoblock/Model/image.dart';
 import '../../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 // ignore: must_be_immutable
 class EditProfileHeader extends StatefulWidget {
   //final String imagePath;

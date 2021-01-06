@@ -9,6 +9,9 @@ import '../ProfileScreen/profile_screen.dart';
 import '../UploadPhotoScreen/camera_screen.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 // ignore: must_be_immutable
 class NavigationBar extends StatefulWidget {
   final int userId;

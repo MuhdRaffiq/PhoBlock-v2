@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:phoblock/Model/following.dart';
 import 'package:phoblock/Model/phoblock_user.dart';
 import 'package:phoblock/Screens/ProfileScreen/MessageFollowButtons/message_follow_buttons.dart';
 import 'ButtonSections/buttons.dart';
@@ -25,6 +26,7 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   PhoblockUser phoblockUser;
+  String isFollowing;
 
   @override
   void initState() {
@@ -40,6 +42,12 @@ class ProfileScreenState extends State<ProfileScreen> {
       PhoblockUser.fetchUser(widget.otherUserId).then((user) {
         setState(() {
           phoblockUser = user;
+        });
+      });
+
+      Following.isFollowing(widget.userId, widget.otherUserId).then((value) {
+        setState(() {
+          isFollowing = value;
         });
       });
     }
@@ -89,7 +97,8 @@ class ProfileScreenState extends State<ProfileScreen> {
       if (phoblockUser == null) {
         return Spacer();
       } else {
-        return MessageFollowButtons();
+        return MessageFollowButtons(
+            widget.userId, widget.otherUserId, isFollowing);
       }
     } else {
       if (phoblockUser == null) {

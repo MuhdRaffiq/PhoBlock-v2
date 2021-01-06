@@ -3,6 +3,9 @@ import 'package:phoblock/Model/post.dart';
 import 'Post/card_post.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class HomeScreen extends StatefulWidget {
   final int loginId;
 

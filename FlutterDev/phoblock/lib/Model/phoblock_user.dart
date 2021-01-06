@@ -1,8 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:phoblock/Model/follower.dart';
+import 'package:phoblock/Model/following.dart';
 import 'package:phoblock/Model/image.dart';
 import 'package:phoblock/Model/post.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class PhoblockUser {
   int userId;
   String firstName;
@@ -16,6 +21,8 @@ class PhoblockUser {
   ImageFile profilePicture;
   List<Post> userPosts;
   List<Post> userFavs;
+  List<Follower> followers;
+  List<Following> followings;
 
   PhoblockUser({
     this.userId,
@@ -30,6 +37,8 @@ class PhoblockUser {
     this.profilePicture,
     this.userPosts,
     this.userFavs,
+    this.followers,
+    this.followings,
   });
 
   factory PhoblockUser.fromJson(Map<dynamic, dynamic> json1) {
@@ -40,6 +49,12 @@ class PhoblockUser {
         List<Post>.from(json1['userFavorites'].map((x) => Post.fromJson(x)));
 
     ImageFile userDp = ImageFile.fromJson(json1['userDefaultPicture']);
+
+    List<Follower> followersList = List<Follower>.from(
+        json1['followers'].map((x) => Follower.fromJson(x)));
+
+    List<Following> followingsList = List<Following>.from(
+        json1['followings'].map((x) => Following.fromJson(x)));
 
     return PhoblockUser(
       userId: json1['id'],
@@ -54,6 +69,8 @@ class PhoblockUser {
       profilePicture: userDp,
       userPosts: postList,
       userFavs: favList,
+      followers: followersList,
+      followings: followingsList,
     );
   }
 
@@ -77,5 +94,25 @@ class PhoblockUser {
     } else {
       return null;
     }
+  }
+
+  static Future<http.Response> followUser(
+      int loggedInId, int otherUserId) async {
+    final response = await http.post('http://127.0.0.1:8080/Users/User/' +
+        loggedInId.toString() +
+        '/Follow/' +
+        otherUserId.toString());
+
+    return response;
+  }
+
+  static Future<http.Response> unfollowUser(
+      int loggedInId, int otherUserId) async {
+    final response = await http.post('http://127.0.0.1:8080/Users/User/' +
+        loggedInId.toString() +
+        '/Unfollow/' +
+        otherUserId.toString());
+
+    return response;
   }
 }

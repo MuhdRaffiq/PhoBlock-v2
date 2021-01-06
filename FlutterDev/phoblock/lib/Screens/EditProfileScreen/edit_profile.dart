@@ -5,6 +5,9 @@ import 'EditProfileBody/edit_profile_body.dart';
 import 'EditProfileHeader/edit_profile_header.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 // ignore: must_be_immutable
 class EditProfile extends StatefulWidget {
   PhoblockUser user;

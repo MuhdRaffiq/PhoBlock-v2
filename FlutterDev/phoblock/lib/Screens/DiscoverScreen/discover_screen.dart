@@ -2,6 +2,9 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

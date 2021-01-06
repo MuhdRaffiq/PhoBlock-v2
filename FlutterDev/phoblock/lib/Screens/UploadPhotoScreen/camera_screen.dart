@@ -12,6 +12,9 @@ import 'PreviewScreen/preview_screen.dart';
 import 'Gallery/gallery_screen.dart';
 import '../../style.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class CameraScreen extends StatefulWidget {
   final int userId;
 

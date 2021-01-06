@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class PostFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

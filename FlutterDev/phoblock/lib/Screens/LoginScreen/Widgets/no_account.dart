@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:phoblock/app.dart';
 
+/*
+  Author: Muhammad Khairi Norizan
+*/
 class NoAccount extends StatelessWidget {
   static const double _hPad = 40.0;
 
