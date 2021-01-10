@@ -38,6 +38,13 @@ class ProfileScreenState extends State<ProfileScreen> {
           phoblockUser = user;
         });
       });
+    } else if (widget.otherUserId != null &&
+        widget.userId == widget.otherUserId) {
+      PhoblockUser.fetchUser(widget.userId).then((user) {
+        setState(() {
+          phoblockUser = user;
+        });
+      });
     } else {
       PhoblockUser.fetchUser(widget.otherUserId).then((user) {
         setState(() {
@@ -80,6 +87,8 @@ class ProfileScreenState extends State<ProfileScreen> {
       return ProfileHeader(
         phoblockUser.profilePicture,
         phoblockUser.userPosts.length,
+        phoblockUser.followers.length,
+        phoblockUser.followings.length,
       );
     }
   }
@@ -93,18 +102,29 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _showButtons() {
-    if (widget.otherUserId != null) {
+    if (widget.otherUserId == null) {
       if (phoblockUser == null) {
         return Spacer();
       } else {
-        return MessageFollowButtons(
-            widget.userId, widget.otherUserId, isFollowing);
+        return Buttons(phoblockUser, widget.userId);
+      }
+    } else if (widget.otherUserId != null &&
+        widget.userId == widget.otherUserId) {
+      if (phoblockUser == null) {
+        return Spacer();
+      } else {
+        return Buttons(phoblockUser, widget.userId);
       }
     } else {
       if (phoblockUser == null) {
         return Spacer();
       } else {
-        return Buttons(phoblockUser, widget.userId);
+        return MessageFollowButtons(
+          loggedInId: widget.userId,
+          otherUserId: widget.otherUserId,
+          phoblockUser: phoblockUser,
+          isFollowing: isFollowing,
+        );
       }
     }
   }

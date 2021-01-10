@@ -9,11 +9,21 @@ import '../../../style.dart';
 /*
   Author: Muhammad Khairi Norizan
 */
-class CardPost extends StatelessWidget {
+class CardPost extends StatefulWidget {
   final int loggedInId;
   final Post postFeed;
 
   CardPost(this.loggedInId, this.postFeed);
+
+  @override
+  CardPostState createState() => CardPostState();
+}
+
+class CardPostState extends State<CardPost> {
+  // final int loggedInId;
+  // final Post postFeed;
+
+  // CardPost(this.loggedInId, this.postFeed);
 
   @override
   Widget build(BuildContext context) {
@@ -29,33 +39,35 @@ class CardPost extends StatelessWidget {
   }
 
   Widget _showHeader() {
-    if (postFeed.ownerUsername == null && postFeed.postUserDp == null) {
+    if (widget.postFeed.ownerUsername == null &&
+        widget.postFeed.postUserDp == null) {
       return Container(
         width: 0.0,
         height: 0.0,
       );
     } else {
-      return PostHeader(loggedInId, postFeed);
+      return PostHeader(widget.loggedInId, widget.postFeed);
     }
   }
 
   Widget _showBody() {
-    if (postFeed.postPicture == null) {
+    if (widget.postFeed.postPicture == null) {
       return Container(
         width: 0.0,
         height: 0.0,
       );
     } else {
-      return PostBody(postFeed);
+      return PostBody(widget.postFeed);
     }
   }
 
   Widget _showFooter() {
-    if (postFeed == null) {
-      return Container(
-        width: 0.0,
-        height: 0.0,
-      );
+    if (widget.postFeed == null) {
+      return Spacer();
+      // return Container(
+      //   width: 0.0,
+      //   height: 0.0,
+      // );
     } else {
       return PostFooter();
     }

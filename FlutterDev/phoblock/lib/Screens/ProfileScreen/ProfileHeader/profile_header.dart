@@ -11,8 +11,11 @@ import 'package:phoblock/Model/image.dart';
 class ProfileHeader extends StatelessWidget {
   final ImageFile userDp;
   final int postLength;
+  final int followerslength;
+  final int followingslength;
 
-  ProfileHeader(this.userDp, this.postLength);
+  ProfileHeader(this.userDp, this.postLength, this.followerslength,
+      this.followingslength);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,7 @@ class ProfileHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '99',
+                  followerslength.toString(), //'99',
                   style: TextStyle(
                     fontFamily: 'Lalezar',
                     fontSize: 14.0,
@@ -73,7 +76,7 @@ class ProfileHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  'Following',
+                  'Following', //'99',
                   style: TextStyle(
                     fontFamily: 'Lalezar',
                     fontSize: 16.0,
@@ -81,7 +84,7 @@ class ProfileHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '99',
+                  followingslength.toString(),
                   style: TextStyle(
                     fontFamily: 'Lalezar',
                     fontSize: 14.0,

@@ -32,7 +32,7 @@ class ProfileGallery extends StatelessWidget {
                           base64.decode(post.postPicture.imageString),
                           height: 140.0,
                           width: 140.0,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover, //BoxFit.fill,
                         ),
                       ))
                   .toList(),

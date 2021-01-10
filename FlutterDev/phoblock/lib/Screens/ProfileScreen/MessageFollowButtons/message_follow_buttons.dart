@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/phoblock_user.dart';
+import 'package:phoblock/Screens/ProfileScreen/profile_screen.dart';
 import './follow_button.dart';
 import './unfollow_button.dart';
 import '../custom_outline_button.dart';
@@ -7,12 +9,19 @@ import '../../../style.dart';
 /*
   Author: Muhammad Khairi Norizan
 */
+// ignore: must_be_immutable
 class MessageFollowButtons extends StatefulWidget {
   final int loggedInId;
   final int otherUserId;
+  final PhoblockUser phoblockUser;
   final String isFollowing;
 
-  MessageFollowButtons(this.loggedInId, this.otherUserId, this.isFollowing);
+  MessageFollowButtons({
+    this.loggedInId,
+    this.otherUserId,
+    this.phoblockUser,
+    this.isFollowing,
+  });
 
   @override
   MessageFollowButtonState createState() => MessageFollowButtonState();
@@ -20,6 +29,26 @@ class MessageFollowButtons extends StatefulWidget {
 
 class MessageFollowButtonState extends State<MessageFollowButtons> {
   static const double _hPad = 20.0;
+  bool isFollowing;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isFollowing == 'true') {
+      isFollowing = true;
+    } else if (widget.isFollowing == 'false') {
+      isFollowing = false;
+    } else {
+      isFollowing = null;
+    }
+  }
+
+  void switchIsFollowing(bool val) {
+    setState(() {
+      isFollowing = val;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,34 +59,24 @@ class MessageFollowButtonState extends State<MessageFollowButtons> {
         children: [
           getFollowUnfollowButton(),
           getMessageButton(),
-          // Container(
-          //   height: 40.0,
-          //   width: 180.0,
-          //   child: CustomOutlineButton(
-          //     text: "Follow",
-          //     color: hexToColor('#64B6A9'),
-          //     onPressed: () {},
-          //   ),
-          // ),
-          // Container(
-          //   height: 40.0,
-          //   width: 180.0,
-          //   child: CustomOutlineButton(
-          //     text: "Message",
-          //     color: Colors.black38,
-          //     onPressed: () {},
-          //   ),
-          // ),
         ],
       ),
     );
   }
 
   Widget getFollowUnfollowButton() {
-    if (widget.isFollowing == 'True') {
-      return UnfollowButton(widget.loggedInId, widget.otherUserId);
-    } else if (widget.isFollowing == 'False') {
-      return FollowButton(widget.loggedInId, widget.otherUserId);
+    if (isFollowing == true) {
+      return UnfollowButton(
+        loggedInId: widget.loggedInId,
+        otherUserId: widget.otherUserId,
+        phoblockUser: widget.phoblockUser,
+      );
+    } else if (isFollowing == false) {
+      return FollowButton(
+        loggedInId: widget.loggedInId,
+        otherUserId: widget.otherUserId,
+        phoblockUser: widget.phoblockUser,
+      );
     } else {
       return Spacer();
     }
