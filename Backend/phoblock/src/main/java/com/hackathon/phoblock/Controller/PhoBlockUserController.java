@@ -181,26 +181,47 @@ public class PhoBlockUserController {
             following.setUsername(retrievedFollowingUser.getUserName());
             following.setFollowingDate(new Date());
             following.setFollowingId(retrievedFollowingUser.getId());
-            following.setFollowingDefaultPicture(retrievedFollowingUser.getUserDefaultPicture());
-            following.setFollower(retrievedUser);
 
-            followingRepository.save(following);
+            if(retrievedFollowingUser.getUserDefaultPicture() != null){
+                Image followingUserDp = new Image(retrievedFollowingUser.getUserDefaultPicture().getImageName(),
+                        retrievedFollowingUser.getUserDefaultPicture().getImageType(),
+                        retrievedFollowingUser.getUserDefaultPicture().getImageString());
+                following.setFollowingDefaultPicture(followingUserDp);
+                following.setFollower(retrievedUser);
+                followingUserDp.setFollowingImage(following);
+            }
 
             //Create a follower
             Follower follower = new Follower();
             follower.setUsername(retrievedUser.getUserName());
             follower.setFollowedDate(new Date());
             follower.setFollowerId(retrievedUser.getId());
-            follower.setFollowerDefaultPicture(retrievedFollowingUser.getUserDefaultPicture());
-            follower.setFollowing(retrievedFollowingUser);
 
-            followerRepository.save(follower);
+            if(retrievedUser.getUserDefaultPicture() != null){
+                Image followerUserDp = new Image(retrievedUser.getUserDefaultPicture().getImageName(),
+                        retrievedUser.getUserDefaultPicture().getImageType(),
+                        retrievedUser.getUserDefaultPicture().getImageString());
+                follower.setFollowerDefaultPicture(followerUserDp);
+                follower.setFollowing(retrievedFollowingUser);
+                followerUserDp.setFollowerImage(follower);
+            }
 
             retrievedUser.addFollowing(following);
             retrievedFollowingUser.addFollower(follower);
 
             phoBlockUserRepository.save(retrievedUser);
             phoBlockUserRepository.save(retrievedFollowingUser);
+
+            followingRepository.save(following);
+            followerRepository.save(follower);
+
+            if(following.getFollowingDefaultPicture() != null){
+                imageRepository.save(following.getFollowingDefaultPicture());
+            }
+
+            if(follower.getFollowerDefaultPicture() != null){
+                imageRepository.save(follower.getFollowerDefaultPicture());
+            }
 
             return ResponseEntity.ok().build();
         }
@@ -216,7 +237,7 @@ public class PhoBlockUserController {
             throw new ResourceNotFoundException("User not found!");
         }else{
 
-            PhoBlockUser findFollowing = followingRepository.findByUsernameAndFollower(retrievedFollowingUser.getUserName(), retrievedUser);
+            Following findFollowing = followingRepository.findByUsernameAndFollower(retrievedFollowingUser.getUserName(), retrievedUser);
 
             if(findFollowing == null){
                 return ResponseEntity.status(406).build();
@@ -225,6 +246,13 @@ public class PhoBlockUserController {
             //Removing following from userId
             for(Following following: retrievedUser.getFollowings()){
                 if(following.getFollowingId() == findFollowing.getId()){
+                    Image followingDp = following.getFollowingDefaultPicture();
+
+                    if(followingDp != null){
+                        following.setFollowingDefaultPicture(null);
+                        imageRepository.delete(followingDp);
+                    }
+
                     retrievedUser.removeFollowing(following);
                     following.setFollower(null);
                     followingRepository.delete(following);
@@ -236,6 +264,13 @@ public class PhoBlockUserController {
             //Removing follower from unfollowUsername
             for(Follower follower: retrievedFollowingUser.getFollowers()){
                 if(follower.getFollowerId() == retrievedUser.getId()){
+                    Image followerDp = follower.getFollowerDefaultPicture();
+
+                    if(followerDp != null){
+                        follower.setFollowerDefaultPicture(null);
+                        imageRepository.delete(followerDp);
+                    }
+
                     retrievedFollowingUser.removeFollower(follower);
                     follower.setFollowing(null);
                     followerRepository.delete(follower);
@@ -246,62 +281,6 @@ public class PhoBlockUserController {
 
             phoBlockUserRepository.save(retrievedFollowingUser);
             phoBlockUserRepository.save(retrievedUser);
-
-            return ResponseEntity.ok().build();
-        }
-    }
-
-    @GetMapping("/Users/User/{username}/Favorites")
-    Set<Post> getUserFavoritePost(@PathVariable String username) throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
-
-        if(retrievedUser == null){
-            throw new ResourceNotFoundException("Username not found!");
-        }else{
-            return retrievedUser.getUserFavorites();
-        }
-    }
-
-    @PostMapping("/Users/User/{username}/Favorite/{postId}")
-    ResponseEntity<?> favoritePost(@PathVariable String username, @PathVariable int postId)
-            throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
-
-        if(retrievedUser == null){
-            throw new ResourceNotFoundException("Username not found!");
-        }else{
-            Post favPost = postRepository.findById(postId);
-            favPost.setNumberFavorite(favPost.getNumberFavorite() + 1);
-            favPost.setUserFavorites(retrievedUser);
-            postRepository.save(favPost);
-
-            retrievedUser.addUserFavorites(favPost);
-            phoBlockUserRepository.save(retrievedUser);
-
-            return ResponseEntity.ok().build();
-        }
-    }
-
-    @PostMapping("/Users/User/{username}/Unfavorite/{postId}")
-    ResponseEntity<?> unfavoritePost(@PathVariable String username, @PathVariable int postId)
-            throws ResourceNotFoundException {
-        PhoBlockUser retrievedUser = phoBlockUserRepository.findByUserName(username);
-
-        if(retrievedUser == null){
-            throw new ResourceNotFoundException("Username not found!");
-        }else{
-            Post favPost = postRepository.findById(postId);
-            favPost.setNumberFavorite(favPost.getNumberFavorite() - 1);
-            favPost.setUserFavorites(null);
-            postRepository.save(favPost);
-
-            for(Post post: retrievedUser.getUserFavorites()){
-                if(post.getId().equals(favPost.getId())){
-                    retrievedUser.getUserFavorites().remove(post);
-
-                    phoBlockUserRepository.save(retrievedUser);
-                }
-            }
 
             return ResponseEntity.ok().build();
         }

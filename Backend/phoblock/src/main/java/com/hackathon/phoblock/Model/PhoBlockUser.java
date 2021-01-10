@@ -42,10 +42,13 @@ public class PhoBlockUser {
     Set<Follower> followers;
     @OneToMany(mappedBy = "follower")
     Set<Following> followings;
-    @OneToMany(mappedBy = "userFavorites")
+    //@OneToMany(mappedBy = "userFavorites")
+    @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
     Set<Post> userFavorites;
     @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
     Set<Post> likedPost;
+    @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
+    Set<Post> downloadedPosts;
 
     public Integer getId() {
         return id;
@@ -202,8 +205,22 @@ public class PhoBlockUser {
         this.userFavorites = userFavorites;
     }
 
+    /*
+    * Helper function to add favorite post
+    * */
     public void addUserFavorites(Post userFavorite){
         this.userFavorites.add(userFavorite);
+    }
+
+    /*
+    * Helper function to remove favorite post
+    * */
+    public void removeFavoritePost(Post favoritePost){
+        for(Post post: this.getUserFavorites()){
+            if(post.getId().equals(favoritePost.getId())){
+                this.getUserFavorites().remove(post);
+            }
+        }
     }
 
     public Set<Post> getLikedPost() {
@@ -219,5 +236,77 @@ public class PhoBlockUser {
      * */
     public void addLikedPost(Post likedPost){
         this.likedPost.add(likedPost);
+    }
+
+    /*
+    * Helper function to remove liked post
+    * */
+    public void removeLikedPost(Post likedPost){
+        for(Post post: this.likedPost){
+            if(post.getId().equals(likedPost.getId())){
+                this.likedPost.remove(likedPost);
+            }
+        }
+    }
+
+    public Set<Post> getDownloadedPosts() {
+        return downloadedPosts;
+    }
+
+    public void setDownloadedPosts(Set<Post> downloadedPosts) {
+        this.downloadedPosts = downloadedPosts;
+    }
+
+    /*
+     * Helper function to add downloaded post
+     * */
+    public void addDownloadedPosts(Post downloadedPost){
+        this.downloadedPosts.add(downloadedPost);
+    }
+
+    /*
+    * Helper function to remove downloaded post
+    * */
+    public void removeDownloadedPost(Post downloadedPost){
+        this.downloadedPosts.remove(downloadedPost);
+    }
+
+    /*
+    * Helper function to check if user has liked a post
+    * */
+    public boolean isLikedPost(Post checkPost){
+        for(Post post: this.getLikedPost()){
+            if(post.getId().equals(checkPost.getId())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+    * Helper function to check if user has favorite a post
+    * */
+    public boolean isFavoritePost(Post checkPost){
+        for(Post post: this.getUserFavorites()){
+            if(post.getId().equals(checkPost.getId())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+    * Helper function to check if user has downloaded a post
+    * */
+    public boolean isDownloadedPost(Post checkPost){
+        for(Post post: this.getDownloadedPosts()){
+            if(post.getId().equals(checkPost.getId())){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

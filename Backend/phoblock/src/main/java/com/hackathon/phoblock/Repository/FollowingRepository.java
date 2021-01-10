@@ -5,5 +5,5 @@ import com.hackathon.phoblock.Model.PhoBlockUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FollowingRepository extends JpaRepository<Following, Long> {
-    PhoBlockUser findByUsernameAndFollower(String username, PhoBlockUser phoBlockUser);
+    Following findByUsernameAndFollower(String username, PhoBlockUser phoBlockUser);
 }

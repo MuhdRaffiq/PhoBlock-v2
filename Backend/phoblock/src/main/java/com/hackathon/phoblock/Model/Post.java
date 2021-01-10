@@ -41,13 +41,19 @@ public class Post {
     PhoBlockUser postOwner;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "imagePost")
     Image postPicture;
-    @ManyToOne
-    @JoinColumn(name = "user_fav_id", referencedColumnName = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @ManyToOne
+//    @JoinColumn(name = "user_fav_id", referencedColumnName = "id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+    @ManyToMany(targetEntity = PhoBlockUser.class, mappedBy = "userFavorites", cascade = CascadeType.ALL)
     @JsonIgnore
-    PhoBlockUser userFavorites;
+    Set<PhoBlockUser> userFavorites;
     @ManyToMany(targetEntity = PhoBlockUser.class, mappedBy = "likedPost", cascade = CascadeType.ALL)
+    @JsonIgnore
     Set<PhoBlockUser> likedUser;
+    @ManyToMany(targetEntity = PhoBlockUser.class, mappedBy = "downloadedPosts", cascade = CascadeType.ALL)
+    @JsonIgnore
+    Set<PhoBlockUser> downloadedUsers;
 
     public Integer getId() {
         return id;
@@ -145,12 +151,30 @@ public class Post {
         this.postPicture = postPicture;
     }
 
-    public PhoBlockUser getUserFavorites() {
+    public Set<PhoBlockUser> getUserFavorites() {
         return userFavorites;
     }
 
-    public void setUserFavorites(PhoBlockUser userFavorites) {
+    public void setUserFavorites(Set<PhoBlockUser> userFavorites) {
         this.userFavorites = userFavorites;
+    }
+
+    /*
+    * Helper function to add new user to favorites
+    * */
+    public void addUserFavorites(PhoBlockUser user){
+        this.userFavorites.add(user);
+    }
+
+    /*
+    *
+    * */
+    public void removeUserFavorites(PhoBlockUser user){
+        for(PhoBlockUser phoBlockUser: this.userFavorites){
+            if(phoBlockUser.getId().equals(user.getId())){
+                this.userFavorites.remove(phoBlockUser);
+            }
+        }
     }
 
     public Set<PhoBlockUser> getLikedUser() {
@@ -161,7 +185,47 @@ public class Post {
         this.likedUser = likedUser;
     }
 
+    /*
+     * Helper function to add Liked User
+     * */
     public void addLikedUser(PhoBlockUser likedUser){
         this.likedUser.add(likedUser);
+    }
+
+    /*
+    * Helper function to remove liked user
+    * */
+    public void removeLikedUser(PhoBlockUser likedUser){
+        for(PhoBlockUser user: this.likedUser){
+            if(user.getId().equals(likedUser.getId())){
+                this.likedUser.remove(likedUser);
+            }
+        }
+    }
+
+    public Set<PhoBlockUser> getDownloadedUsers() {
+        return downloadedUsers;
+    }
+
+    public void setDownloadedUsers(Set<PhoBlockUser> downloadedUsers) {
+        this.downloadedUsers = downloadedUsers;
+    }
+
+    /*
+    * Helper function to add Download User
+    * */
+    public void addDownloadedUsers(PhoBlockUser downloadUser){
+        this.downloadedUsers.add(downloadUser);
+    }
+
+    /*
+    * Helper function to remove downloaded User
+    * */
+    public void removeDownloadedUser(PhoBlockUser downloadUser){
+        for(PhoBlockUser phoBlockUser: this.downloadedUsers){
+            if(phoBlockUser.getId().equals(downloadUser.getId())){
+                this.downloadedUsers.remove(phoBlockUser);
+            }
+        }
     }
 }
