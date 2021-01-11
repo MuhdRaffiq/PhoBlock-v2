@@ -45,7 +45,7 @@ public class Post {
 //    @JoinColumn(name = "user_fav_id", referencedColumnName = "id")
 //    @OnDelete(action = OnDeleteAction.CASCADE)
 //    @JsonIgnore
-    @ManyToMany(targetEntity = PhoBlockUser.class, mappedBy = "userFavorites", cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = PhoBlockUser.class, mappedBy = "favoritePosts", cascade = CascadeType.ALL)
     @JsonIgnore
     Set<PhoBlockUser> userFavorites;
     @ManyToMany(targetEntity = PhoBlockUser.class, mappedBy = "likedPost", cascade = CascadeType.ALL)

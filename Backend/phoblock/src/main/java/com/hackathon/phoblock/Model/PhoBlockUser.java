@@ -44,7 +44,7 @@ public class PhoBlockUser {
     Set<Following> followings;
     //@OneToMany(mappedBy = "userFavorites")
     @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
-    Set<Post> userFavorites;
+    Set<Post> favoritePosts;
     @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
     Set<Post> likedPost;
     @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
@@ -197,28 +197,28 @@ public class PhoBlockUser {
         this.followings.remove(following);
     }
 
-    public Set<Post> getUserFavorites() {
-        return userFavorites;
+    public Set<Post> getFavoritePosts() {
+        return favoritePosts;
     }
 
-    public void setUserFavorites(Set<Post> userFavorites) {
-        this.userFavorites = userFavorites;
+    public void setFavoritePosts(Set<Post> userFavorites) {
+        this.favoritePosts = userFavorites;
     }
 
     /*
     * Helper function to add favorite post
     * */
-    public void addUserFavorites(Post userFavorite){
-        this.userFavorites.add(userFavorite);
+    public void addFavoritePost(Post userFavorite){
+        this.favoritePosts.add(userFavorite);
     }
 
     /*
     * Helper function to remove favorite post
     * */
     public void removeFavoritePost(Post favoritePost){
-        for(Post post: this.getUserFavorites()){
+        for(Post post: this.favoritePosts){
             if(post.getId().equals(favoritePost.getId())){
-                this.getUserFavorites().remove(post);
+                this.favoritePosts.remove(post);
             }
         }
     }
@@ -288,7 +288,7 @@ public class PhoBlockUser {
     * Helper function to check if user has favorite a post
     * */
     public boolean isFavoritePost(Post checkPost){
-        for(Post post: this.getUserFavorites()){
+        for(Post post: this.favoritePosts){
             if(post.getId().equals(checkPost.getId())){
                 return true;
             }

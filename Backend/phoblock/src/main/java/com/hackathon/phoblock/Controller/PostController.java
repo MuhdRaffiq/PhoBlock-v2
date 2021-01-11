@@ -194,6 +194,7 @@ public class PostController {
         PhoBlockUser getUser = phoBlockUserRepository.findById(userId);
         Post getPost = postRepository.findById(postId);
 
+        //Validation
         if(getUser == null || getPost == null){
             throw new ResourceNotFoundException("User ID/Post ID not found");
         }
@@ -247,7 +248,7 @@ public class PostController {
             throw new ResourceNotFoundException("User ID/Post ID not found");
         }
 
-        for(Post post: getUser.getUserFavorites()){
+        for(Post post: getUser.getFavoritePosts()){
             if(post.getId().equals(postId)){
                 return true;
             }
@@ -271,7 +272,7 @@ public class PostController {
         }
 
         getPost.addUserFavorites(getUser);
-        getUser.addUserFavorites(getPost);
+        getUser.addFavoritePost(getPost);
 
         postRepository.save(getPost);
         phoBlockUserRepository.save(getUser);
@@ -372,7 +373,7 @@ public class PostController {
         if(retrievedUser == null){
             throw new ResourceNotFoundException("Username not found!");
         }else{
-            return retrievedUser.getUserFavorites();
+            return retrievedUser.getFavoritePosts();
         }
     }
 }
