@@ -21,6 +21,8 @@ class PhoblockUser {
   ImageFile profilePicture;
   List<Post> userPosts;
   List<Post> userFavs;
+  List<Post> userLikes;
+  List<Post> userDownloads;
   List<Follower> followers;
   List<Following> followings;
 
@@ -37,6 +39,8 @@ class PhoblockUser {
     this.profilePicture,
     this.userPosts,
     this.userFavs,
+    this.userLikes,
+    this.userDownloads,
     this.followers,
     this.followings,
   });
@@ -46,7 +50,13 @@ class PhoblockUser {
         List<Post>.from(json1['userPost'].map((x) => Post.fromJson(x)));
 
     List<Post> favList =
-        List<Post>.from(json1['userFavorites'].map((x) => Post.fromJson(x)));
+        List<Post>.from(json1['favoritePosts'].map((x) => Post.fromJson(x)));
+
+    List<Post> likedList =
+        List<Post>.from(json1['likedPost'].map((x) => Post.fromJson(x)));
+
+    List<Post> downloadedList =
+        List<Post>.from(json1['downloadedPosts'].map((x) => Post.fromJson(x)));
 
     ImageFile userDp = ImageFile.fromJson(json1['userDefaultPicture']);
 
@@ -69,6 +79,8 @@ class PhoblockUser {
       profilePicture: userDp,
       userPosts: postList,
       userFavs: favList,
+      userLikes: likedList,
+      userDownloads: downloadedList,
       followers: followersList,
       followings: followingsList,
     );

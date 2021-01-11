@@ -32,7 +32,7 @@ class CardPostState extends State<CardPost> {
         children: [
           _showHeader(),
           _showBody(),
-          _showFooter(),
+          //_showFooter(),
         ],
       ),
     );
@@ -57,19 +57,25 @@ class CardPostState extends State<CardPost> {
         height: 0.0,
       );
     } else {
-      return PostBody(widget.postFeed);
+      return PostBody(
+        loggedInId: widget.loggedInId,
+        postFeed: widget.postFeed,
+      );
     }
   }
 
-  Widget _showFooter() {
-    if (widget.postFeed == null) {
-      return Spacer();
-      // return Container(
-      //   width: 0.0,
-      //   height: 0.0,
-      // );
-    } else {
-      return PostFooter();
-    }
-  }
+  // Widget _showFooter() {
+  //   if (widget.postFeed == null) {
+  //     return Spacer();
+  //     // return Container(
+  //     //   width: 0.0,
+  //     //   height: 0.0,
+  //     // );
+  //   } else {
+  //     return PostFooter(
+  //       loggedInId: widget.loggedInId,
+  //       postFeed: widget.postFeed,
+  //     );
+  //   }
+  // }
 }
