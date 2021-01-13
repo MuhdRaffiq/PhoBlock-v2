@@ -4,9 +4,11 @@ import com.hackathon.phoblock.Exceptions.NotAcceptableException;
 import com.hackathon.phoblock.Exceptions.OnSuccessException;
 import com.hackathon.phoblock.Exceptions.ResourceNotFoundException;
 import com.hackathon.phoblock.Model.Image;
+import com.hackathon.phoblock.Model.Notification;
 import com.hackathon.phoblock.Model.PhoBlockUser;
 import com.hackathon.phoblock.Model.Post;
 import com.hackathon.phoblock.Repository.ImageRepository;
+import com.hackathon.phoblock.Repository.NotificationRepository;
 import com.hackathon.phoblock.Repository.PhoBlockUserRepository;
 import com.hackathon.phoblock.Repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class PostController {
     PostRepository postRepository;
     @Autowired
     ImageRepository imageRepository;
+    @Autowired
+    NotificationRepository notificationRepository;
 
     @GetMapping("/Posts")
     List<Post> getAllPost() {
@@ -209,6 +213,36 @@ public class PostController {
         getPost.addLikedUser(getUser);
         getUser.addLikedPost(getPost);
 
+        PhoBlockUser getOtherUser = phoBlockUserRepository.findById(getPost.getOwnerUserId());
+
+        // Create Notification
+        Notification notification = new Notification();
+        notification.setMessage("liked your image");
+        notification.setNotificationFlag(1);
+        notification.setNotifierUsername(getUser.getUserName());
+        notification.setNotifierUserId(getUser.getId());
+        notification.setNotifiedUsername(getOtherUser.getUserName());
+        notification.setNotifiedUserId(getOtherUser.getId());
+        notification.setNotifiedPostId(postId);
+
+        Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
+                getUser.getUserDefaultPicture().getImageType(),
+                getUser.getUserDefaultPicture().getImageString());
+
+        Image notifiedPost = new Image(getPost.getPostPicture().getImageName(),
+                getPost.getPostPicture().getImageType(),
+                getPost.getPostPicture().getImageString());
+
+        notifierDp.setNotifierUserImage(notification);
+        notifiedPost.setNotifiedPost(notification);
+
+        notification.setNotifierImage(notifierDp);
+        notification.setNotifiedImage(notifiedPost);
+        notification.setUserNotification(getOtherUser);
+
+        getOtherUser.addNotification(notification);
+
+        notificationRepository.save(notification);
         postRepository.save(getPost);
         phoBlockUserRepository.save(getUser);
 
@@ -232,6 +266,27 @@ public class PostController {
         //Unlike the post
         getPost.removeLikedUser(getUser);
         getUser.removeLikedPost(getPost);
+
+        //Remove the notification
+        PhoBlockUser getOtherUser = phoBlockUserRepository.findById(getPost.getOwnerUserId());
+
+        for(Notification notification: getOtherUser.getNotifications()){
+            if(notification.getNotifiedPostId() == postId && notification.getNotificationFlag() == 1){
+                Notification userNoti = notification;
+                Image notifierDp = userNoti.getNotifierImage();
+                Image notifiedPost = userNoti.getNotifiedImage();
+
+                getOtherUser.removeNotification(userNoti);
+                userNoti.setUserNotification(null);
+                notifierDp.setNotifierUserImage(null);
+                notifiedPost.setNotifiedPost(null);
+
+                imageRepository.delete(notifierDp);
+                imageRepository.delete(notifiedPost);
+
+                notificationRepository.delete(notification);
+            }
+        }
 
         postRepository.save(getPost);
         phoBlockUserRepository.save(getUser);
@@ -271,9 +326,40 @@ public class PostController {
             throw new NotAcceptableException("User has favorite this post");
         }
 
+        //Favoriting the post
         getPost.addUserFavorites(getUser);
         getUser.addFavoritePost(getPost);
 
+        // Create Notification
+        PhoBlockUser getOtherUser = phoBlockUserRepository.findById(getPost.getOwnerUserId());
+
+        Notification notification = new Notification();
+        notification.setMessage("favorited your image");
+        notification.setNotificationFlag(2);
+        notification.setNotifierUsername(getUser.getUserName());
+        notification.setNotifierUserId(getUser.getId());
+        notification.setNotifiedUsername(getOtherUser.getUserName());
+        notification.setNotifiedUserId(getOtherUser.getId());
+        notification.setNotifiedPostId(postId);
+
+        Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
+                getUser.getUserDefaultPicture().getImageType(),
+                getUser.getUserDefaultPicture().getImageString());
+
+        Image notifiedPost = new Image(getPost.getPostPicture().getImageName(),
+                getPost.getPostPicture().getImageType(),
+                getPost.getPostPicture().getImageString());
+
+        notifierDp.setNotifierUserImage(notification);
+        notifiedPost.setNotifiedPost(notification);
+
+        notification.setNotifierImage(notifierDp);
+        notification.setNotifiedImage(notifiedPost);
+        notification.setUserNotification(getOtherUser);
+
+        getOtherUser.addNotification(notification);
+
+        notificationRepository.save(notification);
         postRepository.save(getPost);
         phoBlockUserRepository.save(getUser);
 
@@ -296,6 +382,27 @@ public class PostController {
 
         getPost.removeUserFavorites(getUser);
         getUser.removeFavoritePost(getPost);
+
+        //Remove the notification
+        PhoBlockUser getOtherUser = phoBlockUserRepository.findById(getPost.getOwnerUserId());
+
+        for(Notification notification: getOtherUser.getNotifications()){
+            if(notification.getNotifiedPostId() == postId && notification.getNotificationFlag() == 2){
+                Notification userNoti = notification;
+                Image notifierDp = userNoti.getNotifierImage();
+                Image notifiedPost = userNoti.getNotifiedImage();
+
+                getOtherUser.removeNotification(userNoti);
+                userNoti.setUserNotification(null);
+                notifierDp.setNotifierUserImage(null);
+                notifiedPost.setNotifiedPost(null);
+
+                imageRepository.delete(notifierDp);
+                imageRepository.delete(notifiedPost);
+
+                notificationRepository.delete(notification);
+            }
+        }
 
         postRepository.save(getPost);
         phoBlockUserRepository.save(getUser);
@@ -337,6 +444,37 @@ public class PostController {
 
         getPost.addDownloadedUsers(getUser);
         getUser.addDownloadedPosts(getPost);
+
+        // Create Notification
+        PhoBlockUser getOtherUser = phoBlockUserRepository.findById(getPost.getOwnerUserId());
+
+        Notification notification = new Notification();
+        notification.setMessage("downloaded your image");
+        notification.setNotificationFlag(3);
+        notification.setNotifierUsername(getUser.getUserName());
+        notification.setNotifierUserId(getUser.getId());
+        notification.setNotifiedUsername(getOtherUser.getUserName());
+        notification.setNotifiedUserId(getOtherUser.getId());
+        notification.setNotifiedPostId(postId);
+
+        Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
+                getUser.getUserDefaultPicture().getImageType(),
+                getUser.getUserDefaultPicture().getImageString());
+
+        Image notifiedPost = new Image(getPost.getPostPicture().getImageName(),
+                getPost.getPostPicture().getImageType(),
+                getPost.getPostPicture().getImageString());
+
+        notifierDp.setNotifierUserImage(notification);
+        notifiedPost.setNotifiedPost(notification);
+
+        notification.setNotifierImage(notifierDp);
+        notification.setNotifiedImage(notifiedPost);
+        notification.setUserNotification(getOtherUser);
+
+        getOtherUser.addNotification(notification);
+
+        notificationRepository.save(notification);
 
         postRepository.save(getPost);
         phoBlockUserRepository.save(getUser);

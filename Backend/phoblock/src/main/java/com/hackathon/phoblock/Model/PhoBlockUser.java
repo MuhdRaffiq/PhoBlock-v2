@@ -42,7 +42,8 @@ public class PhoBlockUser {
     Set<Follower> followers;
     @OneToMany(mappedBy = "follower")
     Set<Following> followings;
-    //@OneToMany(mappedBy = "userFavorites")
+    @OneToMany(mappedBy = "userNotification")
+    Set<Notification> notifications;
     @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
     Set<Post> favoritePosts;
     @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
@@ -195,6 +196,32 @@ public class PhoBlockUser {
     * */
     public void removeFollowing(Following following){
         this.followings.remove(following);
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    /*
+    * Helper function to add notification
+    * */
+    public void addNotification(Notification notification){
+        this.notifications.add(notification);
+    }
+
+    /*
+    * Helper function to remove notification
+    * */
+    public void removeNotification(Notification notification){
+        for(Notification currNotification : this.notifications){
+            if(currNotification.getId().equals(notification.getId())){
+                this.notifications.remove(currNotification);
+            }
+        }
     }
 
     public Set<Post> getFavoritePosts() {

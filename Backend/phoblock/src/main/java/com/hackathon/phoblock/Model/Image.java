@@ -44,6 +44,16 @@ public class Image {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Post postUserDp;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notifier_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    Notification notifierUserImage;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notified_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    Notification notifiedPost;
 
     public Image() {
         super();
@@ -125,5 +135,21 @@ public class Image {
 
     public void setPostUserDp(Post postUserDp) {
         this.postUserDp = postUserDp;
+    }
+
+    public Notification getNotifiedPost() {
+        return notifiedPost;
+    }
+
+    public void setNotifiedPost(Notification notifiedPost) {
+        this.notifiedPost = notifiedPost;
+    }
+
+    public Notification getNotifierUserImage() {
+        return notifierUserImage;
+    }
+
+    public void setNotifierUserImage(Notification notifierUserImage) {
+        this.notifierUserImage = notifierUserImage;
     }
 }
