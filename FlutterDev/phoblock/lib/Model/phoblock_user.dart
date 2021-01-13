@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:phoblock/Model/follower.dart';
 import 'package:phoblock/Model/following.dart';
 import 'package:phoblock/Model/image.dart';
+import 'package:phoblock/Model/notification.dart';
 import 'package:phoblock/Model/post.dart';
 
 /*
@@ -25,6 +26,7 @@ class PhoblockUser {
   List<Post> userDownloads;
   List<Follower> followers;
   List<Following> followings;
+  List<UserNotification> notifications;
 
   PhoblockUser({
     this.userId,
@@ -43,6 +45,7 @@ class PhoblockUser {
     this.userDownloads,
     this.followers,
     this.followings,
+    this.notifications,
   });
 
   factory PhoblockUser.fromJson(Map<dynamic, dynamic> json1) {
@@ -66,6 +69,9 @@ class PhoblockUser {
     List<Following> followingsList = List<Following>.from(
         json1['followings'].map((x) => Following.fromJson(x)));
 
+    List<UserNotification> notificationList = List<UserNotification>.from(
+        json1['notifications'].map((x) => UserNotification.fromJson(x)));
+
     return PhoblockUser(
       userId: json1['id'],
       firstName: json1['firstName'],
@@ -83,6 +89,7 @@ class PhoblockUser {
       userDownloads: downloadedList,
       followers: followersList,
       followings: followingsList,
+      notifications: notificationList,
     );
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:phoblock/Model/image.dart';
 import 'package:phoblock/Model/post.dart';
 import 'post_body.dart';
-import 'post_footer.dart';
 import 'post_header.dart';
 import '../../../style.dart';
 
@@ -20,11 +19,6 @@ class CardPost extends StatefulWidget {
 }
 
 class CardPostState extends State<CardPost> {
-  // final int loggedInId;
-  // final Post postFeed;
-
-  // CardPost(this.loggedInId, this.postFeed);
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,7 +26,6 @@ class CardPostState extends State<CardPost> {
         children: [
           _showHeader(),
           _showBody(),
-          //_showFooter(),
         ],
       ),
     );
@@ -63,19 +56,4 @@ class CardPostState extends State<CardPost> {
       );
     }
   }
-
-  // Widget _showFooter() {
-  //   if (widget.postFeed == null) {
-  //     return Spacer();
-  //     // return Container(
-  //     //   width: 0.0,
-  //     //   height: 0.0,
-  //     // );
-  //   } else {
-  //     return PostFooter(
-  //       loggedInId: widget.loggedInId,
-  //       postFeed: widget.postFeed,
-  //     );
-  //   }
-  // }
 }

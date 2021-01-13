@@ -37,7 +37,9 @@ class NavigationState extends State<NavigationBar> {
       HomeScreen(widget.userId),
       DiscoverScreen(),
       Spacer(),
-      NotificationScreen(),
+      NotificationScreen(
+        loggedInId: widget.userId,
+      ),
       ProfileScreen(userId: widget.userId, otherUserId: null)
     ];
   }

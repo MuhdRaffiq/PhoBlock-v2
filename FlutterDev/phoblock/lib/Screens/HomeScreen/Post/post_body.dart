@@ -116,9 +116,29 @@ class PostBodyState extends State<PostBody> {
     return Container(
       margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 5.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _showPostBody(),
           _showPostFooter(),
+          Row(
+            children: [
+              Text(
+                widget.postFeed.ownerUsername + " ",
+                style: TextStyle(
+                  fontFamily: 'Lalezar',
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                widget.postFeed.postCaption,
+                style: TextStyle(
+                  fontFamily: 'Lalezar',
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

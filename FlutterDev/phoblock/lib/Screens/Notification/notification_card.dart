@@ -1,17 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:phoblock/Model/notification.dart';
 import 'notification_image.dart';
 
 /*
   Author: Muhammad Khairi Norizan
 */
-class NotificationCard extends StatelessWidget {
-  final String _imagePath;
-  final String _usernameString;
-  final String _notificationMessage;
+class NotificationCard extends StatefulWidget {
+  final UserNotification notification;
 
-  NotificationCard(
-      this._imagePath, this._usernameString, this._notificationMessage);
+  NotificationCard({this.notification});
 
+  @override
+  NotificationCardState createState() => NotificationCardState();
+}
+
+class NotificationCardState extends State<NotificationCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -20,18 +25,31 @@ class NotificationCard extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(1.0, 0.0, 10.0, 0.0),
         child: Column(
           children: [
-            ListTile(
-              leading: NotificationImage(this._imagePath),
-              title: Text(this._usernameString),
-              subtitle: Text(this._notificationMessage),
-              trailing: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Image.asset(this._imagePath),
-              ),
-            ),
+            _buildNoticationCard(),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildNoticationCard() {
+    if (widget.notification == null) {
+      return Spacer();
+    } else {
+      return ListTile(
+        leading: NotificationImage(
+          notifiedImage: widget.notification.notifierDp,
+        ),
+        title: Text(widget.notification.notifierUsername),
+        subtitle: Text(widget.notification.notificationMessage),
+        trailing: Container(
+          constraints: BoxConstraints.expand(height: 60.0, width: 60.0),
+          child: Image.memory(
+            base64.decode(widget.notification.notifiedPost.imageString),
+            fit: BoxFit.cover, //BoxFit.fill,
+          ),
+        ),
+      );
+    }
   }
 }
