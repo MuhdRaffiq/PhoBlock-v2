@@ -24,6 +24,8 @@ public class PhoBlockUserController {
     FollowingRepository followingRepository;
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    NotificationRepository notificationRepository;
 
     static class PostSortByDate implements Comparator<Post> {
         @Override
@@ -41,6 +43,10 @@ public class PhoBlockUserController {
         }else{
             if(phoBlockUserRepository.findByUserName(phoBlockUser.getUserName()) != null){
                 throw new RegistrationFailedException("Username is taken. Try a different username");
+            }
+
+            if(phoBlockUser.getWalletAddress() == null || phoBlockUser.getWalletAddress().isEmpty()){
+
             }
 
             phoBlockUserRepository.save(phoBlockUser);
@@ -102,8 +108,6 @@ public class PhoBlockUserController {
 
                 return retrievedUserByUsername.getId();
             }
-
-
         }
     }
 
@@ -115,6 +119,7 @@ public class PhoBlockUserController {
         if(retrievedUser == null){
             throw new ResourceNotFoundException("Username not found!");
         }else{
+            //Update user details
             retrievedUser.setFirstName(phoBlockUser.getFirstName());
             retrievedUser.setLastName(phoBlockUser.getLastName());
             retrievedUser.setUserName(phoBlockUser.getUsername());
@@ -123,22 +128,25 @@ public class PhoBlockUserController {
             retrievedUser.setPhoneNumber(phoBlockUser.getPhoneNumber());
             retrievedUser.setBirthDate(phoBlockUser.getBirthday());
 
+            //Update user profile picture
             if(phoBlockUser.getImageName() != null &&
                     phoBlockUser.getImageType() != null &&
                     phoBlockUser.getImageString() != null){
                 Image newImage = new Image(phoBlockUser.getImageName(), phoBlockUser.getImageType(), phoBlockUser.getImageString());
                 newImage.setUserImage(retrievedUser);
 
+                // Update user old DP
                 if(retrievedUser.getUserDefaultPicture() != null){
                     Image oldDp = retrievedUser.getUserDefaultPicture();
                     oldDp.setUserImage(null);
 
                     retrievedUser.setUserDefaultPicture(null);
-                    imageRepository.delete(retrievedUser.getUserDefaultPicture());
+                    imageRepository.delete(oldDp);
                 }
 
                 retrievedUser.setUserDefaultPicture(newImage);
 
+                // Update all the user's post
                 for(Post userPost: retrievedUser.getUserPost()){
                     Image idk = new Image(retrievedUser.getUserDefaultPicture().getImageName(),
                             retrievedUser.getUserDefaultPicture().getImageType(),
@@ -149,6 +157,138 @@ public class PhoBlockUserController {
 
                     imageRepository.save(idk);
                     postRepository.save(userPost);
+                }
+
+                // update all notifierUser == user
+                List<Notification> notifierList = notificationRepository.findByNotifierUserId(retrievedUser.getId());
+
+                for(Notification notification: notifierList){
+                    notification.setNotifierUsername(phoBlockUser.getUsername());
+
+                    if(notification.getNotifierUsrImg() != null){
+                        Image notifierDp = notification.getNotifierUsrImg();
+                        notifierDp.setImageName(phoBlockUser.getImageName());
+                        notifierDp.setImageType(phoBlockUser.getImageType());
+                        notifierDp.setImageString(phoBlockUser.getImageString());
+
+                        notification.setNotifierUsrImg(notifierDp);
+
+                        imageRepository.save(notifierDp);
+                    }else{
+                        Image notifierDp = new Image(phoBlockUser.getImageName(),
+                                phoBlockUser.getImageType(), phoBlockUser.getImageString());
+
+                        notification.setNotifierUsrImg(notifierDp);
+
+                        imageRepository.save(notifierDp);
+                    }
+                    notificationRepository.save(notification);
+
+                    PhoBlockUser user = phoBlockUserRepository.findById(notification.getNotifiedUserId());
+
+                    for(Notification userNotification: user.getNotifications()){
+                        if(userNotification.getNotifierUsrImg() != null){
+                            Image notifierDp = userNotification.getNotifierUsrImg();
+                            notifierDp.setImageName(phoBlockUser.getImageName());
+                            notifierDp.setImageType(phoBlockUser.getImageType());
+                            notifierDp.setImageString(phoBlockUser.getImageString());
+
+                            notification.setNotifierUsrImg(notifierDp);
+
+                            imageRepository.save(notifierDp);
+                        }else{
+                            Image notifierDp = new Image(phoBlockUser.getImageName(),
+                                    phoBlockUser.getImageType(), phoBlockUser.getImageString());
+
+                            userNotification.setNotifierUsrImg(notifierDp);
+                            notifierDp.setNotifierUserImage(userNotification);
+
+                            imageRepository.save(notifierDp);
+                        }
+                        notificationRepository.save(userNotification);
+                    }
+
+                    phoBlockUserRepository.save(user);
+                }
+
+                // update all notifiedUser == user
+                List<Notification> notifiedList = notificationRepository.findByNotifiedUserId(retrievedUser.getId());
+
+                for(Notification notification: notifiedList){
+                    notification.setNotifiedUsername(phoBlockUser.getUsername());
+
+                    if(notification.getNotifiedUsrImg() != null){
+                        Image notifiedDp = notification.getNotifiedUsrImg();
+                        notifiedDp.setImageName(phoBlockUser.getImageName());
+                        notifiedDp.setImageType(phoBlockUser.getImageType());
+                        notifiedDp.setImageString(phoBlockUser.getImageString());
+
+                        notification.setNotifiedUsrImg(notifiedDp);
+
+                        imageRepository.save(notifiedDp);
+                    }else{
+                        Image notifiedDp = new Image(phoBlockUser.getImageName(),
+                                phoBlockUser.getImageType(), phoBlockUser.getImageString());
+
+                        notification.setNotifiedUsrImg(notifiedDp);
+
+                        imageRepository.save(notifiedDp);
+                    }
+
+                    notificationRepository.save(notification);
+
+                    PhoBlockUser user = phoBlockUserRepository.findById(notification.getNotifierUserId());
+
+                    for(Notification userNotification: user.getNotifications()){
+                        if(userNotification.getNotifiedUsrImg() != null){
+                            Image notifiedDp = userNotification.getNotifiedUsrImg();
+                            notifiedDp.setImageName(phoBlockUser.getImageName());
+                            notifiedDp.setImageType(phoBlockUser.getImageType());
+                            notifiedDp.setImageString(phoBlockUser.getImageString());
+
+                            userNotification.setNotifiedUsrImg(notifiedDp);
+
+                            imageRepository.save(notifiedDp);
+                        }else{
+                            Image notifiedDp = new Image(phoBlockUser.getImageName(),
+                                    phoBlockUser.getImageType(), phoBlockUser.getImageString());
+
+                            userNotification.setNotifiedUsrImg(notifiedDp);
+                            notifiedDp.setNotifiedUserImage(userNotification);
+
+                            imageRepository.save(notifiedDp);
+                        }
+                        notificationRepository.save(userNotification);
+                    }
+                    phoBlockUserRepository.save(user);
+                }
+
+                // update all follower == user
+                List<Follower> followerList = followerRepository.findByFollowerId(retrievedUser.getId());
+
+                for(Follower follower: followerList){
+                    follower.setUsername(phoBlockUser.getUsername());
+                    Image followerDp = follower.getFollowerDefaultPicture();
+                    followerDp.setImageName(phoBlockUser.getImageName());
+                    followerDp.setImageType(phoBlockUser.getImageType());
+                    followerDp.setImageString(phoBlockUser.getImageString());
+
+                    imageRepository.save(followerDp);
+                    followerRepository.save(follower);
+                }
+
+                // update all following == user
+                List<Following> followingList = followingRepository.findByFollowingId(retrievedUser.getId());
+
+                for(Following following: followingList){
+                    following.setUsername(phoBlockUser.getUsername());
+                    Image followingDp = following.getFollowingDefaultPicture();
+                    followingDp.setImageName(phoBlockUser.getImageName());
+                    followingDp.setImageType(phoBlockUser.getImageType());
+                    followingDp.setImageString(phoBlockUser.getImageString());
+
+                    imageRepository.save(followingDp);
+                    followingRepository.save(following);
                 }
 
                 imageRepository.save(newImage);

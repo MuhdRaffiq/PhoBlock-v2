@@ -225,19 +225,37 @@ public class PostController {
         notification.setNotifiedUserId(getOtherUser.getId());
         notification.setNotifiedPostId(postId);
 
-        Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
-                getUser.getUserDefaultPicture().getImageType(),
-                getUser.getUserDefaultPicture().getImageString());
+        if(getUser.getUserDefaultPicture() != null){
+            Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
+                    getUser.getUserDefaultPicture().getImageType(),
+                    getUser.getUserDefaultPicture().getImageString());
+
+            notifierDp.setNotifierUserImage(notification);
+            notification.setNotifierUsrImg(notifierDp);
+            //notification.setNotifierImage(notifierDp);
+
+            imageRepository.save(notifierDp);
+        }
+
+        if(getOtherUser.getUserDefaultPicture() != null){
+            Image notifiedDp = new Image(getOtherUser.getUserDefaultPicture().getImageName(),
+                    getOtherUser.getUserDefaultPicture().getImageType(),
+                    getOtherUser.getUserDefaultPicture().getImageString());
+
+            notifiedDp.setNotifiedUserImage(notification);
+            notification.setNotifiedUsrImg(notifiedDp);
+
+            imageRepository.save(notifiedDp);
+        }
 
         Image notifiedPost = new Image(getPost.getPostPicture().getImageName(),
                 getPost.getPostPicture().getImageType(),
                 getPost.getPostPicture().getImageString());
 
-        notifierDp.setNotifierUserImage(notification);
         notifiedPost.setNotifiedPost(notification);
 
-        notification.setNotifierImage(notifierDp);
-        notification.setNotifiedImage(notifiedPost);
+        //notification.setNotifiedImage(notifiedPost);
+        notification.setNotifiedPostImage(notifiedPost);
         notification.setUserNotification(getOtherUser);
 
         getOtherUser.addNotification(notification);
@@ -273,15 +291,28 @@ public class PostController {
         for(Notification notification: getOtherUser.getNotifications()){
             if(notification.getNotifiedPostId() == postId && notification.getNotificationFlag() == 1){
                 Notification userNoti = notification;
-                Image notifierDp = userNoti.getNotifierImage();
-                Image notifiedPost = userNoti.getNotifiedImage();
+                //Image notifierDp = userNoti.getNotifierImage();
+                Image notifierDp = userNoti.getNotifierUsrImg();
+                //Image notifiedPost = userNoti.getNotifiedImage();
+                Image notifiedPost = userNoti.getNotifiedPostImage();
+                Image notifiedUsrDp = userNoti.getNotifierUsrImg();
 
                 getOtherUser.removeNotification(userNoti);
                 userNoti.setUserNotification(null);
-                notifierDp.setNotifierUserImage(null);
                 notifiedPost.setNotifiedPost(null);
 
-                imageRepository.delete(notifierDp);
+                if(notifierDp != null) {
+                    notifierDp.setNotifierUserImage(null);
+                    userNoti.setNotifierUsrImg(null);
+                    imageRepository.delete(notifierDp);
+                }
+
+                if(notifiedUsrDp != null){
+                    notifiedUsrDp.setNotifiedUserImage(null);
+                    userNoti.setNotifiedUsrImg(null);
+                    imageRepository.delete(notifiedUsrDp);
+                }
+
                 imageRepository.delete(notifiedPost);
 
                 notificationRepository.delete(notification);
@@ -342,19 +373,37 @@ public class PostController {
         notification.setNotifiedUserId(getOtherUser.getId());
         notification.setNotifiedPostId(postId);
 
-        Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
-                getUser.getUserDefaultPicture().getImageType(),
-                getUser.getUserDefaultPicture().getImageString());
+        if(getUser.getUserDefaultPicture() != null){
+            Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
+                    getUser.getUserDefaultPicture().getImageType(),
+                    getUser.getUserDefaultPicture().getImageString());
+
+            notifierDp.setNotifierUserImage(notification);
+            //notification.setNotifierImage(notifierDp);
+            notification.setNotifierUsrImg(notifierDp);
+
+            imageRepository.save(notifierDp);
+        }
+
+        if(getOtherUser.getUserDefaultPicture() != null){
+            Image notifiedDp = new Image(getOtherUser.getUserDefaultPicture().getImageName(),
+                    getOtherUser.getUserDefaultPicture().getImageType(),
+                    getOtherUser.getUserDefaultPicture().getImageString());
+
+            notifiedDp.setNotifiedUserImage(notification);
+            notification.setNotifiedUsrImg(notifiedDp);
+
+            imageRepository.save(notifiedDp);
+        }
 
         Image notifiedPost = new Image(getPost.getPostPicture().getImageName(),
                 getPost.getPostPicture().getImageType(),
                 getPost.getPostPicture().getImageString());
 
-        notifierDp.setNotifierUserImage(notification);
         notifiedPost.setNotifiedPost(notification);
 
-        notification.setNotifierImage(notifierDp);
-        notification.setNotifiedImage(notifiedPost);
+        //notification.setNotifiedImage(notifiedPost);
+        notification.setNotifiedPostImage(notifiedPost);
         notification.setUserNotification(getOtherUser);
 
         getOtherUser.addNotification(notification);
@@ -389,17 +438,29 @@ public class PostController {
         for(Notification notification: getOtherUser.getNotifications()){
             if(notification.getNotifiedPostId() == postId && notification.getNotificationFlag() == 2){
                 Notification userNoti = notification;
-                Image notifierDp = userNoti.getNotifierImage();
-                Image notifiedPost = userNoti.getNotifiedImage();
+                //Image notifierDp = userNoti.getNotifierImage();
+                //Image notifiedPost = userNoti.getNotifiedImage();
+                Image notifierDp = userNoti.getNotifierUsrImg();
+                Image notifiedDp = userNoti.getNotifiedUsrImg();
+                Image notifiedPost = userNoti.getNotifiedPostImage();
 
                 getOtherUser.removeNotification(userNoti);
                 userNoti.setUserNotification(null);
-                notifierDp.setNotifierUserImage(null);
                 notifiedPost.setNotifiedPost(null);
 
-                imageRepository.delete(notifierDp);
-                imageRepository.delete(notifiedPost);
+                if(notifierDp != null){
+                    notifierDp.setNotifierUserImage(null);
+                    userNoti.setNotifierUsrImg(null);
+                    imageRepository.delete(notifierDp);
+                }
 
+                if(notifiedDp != null){
+                    notifiedDp.setNotifiedUserImage(null);
+                    userNoti.setNotifiedUsrImg(null);
+                    imageRepository.delete(notifiedDp);
+                }
+
+                imageRepository.delete(notifiedPost);
                 notificationRepository.delete(notification);
             }
         }
@@ -457,19 +518,37 @@ public class PostController {
         notification.setNotifiedUserId(getOtherUser.getId());
         notification.setNotifiedPostId(postId);
 
-        Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
-                getUser.getUserDefaultPicture().getImageType(),
-                getUser.getUserDefaultPicture().getImageString());
+        if(getUser.getUserDefaultPicture() != null){
+            Image notifierDp = new Image(getUser.getUserDefaultPicture().getImageName(),
+                    getUser.getUserDefaultPicture().getImageType(),
+                    getUser.getUserDefaultPicture().getImageString());
+
+            notifierDp.setNotifierUserImage(notification);
+            //notification.setNotifierImage(notifierDp);
+            notification.setNotifierUsrImg(notifierDp);
+
+            imageRepository.save(notifierDp);
+        }
+
+        if(getOtherUser.getUserDefaultPicture() != null){
+            Image notifiedDp = new Image(getOtherUser.getUserDefaultPicture().getImageName(),
+                    getOtherUser.getUserDefaultPicture().getImageType(),
+                    getOtherUser.getUserDefaultPicture().getImageString());
+
+            notifiedDp.setNotifiedUserImage(notification);
+            notification.setNotifiedUsrImg(notifiedDp);
+
+            imageRepository.save(notifiedDp);
+        }
 
         Image notifiedPost = new Image(getPost.getPostPicture().getImageName(),
                 getPost.getPostPicture().getImageType(),
                 getPost.getPostPicture().getImageString());
 
-        notifierDp.setNotifierUserImage(notification);
         notifiedPost.setNotifiedPost(notification);
 
-        notification.setNotifierImage(notifierDp);
-        notification.setNotifiedImage(notifiedPost);
+        //notification.setNotifiedImage(notifiedPost);
+        notification.setNotifiedPostImage(notifiedPost);
         notification.setUserNotification(getOtherUser);
 
         getOtherUser.addNotification(notification);

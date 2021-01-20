@@ -34,6 +34,8 @@ public class PhoBlockUser {
     String bio;
     @Column
     String phoneNumber;
+    @Column
+    String walletAddress;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "postOwner")
     Set<Post> userPost;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userImage")
@@ -121,6 +123,14 @@ public class PhoBlockUser {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getWalletAddress() {
+        return walletAddress;
+    }
+
+    public void setWalletAddress(String walletAddress) {
+        this.walletAddress = walletAddress;
     }
 
     public Date getDateCreated() {
