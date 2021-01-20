@@ -17,6 +17,7 @@ class UserNotification {
   int notifiedUserId;
   int notifiedPostId;
   ImageFile notifierDp;
+  ImageFile notifiedDp;
   ImageFile notifiedPost;
 
   UserNotification({
@@ -29,12 +30,14 @@ class UserNotification {
     this.notifiedUserId,
     this.notifiedPostId,
     this.notifierDp,
+    this.notifiedDp,
     this.notifiedPost,
   });
 
   factory UserNotification.fromJson(Map<dynamic, dynamic> json1) {
-    ImageFile notifierDp = ImageFile.fromJson(json1['notifierImage']);
-    ImageFile notifiedPost = ImageFile.fromJson(json1['notifiedImage']);
+    ImageFile notifierDp = ImageFile.fromJson(json1['notifierUsrImg']);
+    ImageFile notifiedDp = ImageFile.fromJson(json1['notifiedUsrImg']);
+    ImageFile notifiedPost = ImageFile.fromJson(json1['notifiedPostImage']);
 
     return UserNotification(
       notificationId: json1['id'],
@@ -46,6 +49,7 @@ class UserNotification {
       notifiedUserId: json1['notifiedUserId'],
       notifiedPostId: json1['notifiedPostId'],
       notifierDp: notifierDp,
+      notifiedDp: notifiedDp,
       notifiedPost: notifiedPost,
     );
   }

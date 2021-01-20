@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 /*
   Author: Muhammad Khairi Norizan
 */
-class ConfirmPasswTextBox extends StatelessWidget {
+class WalletTextBox extends StatelessWidget {
   final textController;
-  final pwdController;
   final formKey;
   static const double _hPad = 40.0;
 
-  ConfirmPasswTextBox(this.textController, this.pwdController, this.formKey);
+  WalletTextBox(this.textController, this.formKey);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +19,19 @@ class ConfirmPasswTextBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 5.0),
+            margin: const EdgeInsets.fromLTRB(_hPad, 0.0, _hPad, 30.0),
             child: TextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
+              keyboardType: TextInputType.text,
               controller: textController,
               validator: (value) {
-                if (value != pwdController.text) {
-                  return 'Password does not match';
+                if (value.isNotEmpty) {
+                  if (value.length < 42) {
+                    return 'Invalid Wallet Address Input';
+                  }
+
+                  if (value.length == 42 && !value.startsWith('0x')) {
+                    return 'Invalid Wallet Address Input';
+                  }
                 }
 
                 return null;
@@ -37,7 +41,7 @@ class ConfirmPasswTextBox extends StatelessWidget {
                   borderRadius: new BorderRadius.circular(25.0),
                   borderSide: BorderSide(color: Colors.black12, width: 7.0),
                 ),
-                hintText: 'Confirm Password',
+                hintText: 'Wallet Address',
                 hintStyle: TextStyle(
                   fontFamily: 'Lalezar',
                   fontWeight: FontWeight.w400,

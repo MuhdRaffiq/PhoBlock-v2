@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phoblock/Screens/SignupScreen/Textbox/wallet_textbox.dart';
 import 'Buttons/cancel_button.dart';
 import 'Textbox/cfmpwd_textbox.dart';
 import 'Textbox/dob_textbox.dart';
@@ -27,6 +28,7 @@ class _SignupScreen extends State<SignupScreen> {
   final usernameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
   final confirmPwdTextController = TextEditingController();
+  final walletTextController = TextEditingController();
 
   final firstNameFormKey = GlobalKey<FormState>();
   final lastNameFormKey = GlobalKey<FormState>();
@@ -35,6 +37,7 @@ class _SignupScreen extends State<SignupScreen> {
   final usernameFormKey = GlobalKey<FormState>();
   final pwdFormKey = GlobalKey<FormState>();
   final cfmPwdFormKey = GlobalKey<FormState>();
+  final walletFormKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -45,6 +48,7 @@ class _SignupScreen extends State<SignupScreen> {
     usernameTextController.dispose();
     passwordTextController.dispose();
     confirmPwdTextController.dispose();
+    walletTextController.dispose();
     super.dispose();
   }
 
@@ -68,6 +72,7 @@ class _SignupScreen extends State<SignupScreen> {
           PasswordTextBox(passwordTextController, pwdFormKey),
           ConfirmPasswTextBox(
               confirmPwdTextController, passwordTextController, cfmPwdFormKey),
+          WalletTextBox(walletTextController, walletFormKey),
           SignupButton(
               firstNameTextController,
               firstNameFormKey,
