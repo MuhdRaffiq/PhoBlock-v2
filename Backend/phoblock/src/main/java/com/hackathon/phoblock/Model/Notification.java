@@ -27,9 +27,11 @@ public class Notification {
     @Column
     int notifiedPostId;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "notifierUserImage")
-    Image notifierImage;
+    Image notifierUsrImg;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "notifiedUserImage")
+    Image notifiedUsrImg;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "notifiedPost")
-    Image notifiedImage;
+    Image notifiedPostImage;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -100,20 +102,28 @@ public class Notification {
         this.notifiedPostId = notifiedPostId;
     }
 
-    public Image getNotifierImage() {
-        return notifierImage;
+    public Image getNotifierUsrImg() {
+        return notifierUsrImg;
     }
 
-    public void setNotifierImage(Image notifierImage) {
-        this.notifierImage = notifierImage;
+    public void setNotifierUsrImg(Image notifierImage) {
+        this.notifierUsrImg = notifierImage;
     }
 
-    public Image getNotifiedImage() {
-        return notifiedImage;
+    public Image getNotifiedUsrImg() {
+        return notifiedUsrImg;
     }
 
-    public void setNotifiedImage(Image notifiedImage) {
-        this.notifiedImage = notifiedImage;
+    public void setNotifiedUsrImg(Image notifiedUsrImg) {
+        this.notifiedUsrImg = notifiedUsrImg;
+    }
+
+    public Image getNotifiedPostImage() {
+        return notifiedPostImage;
+    }
+
+    public void setNotifiedPostImage(Image notifiedImage) {
+        this.notifiedPostImage = notifiedImage;
     }
 
     public PhoBlockUser getUserNotification() {

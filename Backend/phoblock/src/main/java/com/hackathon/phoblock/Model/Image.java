@@ -50,7 +50,12 @@ public class Image {
     @JsonIgnore
     Notification notifierUserImage;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "notified_id", referencedColumnName = "id")
+    @JoinColumn(name = "notifier_user_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    Notification notifiedUserImage;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notified_post_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Notification notifiedPost;
@@ -143,6 +148,14 @@ public class Image {
 
     public void setNotifiedPost(Notification notifiedPost) {
         this.notifiedPost = notifiedPost;
+    }
+
+    public Notification getNotifiedUserImage() {
+        return notifiedUserImage;
+    }
+
+    public void setNotifiedUserImage(Notification notifiedUserImage) {
+        this.notifiedUserImage = notifiedUserImage;
     }
 
     public Notification getNotifierUserImage() {
