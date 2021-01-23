@@ -6,6 +6,7 @@ import com.hackathon.phoblock.Exceptions.ResourceNotFoundException;
 import com.hackathon.phoblock.Model.*;
 import com.hackathon.phoblock.Repository.*;
 import com.hackathon.phoblock.ResponseBodyModel.EditProfileBody;
+import com.hackathon.phoblock.Utilities.EtherWeb3j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,19 @@ public class PhoBlockUserController {
         public int compare(Post post1, Post post2){
             return post1.getDateCreated().compareTo(post2.getDateCreated());
         }
+    }
+
+    @GetMapping("/EtherTesting")
+    void  etherTesting() throws Exception {
+        EtherWeb3j etherWeb3j = new EtherWeb3j();
+
+//        String senderPrivateKey = "16e56711dbdaf5e20b2c41be43216c2f8bc1a312f557f2c7b5cedfd104c26e0f";
+//        String recipientWallet = "0xe283b7D9E72572EbcFe53A2B85E6B9677e0A4A44";
+//        etherWeb3j.makeTransaction(senderPrivateKey, recipientWallet);
+
+        //etherWeb3j.createWallet("Test1234");
+        etherWeb3j.getEtherBalance("0xcD637F1c737C3100c762eea347496EdC229b99c8");
+
     }
 
     @PostMapping("/Users/NewUser")

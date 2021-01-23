@@ -69,9 +69,11 @@
 			<artifactId>web3j-maven-plugin</artifactId>
 			<version>4.6.5</version>
 		</dependency>
-
-
-
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.2.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

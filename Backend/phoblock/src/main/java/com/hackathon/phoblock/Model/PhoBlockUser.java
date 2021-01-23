@@ -36,6 +36,8 @@ public class PhoBlockUser {
     String phoneNumber;
     @Column
     String walletAddress;
+    @Column
+    String walletPrivateKey;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "postOwner")
     Set<Post> userPost;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userImage")
@@ -52,6 +54,8 @@ public class PhoBlockUser {
     Set<Post> likedPost;
     @ManyToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
     Set<Post> downloadedPosts;
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "walletOwner")
+//    Wallet userWallet;
 
     public Integer getId() {
         return id;
@@ -131,6 +135,14 @@ public class PhoBlockUser {
 
     public void setWalletAddress(String walletAddress) {
         this.walletAddress = walletAddress;
+    }
+
+    public String getWalletPrivateKey() {
+        return walletPrivateKey;
+    }
+
+    public void setWalletPrivateKey(String walletPrivateKey) {
+        this.walletPrivateKey = walletPrivateKey;
     }
 
     public Date getDateCreated() {
